@@ -20,6 +20,16 @@ Pares são só INTERNOS (outros anúncios ativos da própria conta, mesma
 categoria e faixa de preço ±30%, alargando para a categoria inteira quando
 sobra pouco). Comparação com concorrente externo é outra frente
 (core.confrontos / vigilância de catálogo) e não entra aqui.
+
+SEM_CONVERSAO tem DUAS réguas, não uma. A relativa (abaixo do p25 de
+conversão do par) fica cega exatamente no caso que mais importa: se a conta
+inteira converte mal, os vizinhos também convertem 0%, o p25 vira 0%, e nada
+consegue ficar "abaixo de zero" — o motor conclui "normal" quando na verdade
+é "ninguém aqui está convertendo, e isso é um problema do operador, não do
+mercado". A régua ABSOLUTA (visita de sobra + zero venda, ver
+LIMIAR_VISITAS_SEM_CONVERSAO) não depende de vizinho nenhum e pega esse caso.
+As duas rodam sempre que há visita para julgar; o veredito bate se qualquer
+uma disparar.
 """
 from __future__ import annotations
 
@@ -33,6 +43,12 @@ from . import db
 JANELA_DIAS_PADRAO = 7
 FAIXA_PRECO = 0.30       # ±30%
 MINIMO_PAR_ESTREITO = 5  # abaixo disso, alarga para a categoria inteira
+
+# Visita "de sobra" o bastante para que zero venda pare de ser coincidência.
+# Não é teste estatístico — é limiar operacional. Mesmo num item de conversão
+# baixa (1%), (0,99)^30 ≈ 74% de chance de ainda dar zero venda por acaso, então
+# isto marca "vale olhar", não "está provado". Ajustar aqui se virar ruído.
+LIMIAR_VISITAS_SEM_CONVERSAO = 30
 
 
 def _pedidos_por_item(con: sqlite3.Connection, conta_slug: str, dias: int) -> dict[str, int]:
@@ -129,6 +145,13 @@ def _percentil25(valores: list[float]) -> float | None:
     if len(dados) < 4:
         return None
     return statistics.quantiles(dados, n=4, method="inclusive")[0]
+
+
+def _sem_conversao_absoluta(visitas: int, pedidos: int) -> bool:
+    """Não compara com par nenhum: visita de sobra e zero venda já é
+    suspeito por si só, mesmo quando os vizinhos também não vendem nada
+    (conta inteira patinando) ou quando não existe par para comparar."""
+    return visitas >= LIMIAR_VISITAS_SEM_CONVERSAO and pedidos == 0
 
 
 def _mediana(valores: list[float]) -> float | None:
@@ -284,11 +307,30 @@ def _avaliar_item(item, ativos, visitas_por_item, pedidos_por_item, frete_por_it
         }]
         return resultado
 
+    sem_conversao_abs = _sem_conversao_absoluta(visitas, pedidos)
+
     par, alargado = _par_de(item, ativos)
     resultado["par_alargado"] = alargado
     resultado["tamanho_par"] = len(par)
 
     if len(par) < 2:
+        if sem_conversao_abs:
+            resultado["veredito"] = "SEM_CONVERSAO"
+            resultado["causas"] = _causas_sem_conversao(item, par, frete_por_item, promo_por_item)
+            resultado["causas"].insert(0, {
+                "causa": "regra absoluta: visita de sobra sem nenhuma venda",
+                "evidencia": f"{visitas} visitas na janela de {dias} dias e 0 pedidos — "
+                             f"sem outro anúncio na conta pra comparar, mas o volume de "
+                             f"visita já torna zero venda um sinal por si só",
+            })
+            historico = media_mensal.get(item_id)
+            resultado["receita_bruta_perdida_mes"] = historico * preco if historico else None
+            resultado["causas"].append({
+                "causa": "valor estimado pelo histórico do próprio item",
+                "evidencia": (f"média histórica de {historico:.1f} pedidos/mês"
+                              if historico else "sem histórico de venda — valor não calculado"),
+            })
+            return resultado
         resultado["veredito"] = "SEM_PAR_SUFICIENTE"
         resultado["causas"] = [{"causa": "sem outro anúncio comparável na conta", "evidencia": "sem dado"}]
         return resultado
@@ -311,12 +353,38 @@ def _avaliar_item(item, ativos, visitas_por_item, pedidos_por_item, frete_por_it
             resultado["receita_bruta_perdida_mes"] = deficit_visitas_mes * p25_conv * preco
         return resultado
 
-    if p25_conv is not None and conversao is not None and conversao < p25_conv:
+    sem_conversao_rel = p25_conv is not None and conversao is not None and conversao < p25_conv
+
+    if sem_conversao_rel or sem_conversao_abs:
         resultado["veredito"] = "SEM_CONVERSAO"
         resultado["causas"] = _causas_sem_conversao(item, par, frete_por_item, promo_por_item)
-        visitas_mes = visitas * (30 / dias)
-        gap_conv = p25_conv - conversao
-        resultado["receita_bruta_perdida_mes"] = gap_conv * visitas_mes * preco
+        if sem_conversao_abs and not sem_conversao_rel:
+            # o par existe, mas não discrimina nada (p25 de conversão do par
+            # também é 0 ou não calculável) — provável conta/categoria inteira
+            # patinando, não só este item. A régua relativa fica cega aqui de
+            # propósito; é para isso que a absoluta existe.
+            p25_txt = f"{p25_conv:.1%}" if p25_conv is not None else "não calculável"
+            resultado["causas"].insert(0, {
+                "causa": "regra absoluta: visita de sobra sem nenhuma venda",
+                "evidencia": f"{visitas} visitas na janela e 0 pedidos — o p25 de "
+                             f"conversão do par é {p25_txt} (não discrimina; "
+                             f"provável conta ou categoria inteira sem converter)",
+            })
+        if sem_conversao_rel:
+            visitas_mes = visitas * (30 / dias)
+            gap_conv = p25_conv - conversao
+            resultado["receita_bruta_perdida_mes"] = gap_conv * visitas_mes * preco
+        else:
+            # regra absoluta sozinha: não há gap de conversão do par pra medir
+            # em cima, então o valor vem do próprio histórico do item — visível
+            # como causa, não só escondido dentro do número.
+            historico = media_mensal.get(item_id)
+            resultado["receita_bruta_perdida_mes"] = historico * preco if historico else None
+            resultado["causas"].append({
+                "causa": "valor estimado pelo histórico do próprio item",
+                "evidencia": (f"média histórica de {historico:.1f} pedidos/mês"
+                              if historico else "sem histórico de venda — valor não calculado"),
+            })
         return resultado
 
     receitas_par = [pedidos_por_item.get(p["item_id"], 0) * (p["preco"] or 0) for p in par]
