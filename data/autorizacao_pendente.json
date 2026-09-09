@@ -1,0 +1,16 @@
+{
+ "facilita-brasil-principal": {
+  "state": "QwKWpT4u0ymu0k7ffKIR9w",
+  "code_verifier": "",
+  "redirect_uri": "https://oauth.pstmn.io/v1/callback",
+  "client_id": "1884682230083689",
+  "criado_em": "2026-08-27T16:27:02+00:00"
+ },
+ "facilita-brasil-loja2": {
+  "state": "PvqPJ2o2ZXOK2Lm3KTS6Dw",
+  "code_verifier": "",
+  "redirect_uri": "https://oauth.pstmn.io/v1/callback",
+  "client_id": "1884682230083689",
+  "criado_em": "2026-08-27T16:27:02+00:00"
+ }
+}

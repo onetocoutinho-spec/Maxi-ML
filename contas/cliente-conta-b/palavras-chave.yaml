@@ -1,0 +1,13 @@
+# Termos que você quer vigiar. Para cada um, o sistema grava:
+#   - o top N de concorrentes (preço, vendas, vendedor, frete)
+#   - a posição dos SEUS anúncios no mesmo resultado
+#
+# Comece com 5 a 15 termos por conta. Termo demais só faz barulho.
+
+palavras_chave:
+  - termo: "exemplo palavra-chave principal"
+    top_n: 30
+    observacao: "termo de maior volume"
+
+  - termo: "exemplo cauda longa"
+    top_n: 20

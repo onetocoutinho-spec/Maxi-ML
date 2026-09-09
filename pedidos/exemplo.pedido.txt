@@ -1,0 +1,5 @@
+{
+  "comando": "diagnostico",
+  "alvo": "enio-toldos-principal",
+  "flags": ["--enviar", "--detalhado"]
+}

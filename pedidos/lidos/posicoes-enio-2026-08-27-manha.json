@@ -1,0 +1,649 @@
+{
+ "conta": "enio-toldos-principal",
+ "medido_em": "2026-08-27T11:49:22+00:00",
+ "termos": [
+  {
+   "termo": "toldo policarbonato 305x100",
+   "total_resultados": 557,
+   "meus": [
+    {
+     "item_id": "MLB6864833186",
+     "posicao": 10,
+     "preco": 1339.0
+    }
+   ],
+   "concorrentes": [
+    {
+     "posicao": 1,
+     "titulo": "Toldo Policarbonato Modular 150x70",
+     "preco": 219.9,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB7384619860"
+    },
+    {
+     "posicao": 2,
+     "titulo": "Toldo Policarbonato 1.50x70cm Cobe",
+     "preco": 349.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4121409071"
+    },
+    {
+     "posicao": 3,
+     "titulo": "Toldo Policarbonato Modular 120x70",
+     "preco": 172.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5491305026"
+    },
+    {
+     "posicao": 4,
+     "titulo": "Toldo Policarbonato 100x70 Cm Modu",
+     "preco": 160.48,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4120316075"
+    },
+    {
+     "posicao": 5,
+     "titulo": "Toldo Policarbonato 1.30 X 50cm Co",
+     "preco": 223.2,
+     "vendedor": null,
+     "item_id": "MLB5039762628"
+    },
+    {
+     "posicao": 6,
+     "titulo": "Toldo Policarbonato 2.50 Metro X 5",
+     "preco": 359.98,
+     "vendedor": null,
+     "item_id": "MLB3890116443"
+    },
+    {
+     "posicao": 7,
+     "titulo": "Toldo Policarbonato Modular 80x70c",
+     "preco": 197.17,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4355590445"
+    },
+    {
+     "posicao": 11,
+     "titulo": "Toldo Policarbonato 5.00x70 Cm Por",
+     "preco": 659.0,
+     "vendedor": null,
+     "item_id": "MLB4256851819"
+    },
+    {
+     "posicao": 12,
+     "titulo": "Toldo Policarbonato 5,30x0,50m - P",
+     "preco": 1499.0,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB5527304492"
+    },
+    {
+     "posicao": 13,
+     "titulo": "Kit Toldos Pergolado 2,00 X 6,00 P",
+     "preco": 1100.0,
+     "vendedor": "POLY SHEET",
+     "item_id": "MLB5088429428"
+    }
+   ]
+  },
+  {
+   "termo": "toldo policarbonato 380x100",
+   "total_resultados": 492,
+   "meus": [
+    {
+     "item_id": "MLB4722895661",
+     "posicao": 5,
+     "preco": 1490.0
+    }
+   ],
+   "concorrentes": [
+    {
+     "posicao": 1,
+     "titulo": "Toldo Policarbonato Modular 150x70",
+     "preco": 219.9,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB7384619860"
+    },
+    {
+     "posicao": 2,
+     "titulo": "Toldo Policarbonato 1.50x70cm Cobe",
+     "preco": 349.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4121409071"
+    },
+    {
+     "posicao": 3,
+     "titulo": "Toldo Policarbonato 2.20x70 Cm Cob",
+     "preco": 381.99,
+     "vendedor": null,
+     "item_id": "MLB5431385272"
+    },
+    {
+     "posicao": 4,
+     "titulo": "Toldo Policarbonato Modular 120x70",
+     "preco": 172.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5491305026"
+    },
+    {
+     "posicao": 6,
+     "titulo": "Toldo Policarbonato 2.50 Metro X 5",
+     "preco": 341.98,
+     "vendedor": null,
+     "item_id": "MLB3890116443"
+    },
+    {
+     "posicao": 7,
+     "titulo": "Toldo Policarbonato Modular 80x70c",
+     "preco": 197.17,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4355590445"
+    },
+    {
+     "posicao": 9,
+     "titulo": "Toldo Policarbonato 4,80x0,80m Imp",
+     "preco": 1940.0,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB4440175253"
+    },
+    {
+     "posicao": 11,
+     "titulo": "Toldo Em Policarbonato  Medida 3,3",
+     "preco": 1600.0,
+     "vendedor": null,
+     "item_id": "MLB2064209477"
+    },
+    {
+     "posicao": 12,
+     "titulo": "Toldo Policarbonato 2,90x0,80m Cob",
+     "preco": 1299.0,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB4027385213"
+    },
+    {
+     "posicao": 13,
+     "titulo": "Toldo Policarbonato 100x70 Cm Modu",
+     "preco": 160.48,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4120316075"
+    }
+   ]
+  },
+  {
+   "termo": "toldo policarbonato 230x100",
+   "total_resultados": 442,
+   "meus": [
+    {
+     "item_id": "MLB4693629595",
+     "posicao": 6,
+     "preco": 890.99
+    }
+   ],
+   "concorrentes": [
+    {
+     "posicao": 1,
+     "titulo": "Toldo Policarbonato Modular 150x70",
+     "preco": 219.9,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB7384619860"
+    },
+    {
+     "posicao": 2,
+     "titulo": "Toldo Policarbonato 2.20x70 Cm Cob",
+     "preco": 381.99,
+     "vendedor": null,
+     "item_id": "MLB5431385272"
+    },
+    {
+     "posicao": 3,
+     "titulo": "Toldo Policarbonato 1.50x70cm Cobe",
+     "preco": 349.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4121409071"
+    },
+    {
+     "posicao": 4,
+     "titulo": "Toldo Policarbonato Modular 120x70",
+     "preco": 172.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5491305026"
+    },
+    {
+     "posicao": 8,
+     "titulo": "Toldo Skyiflex Policarbonato 385x1",
+     "preco": 1648.0,
+     "vendedor": "SKYIFLEX",
+     "item_id": "MLB73023550"
+    },
+    {
+     "posicao": 9,
+     "titulo": "2 T. Retratil 2em1 Completo 3,20/2",
+     "preco": 2235.0,
+     "vendedor": null,
+     "item_id": "MLB3883173337"
+    },
+    {
+     "posicao": 10,
+     "titulo": "Toldo Policarbonato Modular 200x70",
+     "preco": 270.92,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4127588415"
+    },
+    {
+     "posicao": 12,
+     "titulo": "Toldo Policarbonato 1.20x70 Cm Cob",
+     "preco": 172.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5650089682"
+    },
+    {
+     "posicao": 13,
+     "titulo": "Toldo Policarbonato 100x70 Cm Modu",
+     "preco": 160.48,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4120316075"
+    }
+   ]
+  },
+  {
+   "termo": "toldo policarbonato 155x100",
+   "total_resultados": 141,
+   "meus": [
+    {
+     "item_id": "MLB4719594491",
+     "posicao": 5,
+     "preco": 619.99
+    }
+   ],
+   "concorrentes": [
+    {
+     "posicao": 1,
+     "titulo": "Toldo Policarbonato Modular 150x70",
+     "preco": 219.9,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB7385450410"
+    },
+    {
+     "posicao": 2,
+     "titulo": "Toldo Policarbonato 1.50x70cm Cobe",
+     "preco": 349.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4121409071"
+    },
+    {
+     "posicao": 3,
+     "titulo": "Toldo Policarbonato Modular 100x50",
+     "preco": 177.38,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5510241880"
+    },
+    {
+     "posicao": 4,
+     "titulo": "Toldo Policarbonato 1,50x0,50m Por",
+     "preco": 231.04,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5519499950"
+    },
+    {
+     "posicao": 9,
+     "titulo": "Toldo Policarbonato 90 X 50cm Cobe",
+     "preco": 243.5,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB4277468011"
+    },
+    {
+     "posicao": 10,
+     "titulo": "Toldo 150cm X 50cm Slim Cobertura",
+     "preco": 233.85,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB4245321755"
+    },
+    {
+     "posicao": 11,
+     "titulo": "Toldo Fixo Em Policarbonato 1,50x1",
+     "preco": 1509.0,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB4043065555"
+    },
+    {
+     "posicao": 12,
+     "titulo": "Toldo Policarbonato 5.00x70 Cm Por",
+     "preco": 659.0,
+     "vendedor": null,
+     "item_id": "MLB4256851819"
+    },
+    {
+     "posicao": 13,
+     "titulo": "Toldo Policarbonato Modular Kavika",
+     "preco": 326.9,
+     "vendedor": "KAVIKA",
+     "item_id": "MLB5316492894"
+    }
+   ]
+  },
+  {
+   "termo": "toldo metal policarbonato 365x70",
+   "total_resultados": 268,
+   "meus": [
+    {
+     "item_id": "MLB4728439145",
+     "posicao": 10,
+     "preco": 476.99
+    }
+   ],
+   "concorrentes": [
+    {
+     "posicao": 1,
+     "titulo": "Toldo Policarbonato Modular 150x70",
+     "preco": 219.9,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB7385450410"
+    },
+    {
+     "posicao": 2,
+     "titulo": "Toldo Policarbonato 1.50x70cm Cobe",
+     "preco": 349.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4121409071"
+    },
+    {
+     "posicao": 3,
+     "titulo": "Toldo Policarbonato 2.20x70 Cm Cob",
+     "preco": 381.99,
+     "vendedor": null,
+     "item_id": "MLB5431385272"
+    },
+    {
+     "posicao": 4,
+     "titulo": "Toldo Policarbonato Modular 120x70",
+     "preco": 172.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5491305026"
+    },
+    {
+     "posicao": 5,
+     "titulo": "Toldo Policarbonato 1.70x70cm Cobe",
+     "preco": 230.1,
+     "vendedor": null,
+     "item_id": "MLB5439729202"
+    },
+    {
+     "posicao": 6,
+     "titulo": "Toldo Policarbonato Kit Completo 1",
+     "preco": 387.86,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB1453989989"
+    },
+    {
+     "posicao": 7,
+     "titulo": "Toldo Policarbonato Modular 80x70c",
+     "preco": 197.17,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4355590445"
+    },
+    {
+     "posicao": 8,
+     "titulo": "Toldo Policarbonato 3.50x70cm  Por",
+     "preco": 598.92,
+     "vendedor": null,
+     "item_id": "MLB5807198114"
+    },
+    {
+     "posicao": 9,
+     "titulo": "Toldo Policarbonato 5.00x70 Cm Por",
+     "preco": 659.0,
+     "vendedor": null,
+     "item_id": "MLB4256851819"
+    },
+    {
+     "posicao": 11,
+     "titulo": "Toldo Policarbonato 150cm X 70cm M",
+     "preco": 189.0,
+     "vendedor": null,
+     "item_id": "MLB4220835847"
+    }
+   ]
+  },
+  {
+   "termo": "toldo metal policarbonato 290x70",
+   "total_resultados": 186,
+   "meus": [
+    {
+     "item_id": "MLB4728168353",
+     "posicao": 9,
+     "preco": 403.99
+    }
+   ],
+   "concorrentes": [
+    {
+     "posicao": 1,
+     "titulo": "Toldo Policarbonato Modular 250 X",
+     "preco": 372.46,
+     "vendedor": null,
+     "item_id": "MLB4178464653"
+    },
+    {
+     "posicao": 2,
+     "titulo": "Toldo Policarbonato Modular 80x70c",
+     "preco": 197.17,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4355590445"
+    },
+    {
+     "posicao": 3,
+     "titulo": "Toldo Policarbonato 290x70cm Modul",
+     "preco": 545.54,
+     "vendedor": null,
+     "item_id": "MLB4188280915"
+    },
+    {
+     "posicao": 4,
+     "titulo": "Toldo Policarbonato 70x70cm Cobert",
+     "preco": 197.16,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4134323667"
+    },
+    {
+     "posicao": 5,
+     "titulo": "Toldo Policarbonato Modular 150x70",
+     "preco": 219.9,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB7385450410"
+    },
+    {
+     "posicao": 6,
+     "titulo": "Toldo Policarbonato 1.50x70cm Cobe",
+     "preco": 349.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4121409071"
+    },
+    {
+     "posicao": 7,
+     "titulo": "Toldo Policarbonato 2.20x70 Cm Cob",
+     "preco": 381.99,
+     "vendedor": null,
+     "item_id": "MLB5431385272"
+    },
+    {
+     "posicao": 8,
+     "titulo": "Toldo Policarbonato Modular 120x70",
+     "preco": 172.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5491305026"
+    },
+    {
+     "posicao": 10,
+     "titulo": "Toldo Policarbonato 5.00x70 Cm Por",
+     "preco": 659.0,
+     "vendedor": null,
+     "item_id": "MLB4256851819"
+    },
+    {
+     "posicao": 11,
+     "titulo": "Toldo Policarbonato 150cm X 70cm M",
+     "preco": 189.0,
+     "vendedor": null,
+     "item_id": "MLB4220835847"
+    }
+   ]
+  },
+  {
+   "termo": "toldo metal policarbonato 220x70",
+   "total_resultados": 193,
+   "meus": [
+    {
+     "item_id": "MLB4728109795",
+     "posicao": 10,
+     "preco": 437.99
+    }
+   ],
+   "concorrentes": [
+    {
+     "posicao": 1,
+     "titulo": "Toldo Policarbonato Modular 150x70",
+     "preco": 219.9,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB7385450410"
+    },
+    {
+     "posicao": 2,
+     "titulo": "Toldo Policarbonato 1.50x70cm Cobe",
+     "preco": 349.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4121409071"
+    },
+    {
+     "posicao": 3,
+     "titulo": "Toldo Policarbonato Modular 120x70",
+     "preco": 172.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5491305026"
+    },
+    {
+     "posicao": 4,
+     "titulo": "Toldo Policarbonato 2.20x70 Cm Cob",
+     "preco": 381.99,
+     "vendedor": null,
+     "item_id": "MLB5431385272"
+    },
+    {
+     "posicao": 6,
+     "titulo": "Toldo Policarbonato Modular 250 X",
+     "preco": 372.46,
+     "vendedor": null,
+     "item_id": "MLB4178464653"
+    },
+    {
+     "posicao": 7,
+     "titulo": "Toldo Policarbonato 100x70 Cm Modu",
+     "preco": 160.48,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4120316075"
+    },
+    {
+     "posicao": 8,
+     "titulo": "Toldo Policarbonato Kit Completo 1",
+     "preco": 408.27,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB1453989989"
+    },
+    {
+     "posicao": 9,
+     "titulo": "Toldo Policarbonato Modular 80x70c",
+     "preco": 197.17,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4355590445"
+    },
+    {
+     "posicao": 11,
+     "titulo": "Toldo Policarbonato 150cm X 70cm M",
+     "preco": 189.0,
+     "vendedor": null,
+     "item_id": "MLB4220835847"
+    }
+   ]
+  },
+  {
+   "termo": "toldo metal policarbonato 145x70",
+   "total_resultados": 267,
+   "meus": [
+    {
+     "item_id": "MLB6879345124",
+     "posicao": 8,
+     "preco": 266.94
+    }
+   ],
+   "concorrentes": [
+    {
+     "posicao": 1,
+     "titulo": "Toldo Policarbonato Modular 150x70",
+     "preco": 219.9,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB7385450410"
+    },
+    {
+     "posicao": 2,
+     "titulo": "Toldo Policarbonato 1.50x70cm Cobe",
+     "preco": 349.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4121409071"
+    },
+    {
+     "posicao": 3,
+     "titulo": "Toldo Policarbonato 2.20x70 Cm Cob",
+     "preco": 381.99,
+     "vendedor": null,
+     "item_id": "MLB5431385272"
+    },
+    {
+     "posicao": 4,
+     "titulo": "Toldo Policarbonato Modular 120x70",
+     "preco": 172.0,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB5491305026"
+    },
+    {
+     "posicao": 5,
+     "titulo": "Toldo Policarbonato 1.70x70cm Cobe",
+     "preco": 230.1,
+     "vendedor": null,
+     "item_id": "MLB5439729202"
+    },
+    {
+     "posicao": 6,
+     "titulo": "Toldo Policarbonato Kit Completo 1",
+     "preco": 387.86,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB1453989989"
+    },
+    {
+     "posicao": 7,
+     "titulo": "Toldo Policarbonato Modular 80x70c",
+     "preco": 197.17,
+     "vendedor": "PLASMOVE",
+     "item_id": "MLB4355590445"
+    },
+    {
+     "posicao": 9,
+     "titulo": "Toldo Policarbonato 5.00x70 Cm Por",
+     "preco": 659.0,
+     "vendedor": null,
+     "item_id": "MLB4256851819"
+    },
+    {
+     "posicao": 10,
+     "titulo": "Toldo 1,80mx70cm Em Policarbonato",
+     "preco": 635.9,
+     "vendedor": "MEGA TOOLS",
+     "item_id": "MLB1517644828"
+    },
+    {
+     "posicao": 11,
+     "titulo": "Toldo Policarbonato 150cm X 70cm M",
+     "preco": 189.0,
+     "vendedor": null,
+     "item_id": "MLB4220835847"
+    }
+   ]
+  }
+ ]
+}

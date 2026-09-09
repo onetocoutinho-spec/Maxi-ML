@@ -1,0 +1,24 @@
+# Parâmetros operacionais desta conta.
+# O que identifica a conta (user_id, papel) mora em config/clientes.yaml.
+# Aqui ficam só as regras de negócio dela.
+
+parametros:
+  # Margem mínima aceitável — usada em análises de reprecificação
+  margem_minima_percentual: 18
+
+  # Custo médio de frete que você absorve, se aplicável
+  frete_medio: 0
+
+  # Comissão do ML por tipo de anúncio (para cálculo de margem)
+  comissao:
+    gold_special: 0.12   # clássico
+    gold_pro: 0.17       # premium
+
+  # Quantos resultados varrer por palavra-chave (máx. 50 por chamada)
+  top_n_busca: 30
+
+  # Observações que o agente deve levar em conta ao operar esta conta
+  regras_do_negocio: >
+    Descreva aqui o que é específico desta conta: modelo de anúncio,
+    peculiaridades de categoria, política de preço, o que nunca pode ser
+    alterado sem autorização do cliente.

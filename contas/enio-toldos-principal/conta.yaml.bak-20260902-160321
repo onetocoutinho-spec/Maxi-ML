@@ -1,0 +1,38 @@
+parametros:
+  # margem líquida mínima informada pelo Ênio em 27/08/2026
+  margem_minima_percentual: 12
+  frete_medio: 0
+
+  # RESERVA, não é o número usado. A comissão real é medida por anúncio com
+  # `python cli.py tarifas enio-toldos-principal` e fica no banco — o ML cobra
+  # por CATEGORIA, e nesta conta isso vai de 10,5% a 16,5%. Estes valores só
+  # entram em anúncio que ainda não foi medido.
+  comissao:
+    gold_special: 0.105  # clássico — medido em 02/09/2026 (era 0.12)
+    gold_pro: 0.165      # premium — medido em 02/09/2026 (era 0.17)
+
+  # Categorias cujos MAIS VENDIDOS serão coletados a cada rodada.
+  # Vazio = usa automaticamente as categorias dos próprios anúncios,
+  # o que costuma ser o certo. Preencha só se quiser vigiar uma
+  # categoria onde ele ainda não vende.
+  categorias_monitoradas: []
+
+  # Medidas com mais de um anúncio ativo. Ver docs — há canibalização
+  # confirmada em 8 medidas de toldo (3 anúncios cada).
+  alerta_canibalizacao_interna: true
+
+  regras_do_negocio: >
+    Duas linhas convivendo na mesma conta, com lógicas opostas.
+
+    TOLDOS: item de projeto, geralmente vendido por medida. Preço varia por
+    dimensão, então comparar com concorrente exige olhar a medida do anúncio,
+    não só o valor. Frete costuma pesar muito (volume grande) — antes de
+    reagir a um concorrente mais barato, confira se ele não está cobrando
+    frete à parte.
+
+    MÓVEIS (fábrica da Maxi): item de catálogo, comparável direto. Aqui o
+    buy box importa e o preço é o principal fator de vitória. É a linha que
+    mais se beneficia do alerta de perda de buy box.
+
+    Ao analisar alertas, separe as duas linhas: uma queda de posição em toldo
+    raramente tem a mesma causa que uma queda em móvel.

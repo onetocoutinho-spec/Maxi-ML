@@ -1,0 +1,412 @@
+{
+  "conta": "enio-toldos-principal",
+  "medido_em": "2026-08-27T02:30:00+00:00",
+  "observacao": "Medicao completa dos 10 termos, no Chrome logado do usuario. Posicao VISUAL na pagina 1, patrocinados incluidos, porque e o que o comprador ve. Contagem manual a partir do texto da pagina, margem +-1. Termo com meus[] vazio = ShoppLima nao apareceu na pagina 1.",
+  "termos": [
+    {
+      "termo": "toldo metal policarbonato modular",
+      "total_resultados": 127,
+      "meus": [
+        {
+          "item_id": "MLB6953634094",
+          "posicao": 10,
+          "preco": 403.99
+        },
+        {
+          "item_id": "MLB4770364733",
+          "posicao": 11,
+          "preco": 358.99
+        },
+        {
+          "item_id": "MLB6971791596",
+          "posicao": 17,
+          "preco": 358.99
+        },
+        {
+          "item_id": "MLB4770294087",
+          "posicao": 18,
+          "preco": 280.99
+        },
+        {
+          "item_id": "MLB4770425325",
+          "posicao": 19,
+          "preco": 346.99
+        },
+        {
+          "item_id": "MLB6953636662",
+          "posicao": 20,
+          "preco": 476.99
+        },
+        {
+          "item_id": "MLB6953635682",
+          "posicao": 21,
+          "preco": 476.99
+        }
+      ],
+      "concorrentes": [
+        {
+          "posicao": 5,
+          "titulo": "Toldo Policarbonato Modular 200*60 Prevenir Uv/chuva/neve",
+          "preco": 209.0,
+          "vendedor": "SOL VIDA",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 6,
+          "titulo": "Toldo Policarbonato 200cmx60cm Cobertura Portas E Janelas",
+          "preco": 223.1,
+          "vendedor": "VIFIT",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 8,
+          "titulo": "Toldo Policarbonato Modular 3.30x70 Cm",
+          "preco": 582.0,
+          "vendedor": "PLASMOVE",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 9,
+          "titulo": "Toldo Policarbonato Modular 80x70cm",
+          "preco": 197.17,
+          "vendedor": "PLASMOVE",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 12,
+          "titulo": "Toldo Policarbonato Modular 4,00 X 1,50m Abs",
+          "preco": 3055.0,
+          "vendedor": "MEGA TOOLS",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "toldo policarbonato pergolado",
+      "total_resultados": 249,
+      "meus": [
+        {
+          "item_id": "MLB4693629595",
+          "posicao": 18,
+          "preco": 890.99
+        },
+        {
+          "item_id": "MLB6887673448",
+          "posicao": 20,
+          "preco": 890.99
+        },
+        {
+          "item_id": "MLB4722895661",
+          "posicao": 22,
+          "preco": 1490.0
+        },
+        {
+          "item_id": "MLB4719594491",
+          "posicao": 24,
+          "preco": 619.99
+        }
+      ],
+      "concorrentes": [
+        {
+          "posicao": 6,
+          "titulo": "Kit Toldos Pergolado 2,00 X 6,00 Alveolar 4mm",
+          "preco": 1100.0,
+          "vendedor": "POLY SHEET"
+        },
+        {
+          "posicao": 7,
+          "titulo": "Kit Toldo Pergolado 3,50 X 3,50 Alveolar 4mm",
+          "preco": 1354.0,
+          "vendedor": "POLY SHEET"
+        },
+        {
+          "posicao": 8,
+          "titulo": "Toldo Skyiflex 385x100cm Tipo Pergolado Preto",
+          "preco": 1648.0,
+          "vendedor": "SKYIFLEX",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 10,
+          "titulo": "Toldo Skyiflex 230x100cm Tipo Pergolado Fume",
+          "preco": 1067.0,
+          "vendedor": "SKYIFLEX",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 12,
+          "titulo": "Toldo Skyiflex 155x100cm Tipo Pergolado Fume",
+          "preco": 693.0,
+          "vendedor": "SKYIFLEX",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "toldo policarbonato fume",
+      "total_resultados": 1632,
+      "meus": [
+        {
+          "item_id": "MLB4722895661",
+          "posicao": 25,
+          "preco": 1490.0
+        },
+        {
+          "item_id": "MLB4693629595",
+          "posicao": 46,
+          "preco": 890.99
+        }
+      ],
+      "concorrentes": [
+        {
+          "posicao": 5,
+          "titulo": "Toldo Skyiflex 310x100cm Tipo Pergolado Fume",
+          "preco": 1369.0,
+          "vendedor": "SKYIFLEX",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 6,
+          "titulo": "Toldo Policarbonato Modular 200x70 Cm",
+          "preco": 270.92,
+          "vendedor": "PLASMOVE"
+        },
+        {
+          "posicao": 8,
+          "titulo": "Toldo Skyiflex 230x100cm Tipo Pergolado Fume",
+          "preco": 1067.0,
+          "vendedor": "SKYIFLEX",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 10,
+          "titulo": "Toldo Skyiflex 155x100cm Tipo Pergolado Fume",
+          "preco": 693.0,
+          "vendedor": "SKYIFLEX",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "toldo policarbonato janela porta",
+      "total_resultados": 963,
+      "meus": [
+        {
+          "item_id": "MLB4693629595",
+          "posicao": 56,
+          "preco": 890.99
+        }
+      ],
+      "concorrentes": [
+        {
+          "posicao": 5,
+          "titulo": "Toldo Policarbonato Modular 200x70 Cm",
+          "preco": 270.92,
+          "vendedor": "PLASMOVE"
+        },
+        {
+          "posicao": 6,
+          "titulo": "Toldo Policarbonato Modular 120x70cm",
+          "preco": 172.0,
+          "vendedor": "PLASMOVE",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 8,
+          "titulo": "Toldo de Policarbonato Preto 120x60 UV",
+          "preco": 196.1,
+          "vendedor": "WINDA",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "rack para tv 65 polegadas ripado",
+      "total_resultados": 323,
+      "meus": [],
+      "concorrentes": [
+        {
+          "posicao": 5,
+          "titulo": "Rack Bancada Com Painel Ripado Tv Ate 65 1,80m Panama",
+          "preco": 586.81,
+          "vendedor": "CAEMMUN",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 7,
+          "titulo": "Rack Ripado Para TV Ate 65 2 Portas MDF MDP Off White Freijo",
+          "preco": 496.85,
+          "vendedor": "GIGA MOVEIS",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 11,
+          "titulo": "Rack Com Painel Peter 150cm Tv Ate 65 Ripado",
+          "preco": 619.83,
+          "vendedor": "DJ",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 12,
+          "titulo": "Rack Tv Ate 65 Otawa 1 Porta Ripado Freijo",
+          "preco": 514.0,
+          "vendedor": "COLIBRI",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "painel bancada tv",
+      "total_resultados": 1177,
+      "meus": [],
+      "concorrentes": [
+        {
+          "posicao": 6,
+          "titulo": "Rack Bancada Com Painel Ripado Tv Ate 65 1,80m Panama",
+          "preco": 586.81,
+          "vendedor": "CAEMMUN",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 7,
+          "titulo": "Painel Bancada Suspensa Lisboa 190cm Tv Ate 60 Ripado",
+          "preco": 467.54,
+          "vendedor": "INOVA MOVEIS",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 46,
+          "titulo": "Estante Rack Painel Sala Tv 50 Home Bancada Mali Carvalho",
+          "preco": 469.2,
+          "vendedor": "MAXI DO BRASIL",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "mesa dobravel 70x70",
+      "total_resultados": 617,
+      "meus": [],
+      "concorrentes": [
+        {
+          "posicao": 6,
+          "titulo": "Jogos De Mesa Bar Britz 70x70 Com 4 Cadeiras Imbuia",
+          "preco": 409.8,
+          "vendedor": "MOVEIS BRITZ"
+        },
+        {
+          "posicao": 9,
+          "titulo": "Mesa Dobravel Madeira Macica Pinus 70x70cm Mel",
+          "preco": 227.9,
+          "vendedor": "KASALUGA",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 39,
+          "titulo": "Jogo Mesa Dobravel Tabaco 4 Cadeiras Madeira Naval 70x70",
+          "preco": 544.36,
+          "vendedor": "MAXI DO BRASIL",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "mesa bistro dobravel madeira macica",
+      "total_resultados": 329,
+      "meus": [],
+      "concorrentes": [
+        {
+          "posicao": 6,
+          "titulo": "Mesa Bistro Dobravel 55x99cm Madeira Macica Tabaco",
+          "preco": 170.72,
+          "vendedor": "MAXI BRASIL",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 9,
+          "titulo": "Conjunto Mesa Bistro Redonda 2 Cadeiras Dobraveis Mel",
+          "preco": 387.96,
+          "vendedor": "DTE STORE",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 28,
+          "titulo": "Mesa Bistro Dobravel Redonda Madeira Macica Tabaco",
+          "preco": 245.99,
+          "vendedor": "MAXI DO BRASIL",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 16,
+          "titulo": "Mesa Bistro Alta Dobravel Madeira Macica Redonda 59cm",
+          "preco": 229.9,
+          "vendedor": "KASALUGA",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "balcao cozinha cooktop 4 bocas",
+      "total_resultados": 761,
+      "meus": [],
+      "concorrentes": [
+        {
+          "posicao": 5,
+          "titulo": "Balcao De Cozinha Cooktop 4/5 Bocas 2 Portas Carvalho/grafite",
+          "preco": 329.0,
+          "vendedor": "MAXI DO BRASIL",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 6,
+          "titulo": "Balcao Com Tampo Forno e Cooktop 4 ou 5 Bocas 75cm Adriana",
+          "preco": 220.4,
+          "vendedor": "AJL MOVEIS",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 3,
+          "titulo": "Balcao Cooktop 5 Bocas Com 2 Nichos Blue Moby Branco",
+          "preco": 264.67,
+          "vendedor": "BLUE MOBY",
+          "frete_gratis": true
+        }
+      ]
+    },
+    {
+      "termo": "aparador off white nature",
+      "total_resultados": 779,
+      "meus": [],
+      "concorrentes": [
+        {
+          "posicao": 2,
+          "titulo": "Buffet Aparador Tucupi Minimalista Pes Metal Dourado",
+          "preco": 575.51,
+          "vendedor": "JB BECHARA",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 3,
+          "titulo": "Aparador Buffet Florence MDF 3 Portas Off White/Nature",
+          "preco": 599.0,
+          "vendedor": "JLB MOVEIS",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 9,
+          "titulo": "Aparador Sala Libano 1 Gaveta Pes Madeira Macica",
+          "preco": 351.13,
+          "vendedor": "BASOTO BRASIL",
+          "frete_gratis": true
+        },
+        {
+          "posicao": 10,
+          "titulo": "Aparador Studio - Imcal Off White/nature",
+          "preco": 590.0,
+          "vendedor": "IMCAL",
+          "frete_gratis": true
+        }
+      ]
+    }
+  ]
+}

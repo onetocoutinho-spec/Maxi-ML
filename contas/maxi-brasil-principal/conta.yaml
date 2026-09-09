@@ -1,0 +1,30 @@
+# Parâmetros operacionais desta conta.
+# O que identifica a conta (user_id, papel) mora em config/clientes.yaml.
+# Aqui ficam só as regras de negócio dela.
+
+parametros:
+  # Margem mínima aceitável — usada em análises de reprecificação.
+  # ATENÇÃO: valor do template, ainda não confirmado para esta conta.
+  margem_minima_percentual: 18
+
+  # Custo médio de frete que você absorve, se aplicável
+  frete_medio: 0
+
+  # Comissão do ML por tipo de anúncio (para cálculo de margem).
+  # Reserva: a comissão REAL varia por categoria e é medida por anúncio
+  # com `python cli.py tarifas maxi-brasil-principal`. Medição vence isto.
+  comissao:
+    gold_special: 0.12   # clássico
+    gold_pro: 0.17       # premium
+
+  # Quantos resultados varrer por palavra-chave (máx. 50 por chamada)
+  top_n_busca: 30
+
+  # Observações que o agente deve levar em conta ao operar esta conta
+  regras_do_negocio: >
+    Conta da própria Maxi do Brasil (fábrica), não de cliente terceiro.
+    Fornece móveis que o Ênio/ShoppLima revende — produto repetido entre as
+    duas contas é fábrica x revenda, não canibalização.
+    Tem campanha de cupom ativa: o desconto não aparece no preço do anúncio,
+    só no checkout, e o orçamento é 100% do vendedor. Ao avaliar margem
+    nesta conta, descontar o cupom do preço de vitrine.

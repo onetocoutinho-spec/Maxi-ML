@@ -1,0 +1,157 @@
+# ============================================================
+# REGRAS DE ALERTA
+# Cada regra pode ser desligada (ativa: false) ou ter o limiar ajustado.
+# Regras marcadas 'critico: true' disparam alerta imediato;
+# as demais entram só no relatório diário.
+# ============================================================
+
+regras:
+
+  concorrente_cruzou_preco:
+    ativa: true
+    critico: true
+    descricao: >
+      Um concorrente VIGIADO ficou mais barato que o anúncio seu com o qual
+      ele foi vinculado. Só dispara para anúncios listados em
+      contas/<slug>/concorrentes.yaml com o campo 'comparar_com' preenchido —
+      comparar com qualquer item da mesma categoria geraria alerta falso em
+      produto sob medida.
+    tolerancia_percentual: 1.0
+
+  meu_preco_caiu_ou_subiu:
+    ativa: true
+    critico: false
+    descricao: "Seu próprio preço mudou desde a última coleta."
+    variacao_minima_percentual: 3.0
+
+  meu_anuncio_mudou:
+    ativa: true
+    critico: true
+    descricao: >
+      Alguma coisa mudou em um anúncio SEU: título, foto de capa, tipo de
+      anúncio, frete, modo de envio, categoria, entrada ou saída do catálogo,
+      qualidade, promoção, infração — ou o anúncio sumiu da conta.
+      Cobre tanto o que o Mercado Livre altera sozinho quanto o que alguém
+      com acesso à conta mexe sem te avisar.
+    queda_de_saude: 0.1
+
+  venda_nova:
+    ativa: true
+    critico: false
+    descricao: "Um anúncio vendeu desde a última leitura."
+
+  concorrente_mexeu:
+    ativa: true
+    critico: true
+    descricao: >
+      Um concorrente conhecido mudou alguma coisa no anúncio DELE desde a
+      rodada anterior: preço, frete grátis, custo do frete, estoque ou
+      status. É o alerta que responde "mexeram em alguma coisa?" — chega
+      na rodada seguinte à mudança.
+    variacao_minima_percentual: 2.0
+    avisar_frete: true
+    avisar_estoque: true
+    # Quando o MESMO vendedor muda a MESMA coisa em vários produtos na mesma
+    # rodada, vira uma mensagem só. Concorrente grande reajusta a tabela
+    # inteira de uma vez; sem isso chegariam vinte mensagens iguais.
+    agrupar_a_partir_de: 4
+
+  estoque_zerado:
+    ativa: true
+    critico: true
+    descricao: "Anúncio ativo ficou com estoque 0."
+
+  estoque_baixo:
+    ativa: true
+    critico: false
+    descricao: "Estoque abaixo do limiar."
+    limiar_unidades: 5
+
+  anuncio_pausado:
+    ativa: true
+    critico: true
+    descricao: "Anúncio saiu de 'active' (pausado, fechado ou sob revisão)."
+
+  queda_de_posicao:
+    ativa: true
+    critico: false
+    descricao: "Seu anúncio caiu na busca para uma palavra-chave monitorada."
+    queda_minima_posicoes: 3
+
+  perdeu_buy_box:
+    ativa: true
+    critico: true
+    descricao: "Você deixou de ser o vencedor do catálogo (buy box)."
+
+  buy_box_no_fio:
+    ativa: true
+    critico: false
+    descricao: >
+      Você ainda tem o buy box, mas com pouca folga de preço. Aviso
+      antecipado: dá tempo de decidir com calma em vez de reagir depois
+      de perder.
+    margem_percentual: 3.0
+
+  venda_travada:
+    ativa: true
+    critico: false
+    descricao: "Anúncio que vendia parou de vender no período."
+    dias_sem_venda: 7
+
+  reputacao_caiu:
+    ativa: true
+    critico: true
+    descricao: "Cor do termômetro de reputação da conta piorou."
+
+  concorrente_novo_no_topo:
+    ativa: true
+    critico: false
+    descricao: "Apareceu um vendedor novo no top N da palavra-chave."
+    top_n: 10
+
+  promocao_liberada:
+    ativa: true
+    critico: true
+    descricao: >
+      O Mercado Livre liberou uma campanha para um anúncio seu e ela ainda
+      não foi aceita. O alerta traz o preço da campanha comparado com o piso
+      do anúncio: a pergunta nesse momento não é 'existe promoção?', é 'dá
+      para aceitar?'. Depende de custo cadastrado — sem planilha de custo o
+      aviso chega, mas sem veredito.
+      Só campanha nova entra; as que já estavam abertas não repetem.
+
+  cupom_novo:
+    ativa: true
+    critico: true
+    descricao: >
+      Apareceu uma campanha de CUPOM na conta que não existia na leitura
+      anterior. Cupom é criado no aplicativo em três toques e não altera o
+      preço de anúncio nenhum — nada no relatório denuncia que ele existe.
+      O aviso traz o teto, quantos usos ele paga e lembra que o Mercado
+      Livre não co-participa: o orçamento é 100% do vendedor.
+
+  cupom_queimando:
+    ativa: true
+    critico: true
+    descricao: >
+      O orçamento de uma campanha de cupom cruzou uma das faixas de consumo,
+      ou queimou muitos usos de uma rodada para a outra. Quando o teto acaba,
+      já acabou — este é o único aviso que chega antes.
+    faixas_percentuais: [50, 80, 100]
+    usos_por_rodada: 10
+    horas_entre_avisos: 12
+
+  cupom_fura_o_piso:
+    ativa: true
+    critico: true
+    descricao: >
+      Um anúncio que participa da campanha de cupom fica abaixo do piso
+      DEPOIS do desconto. Na vitrine ele parece saudável, porque o cupom só
+      é aplicado no checkout. Depende de custo cadastrado.
+
+  canibalizacao_interna:
+    ativa: true
+    critico: false
+    descricao: >
+      Duas contas do MESMO cliente aparecem na mesma palavra-chave
+      com preços diferentes. Só avalia clientes com coordenar_preco: true.

@@ -1,0 +1,42 @@
+{
+  "conta": "enio-toldos-principal",
+  "medido_em": "2026-08-27T01:30:00+00:00",
+  "observacao": "Medido no Chrome do usuario, sessao logada. Posicao VISUAL na pagina 1 (patrocinados contam, porque e o que o comprador ve). Contagem manual a partir do texto da pagina.",
+  "termos": [
+    {
+      "termo": "toldo policarbonato pergolado",
+      "total_resultados": 249,
+      "meus": [
+        {"item_id": "MLB4693629595", "posicao": 18, "preco": 890.99},
+        {"item_id": "MLB6887673448", "posicao": 20, "preco": 890.99},
+        {"item_id": "MLB4722895661", "posicao": 22, "preco": 1490.00},
+        {"item_id": "MLB4719594491", "posicao": 24, "preco": 619.99}
+      ],
+      "concorrentes": [
+        {"posicao": 6, "titulo": "Kit Toldos Pergolado 2,00 X 6,00 Policarbonato Alveolar 4mm", "preco": 1100.00, "vendedor": "POLY SHEET"},
+        {"posicao": 7, "titulo": "Kit Toldo Pergolado 3,50 X 3,50 Policarbonato Alveolar 4mm", "preco": 1354.00, "vendedor": "POLY SHEET"},
+        {"posicao": 8, "titulo": "Toldo Skyiflex Policarbonato 385x100cm Tipo Pergolado Preto", "preco": 1648.00, "vendedor": "SKYIFLEX", "frete_gratis": true},
+        {"posicao": 9, "titulo": "Kit Toldos Pergolado 7,00 X 2,00 Policarbonato Alveolar 4mm", "preco": 1162.00, "vendedor": "POLY SHEET"},
+        {"posicao": 10, "titulo": "Toldo Skyiflex Policarbonato 230x100cm Tipo Pergolado Fume", "preco": 1067.00, "vendedor": "SKYIFLEX", "frete_gratis": true},
+        {"posicao": 11, "titulo": "Kit Toldos Pergolado 3,00 X 6,00 Policarbonato Alveolar 4mm", "preco": 1528.00, "vendedor": "POLY SHEET"},
+        {"posicao": 12, "titulo": "Toldo Skyiflex Policarbonato 155x100cm Tipo Pergolado Fume", "preco": 693.00, "vendedor": "SKYIFLEX", "frete_gratis": true},
+        {"posicao": 17, "titulo": "Kit Toldos Pergolado 3,50 X 4,50 Policarbonato Alveolar 6mm", "preco": 2053.00, "vendedor": "POLY SHEET"},
+        {"posicao": 23, "titulo": "Kit Toldo Pergolado 3,00 X 3,00 Policarbonato Alveolar 4mm", "preco": 984.30, "vendedor": "PLAZIT POLYGAL"}
+      ]
+    },
+    {
+      "termo": "toldo policarbonato janela porta",
+      "total_resultados": 963,
+      "meus": [
+        {"item_id": "MLB4693629595", "posicao": 56, "preco": 890.99}
+      ],
+      "concorrentes": [
+        {"posicao": 5, "titulo": "Toldo Policarbonato Modular 200x70 Cm Cobertura Porta Janela", "preco": 270.92, "vendedor": "PLASMOVE"},
+        {"posicao": 6, "titulo": "Toldo Policarbonato Modular 120x70cm Cobertura Porta Janela", "preco": 172.00, "vendedor": "PLASMOVE", "frete_gratis": true},
+        {"posicao": 7, "titulo": "Toldo Policarbonato 1,00x0,50 Mao Francesa", "preco": 222.68, "vendedor": "MEGA TOOLS", "frete_gratis": true},
+        {"posicao": 8, "titulo": "Toldo de Policarbonato Preto 120x60 para Porta e Janela UV", "preco": 196.10, "vendedor": "WINDA", "frete_gratis": true},
+        {"posicao": 11, "titulo": "Toldo Modular Policarbonato 100cm X 70cm", "preco": 199.44, "vendedor": "LUMINARTECH por Gaya", "frete_gratis": true}
+      ]
+    }
+  ]
+}

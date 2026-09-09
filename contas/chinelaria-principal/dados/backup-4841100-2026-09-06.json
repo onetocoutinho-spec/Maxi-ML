@@ -1,0 +1,2534 @@
+{
+ "MLB7584944614": {
+  "id": "MLB7584944614",
+  "site_id": "MLB",
+  "title": "Actvitta Australia 4841.100 Marrom-claro 34 Br",
+  "family_name": "Actvitta Australia 4841.100",
+  "family_id": 139487076766676,
+  "seller_id": 2332812759,
+  "category_id": "MLB273770",
+  "user_product_id": "MLBU5072039297",
+  "official_store_id": null,
+  "price": 226.9,
+  "base_price": 226.9,
+  "original_price": null,
+  "inventory_id": null,
+  "currency_id": "BRL",
+  "initial_quantity": 1,
+  "available_quantity": 1,
+  "sold_quantity": 0,
+  "sale_terms": [],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_special",
+  "start_time": "2026-09-03T15:19:19.206Z",
+  "stop_time": "2046-08-29T04:00:00.000Z",
+  "end_time": "2046-08-29T04:00:00.000Z",
+  "expiration_time": "2026-11-22T15:19:20.164Z",
+  "condition": "new",
+  "permalink": "https://produto.mercadolivre.com.br/MLB-7584944614-actvitta-australia-4841100-marrom-claro-34-br-_JM",
+  "thumbnail_id": "725394-MLB117139836455_092026",
+  "thumbnail": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-I.jpg",
+  "pictures": [
+   {
+    "id": "725394-MLB117139836455_092026",
+    "url": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "size": "500x280",
+    "max_size": "1200x673",
+    "quality": ""
+   },
+   {
+    "id": "791780-MLB115689977854_092026",
+    "url": "http://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "640466-MLB115688983454_092026",
+    "url": "http://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "831704-MLB117139161641_092026",
+    "url": "http://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "832919-MLB117139660931_092026",
+    "url": "http://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "size": "500x277",
+    "max_size": "1200x667",
+    "quality": ""
+   },
+   {
+    "id": "813956-MLB115689568018_092026",
+    "url": "http://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "630699-MLB115689304256_092026",
+    "url": "http://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "944842-MLB115689859822_092026",
+    "url": "http://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   }
+  ],
+  "video_id": null,
+  "descriptions": [],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+   "mode": "me2",
+   "methods": [],
+   "tags": [
+    "mandatory_free_shipping"
+   ],
+   "dimensions": null,
+   "local_pick_up": false,
+   "free_shipping": true,
+   "logistic_type": "drop_off",
+   "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+   "comment": "Galeria Porecatu Referencia: Ao lado da Farmácia Droga Raia",
+   "address_line": "Avenida Brasil 5018",
+   "zip_code": "15500051",
+   "city": {
+    "id": "QlItU1BWb3R1cG9yYW5nYQ",
+    "name": "Votuporanga"
+   },
+   "state": {
+    "id": "BR-SP",
+    "name": "São Paulo"
+   },
+   "country": {
+    "id": "BR",
+    "name": "Brasil"
+   },
+   "search_location": {
+    "neighborhood": {
+     "id": "TVhYSmFyZGltIFPDo28gSnVkYXMgVGFkZXVUV5",
+     "name": "Jardim São Judas Tadeu"
+    },
+    "city": {
+     "id": "TVhYVm90dXBvcmFuZ2FUVXhDVUZOQlQwODVOM",
+     "name": "Votuporanga"
+    },
+    "state": {
+     "id": "TUxCUFNBT085N2E4",
+     "name": "São Paulo"
+    }
+   },
+   "latitude": -20.407955,
+   "longitude": -49.9778402,
+   "id": 1481297087
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": {
+   "latitude": -20.407955,
+   "longitude": -49.9778402
+  },
+  "coverage_areas": [],
+  "attributes": [
+   {
+    "id": "BRAND",
+    "name": "Marca",
+    "value_id": null,
+    "value_name": "Actvitta",
+    "values": [
+     {
+      "id": null,
+      "name": "Actvitta",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "COLOR",
+    "name": "Cor",
+    "value_id": "283154",
+    "value_name": "Marrom-claro",
+    "values": [
+     {
+      "id": "283154",
+      "name": "Marrom-claro",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "FOOTWEAR_TYPE",
+    "name": "Tipo de calçado",
+    "value_id": "517586",
+    "value_name": "Chinelo",
+    "values": [
+     {
+      "id": "517586",
+      "name": "Chinelo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GENDER",
+    "name": "Gênero",
+    "value_id": "339665",
+    "value_name": "Feminino",
+    "values": [
+     {
+      "id": "339665",
+      "name": "Feminino",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GTIN",
+    "name": "Código universal de produto",
+    "value_id": null,
+    "value_name": "7900407637584",
+    "values": [
+     {
+      "id": null,
+      "name": "7900407637584",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "ITEM_CONDITION",
+    "name": "Condição do item",
+    "value_id": "2230284",
+    "value_name": "Novo",
+    "values": [
+     {
+      "id": "2230284",
+      "name": "Novo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MAIN_COLOR",
+    "name": "Cor principal",
+    "value_id": "2450291",
+    "value_name": "Marrom",
+    "values": [
+     {
+      "id": "2450291",
+      "name": "Marrom",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MODEL",
+    "name": "Modelo",
+    "value_id": null,
+    "value_name": "AUSTRALIA 4841.100",
+    "values": [
+     {
+      "id": null,
+      "name": "AUSTRALIA 4841.100",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SELLER_PACKAGE_HEIGHT",
+    "name": "Altura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "37 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "37 cm",
+      "struct": {
+       "number": 37,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_LENGTH",
+    "name": "Comprimento da embalagem do vendor",
+    "value_id": null,
+    "value_name": "13 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "13 cm",
+      "struct": {
+       "number": 13,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WEIGHT",
+    "name": "Peso da embalagem do vendor",
+    "value_id": null,
+    "value_name": "740 g",
+    "values": [
+     {
+      "id": null,
+      "name": "740 g",
+      "struct": {
+       "number": 740,
+       "unit": "g"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WIDTH",
+    "name": "Largura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "20 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "20 cm",
+      "struct": {
+       "number": 20,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_SKU",
+    "name": "SKU",
+    "value_id": null,
+    "value_name": "01084934",
+    "values": [
+     {
+      "id": null,
+      "name": "01084934",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE",
+    "name": "Tamanho",
+    "value_id": null,
+    "value_name": "34 BR",
+    "values": [
+     {
+      "id": null,
+      "name": "34 BR",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE_GRID_ID",
+    "name": "ID da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_id"
+   },
+   {
+    "id": "SIZE_GRID_ROW_ID",
+    "name": "ID da linha da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075:1",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075:1",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_row_id"
+   }
+  ],
+  "warnings": [],
+  "listing_source": "",
+  "variations": [],
+  "status": "paused",
+  "sub_status": [
+   "paused_by_seller"
+  ],
+  "tags": [
+   "user_product_listing",
+   "good_quality_thumbnail",
+   "immediate_payment",
+   "cart_eligible"
+  ],
+  "warranty": null,
+  "catalog_product_id": null,
+  "domain_id": "MLB-SANDALS_AND_CLOGS",
+  "seller_custom_field": null,
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2026-09-03T15:19:19.402Z",
+  "last_updated": "2026-09-05T00:17:06.357Z",
+  "health": null,
+  "catalog_listing": false,
+  "item_relations": [],
+  "channels": [
+   "marketplace"
+  ],
+  "_descricao": "Actvitta Australia 4841.100 Marrom-claro 34 Br\nCOMO CONFERIR O SEU NÚMERO\nApoie o pé no chão sobre uma folha e meça do calcanhar até a ponta do dedo\nmais longo.\nFicou entre dois números? Nos chame antes de comprar que conferimos a\nnumeração deste modelo para você.\n\nO QUE VOCÊ RECEBE\n1 par de chinelo Actvitta AUSTRALIA 4841.100, cor Marrom-claro, numeração 34 BR.\nProduto novo.\n\nENVIO\nEnviamos por Mercado Envios com código de rastreio.\n\nChinelaria Leilane Neves - loja física em Votuporanga/SP."
+ },
+ "MLB5183595659": {
+  "id": "MLB5183595659",
+  "site_id": "MLB",
+  "title": "Actvitta Australia 4841.100 Marrom-claro 36 Br",
+  "family_name": "Actvitta Australia 4841.100",
+  "family_id": 139487076766676,
+  "seller_id": 2332812759,
+  "category_id": "MLB273770",
+  "user_product_id": "MLBU5072039363",
+  "official_store_id": null,
+  "price": 226.9,
+  "base_price": 226.9,
+  "original_price": null,
+  "inventory_id": null,
+  "currency_id": "BRL",
+  "initial_quantity": 1,
+  "available_quantity": 1,
+  "sold_quantity": 0,
+  "sale_terms": [],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_special",
+  "start_time": "2026-09-03T15:19:21.661Z",
+  "stop_time": "2046-08-29T04:00:00.000Z",
+  "end_time": "2046-08-29T04:00:00.000Z",
+  "expiration_time": "2026-11-22T15:19:22.592Z",
+  "condition": "new",
+  "permalink": "https://produto.mercadolivre.com.br/MLB-5183595659-actvitta-australia-4841100-marrom-claro-36-br-_JM",
+  "thumbnail_id": "725394-MLB117139836455_092026",
+  "thumbnail": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-I.jpg",
+  "pictures": [
+   {
+    "id": "725394-MLB117139836455_092026",
+    "url": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "size": "500x280",
+    "max_size": "1200x673",
+    "quality": ""
+   },
+   {
+    "id": "791780-MLB115689977854_092026",
+    "url": "http://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "640466-MLB115688983454_092026",
+    "url": "http://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "831704-MLB117139161641_092026",
+    "url": "http://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "832919-MLB117139660931_092026",
+    "url": "http://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "size": "500x277",
+    "max_size": "1200x667",
+    "quality": ""
+   },
+   {
+    "id": "813956-MLB115689568018_092026",
+    "url": "http://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "630699-MLB115689304256_092026",
+    "url": "http://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "944842-MLB115689859822_092026",
+    "url": "http://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   }
+  ],
+  "video_id": null,
+  "descriptions": [],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+   "mode": "me2",
+   "methods": [],
+   "tags": [
+    "mandatory_free_shipping"
+   ],
+   "dimensions": null,
+   "local_pick_up": false,
+   "free_shipping": true,
+   "logistic_type": "drop_off",
+   "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+   "comment": "Galeria Porecatu Referencia: Ao lado da Farmácia Droga Raia",
+   "address_line": "Avenida Brasil 5018",
+   "zip_code": "15500051",
+   "city": {
+    "id": "QlItU1BWb3R1cG9yYW5nYQ",
+    "name": "Votuporanga"
+   },
+   "state": {
+    "id": "BR-SP",
+    "name": "São Paulo"
+   },
+   "country": {
+    "id": "BR",
+    "name": "Brasil"
+   },
+   "search_location": {
+    "neighborhood": {
+     "id": "TVhYSmFyZGltIFPDo28gSnVkYXMgVGFkZXVUV5",
+     "name": "Jardim São Judas Tadeu"
+    },
+    "city": {
+     "id": "TVhYVm90dXBvcmFuZ2FUVXhDVUZOQlQwODVOM",
+     "name": "Votuporanga"
+    },
+    "state": {
+     "id": "TUxCUFNBT085N2E4",
+     "name": "São Paulo"
+    }
+   },
+   "latitude": -20.407955,
+   "longitude": -49.9778402,
+   "id": 1481297087
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": {
+   "latitude": -20.407955,
+   "longitude": -49.9778402
+  },
+  "coverage_areas": [],
+  "attributes": [
+   {
+    "id": "BRAND",
+    "name": "Marca",
+    "value_id": null,
+    "value_name": "Actvitta",
+    "values": [
+     {
+      "id": null,
+      "name": "Actvitta",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "COLOR",
+    "name": "Cor",
+    "value_id": "283154",
+    "value_name": "Marrom-claro",
+    "values": [
+     {
+      "id": "283154",
+      "name": "Marrom-claro",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "FOOTWEAR_TYPE",
+    "name": "Tipo de calçado",
+    "value_id": "517586",
+    "value_name": "Chinelo",
+    "values": [
+     {
+      "id": "517586",
+      "name": "Chinelo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GENDER",
+    "name": "Gênero",
+    "value_id": "339665",
+    "value_name": "Feminino",
+    "values": [
+     {
+      "id": "339665",
+      "name": "Feminino",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GTIN",
+    "name": "Código universal de produto",
+    "value_id": null,
+    "value_name": "7900407637607",
+    "values": [
+     {
+      "id": null,
+      "name": "7900407637607",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "ITEM_CONDITION",
+    "name": "Condição do item",
+    "value_id": "2230284",
+    "value_name": "Novo",
+    "values": [
+     {
+      "id": "2230284",
+      "name": "Novo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MAIN_COLOR",
+    "name": "Cor principal",
+    "value_id": "2450291",
+    "value_name": "Marrom",
+    "values": [
+     {
+      "id": "2450291",
+      "name": "Marrom",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MODEL",
+    "name": "Modelo",
+    "value_id": null,
+    "value_name": "AUSTRALIA 4841.100",
+    "values": [
+     {
+      "id": null,
+      "name": "AUSTRALIA 4841.100",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SELLER_PACKAGE_HEIGHT",
+    "name": "Altura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "39 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "39 cm",
+      "struct": {
+       "number": 39,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_LENGTH",
+    "name": "Comprimento da embalagem do vendor",
+    "value_id": null,
+    "value_name": "13 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "13 cm",
+      "struct": {
+       "number": 13,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WEIGHT",
+    "name": "Peso da embalagem do vendor",
+    "value_id": null,
+    "value_name": "740 g",
+    "values": [
+     {
+      "id": null,
+      "name": "740 g",
+      "struct": {
+       "number": 740,
+       "unit": "g"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WIDTH",
+    "name": "Largura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "23 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "23 cm",
+      "struct": {
+       "number": 23,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_SKU",
+    "name": "SKU",
+    "value_id": null,
+    "value_name": "01084936",
+    "values": [
+     {
+      "id": null,
+      "name": "01084936",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE",
+    "name": "Tamanho",
+    "value_id": null,
+    "value_name": "36 BR",
+    "values": [
+     {
+      "id": null,
+      "name": "36 BR",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE_GRID_ID",
+    "name": "ID da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_id"
+   },
+   {
+    "id": "SIZE_GRID_ROW_ID",
+    "name": "ID da linha da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075:3",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075:3",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_row_id"
+   }
+  ],
+  "warnings": [],
+  "listing_source": "",
+  "variations": [],
+  "status": "paused",
+  "sub_status": [
+   "paused_by_seller"
+  ],
+  "tags": [
+   "good_quality_thumbnail",
+   "user_product_listing",
+   "immediate_payment",
+   "cart_eligible"
+  ],
+  "warranty": null,
+  "catalog_product_id": null,
+  "domain_id": "MLB-SANDALS_AND_CLOGS",
+  "seller_custom_field": null,
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2026-09-03T15:19:21.811Z",
+  "last_updated": "2026-09-05T00:22:24.315Z",
+  "health": null,
+  "catalog_listing": false,
+  "item_relations": [],
+  "channels": [
+   "marketplace"
+  ],
+  "_descricao": "Actvitta Australia 4841.100 Marrom-claro 36 Br\n\nCOMO CONFERIR O SEU NÚMERO\nApoie o pé no chão sobre uma folha e meça do calcanhar até a ponta do dedo\nmais longo.\nFicou entre dois números? Nos chame antes de comprar que conferimos a\nnumeração deste modelo para você.\n\nO QUE VOCÊ RECEBE\n1 par de chinelo Actvitta AUSTRALIA 4841.100, cor Marrom-claro, numeração 36 BR.\nProduto novo.\n\nENVIO\nEnviamos por Mercado Envios com código de rastreio.\n\nChinelaria Leilane Neves - loja física em Votuporanga/SP."
+ },
+ "MLB5183582935": {
+  "id": "MLB5183582935",
+  "site_id": "MLB",
+  "title": "Actvitta Australia 4841.100 Marrom-claro 37 Br",
+  "family_name": "Actvitta Australia 4841.100",
+  "family_id": 139487076766676,
+  "seller_id": 2332812759,
+  "category_id": "MLB273770",
+  "user_product_id": "MLBU5072040815",
+  "official_store_id": null,
+  "price": 226.9,
+  "base_price": 226.9,
+  "original_price": null,
+  "inventory_id": null,
+  "currency_id": "BRL",
+  "initial_quantity": 1,
+  "available_quantity": 1,
+  "sold_quantity": 0,
+  "sale_terms": [],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_special",
+  "start_time": "2026-09-03T15:19:24.103Z",
+  "stop_time": "2046-08-29T04:00:00.000Z",
+  "end_time": "2046-08-29T04:00:00.000Z",
+  "expiration_time": "2026-11-22T15:19:25.043Z",
+  "condition": "new",
+  "permalink": "https://produto.mercadolivre.com.br/MLB-5183582935-actvitta-australia-4841100-marrom-claro-37-br-_JM",
+  "thumbnail_id": "725394-MLB117139836455_092026",
+  "thumbnail": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-I.jpg",
+  "pictures": [
+   {
+    "id": "725394-MLB117139836455_092026",
+    "url": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "size": "500x280",
+    "max_size": "1200x673",
+    "quality": ""
+   },
+   {
+    "id": "791780-MLB115689977854_092026",
+    "url": "http://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "640466-MLB115688983454_092026",
+    "url": "http://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "831704-MLB117139161641_092026",
+    "url": "http://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "832919-MLB117139660931_092026",
+    "url": "http://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "size": "500x277",
+    "max_size": "1200x667",
+    "quality": ""
+   },
+   {
+    "id": "813956-MLB115689568018_092026",
+    "url": "http://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "630699-MLB115689304256_092026",
+    "url": "http://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "944842-MLB115689859822_092026",
+    "url": "http://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   }
+  ],
+  "video_id": null,
+  "descriptions": [],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+   "mode": "me2",
+   "methods": [],
+   "tags": [
+    "mandatory_free_shipping"
+   ],
+   "dimensions": null,
+   "local_pick_up": false,
+   "free_shipping": true,
+   "logistic_type": "drop_off",
+   "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+   "comment": "Galeria Porecatu Referencia: Ao lado da Farmácia Droga Raia",
+   "address_line": "Avenida Brasil 5018",
+   "zip_code": "15500051",
+   "city": {
+    "id": "QlItU1BWb3R1cG9yYW5nYQ",
+    "name": "Votuporanga"
+   },
+   "state": {
+    "id": "BR-SP",
+    "name": "São Paulo"
+   },
+   "country": {
+    "id": "BR",
+    "name": "Brasil"
+   },
+   "search_location": {
+    "neighborhood": {
+     "id": "TVhYSmFyZGltIFPDo28gSnVkYXMgVGFkZXVUV5",
+     "name": "Jardim São Judas Tadeu"
+    },
+    "city": {
+     "id": "TVhYVm90dXBvcmFuZ2FUVXhDVUZOQlQwODVOM",
+     "name": "Votuporanga"
+    },
+    "state": {
+     "id": "TUxCUFNBT085N2E4",
+     "name": "São Paulo"
+    }
+   },
+   "latitude": -20.407955,
+   "longitude": -49.9778402,
+   "id": 1481297087
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": {
+   "latitude": -20.407955,
+   "longitude": -49.9778402
+  },
+  "coverage_areas": [],
+  "attributes": [
+   {
+    "id": "BRAND",
+    "name": "Marca",
+    "value_id": null,
+    "value_name": "Actvitta",
+    "values": [
+     {
+      "id": null,
+      "name": "Actvitta",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "COLOR",
+    "name": "Cor",
+    "value_id": "283154",
+    "value_name": "Marrom-claro",
+    "values": [
+     {
+      "id": "283154",
+      "name": "Marrom-claro",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "FOOTWEAR_TYPE",
+    "name": "Tipo de calçado",
+    "value_id": "517586",
+    "value_name": "Chinelo",
+    "values": [
+     {
+      "id": "517586",
+      "name": "Chinelo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GENDER",
+    "name": "Gênero",
+    "value_id": "339665",
+    "value_name": "Feminino",
+    "values": [
+     {
+      "id": "339665",
+      "name": "Feminino",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GTIN",
+    "name": "Código universal de produto",
+    "value_id": null,
+    "value_name": "7900407637621",
+    "values": [
+     {
+      "id": null,
+      "name": "7900407637621",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "ITEM_CONDITION",
+    "name": "Condição do item",
+    "value_id": "2230284",
+    "value_name": "Novo",
+    "values": [
+     {
+      "id": "2230284",
+      "name": "Novo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MAIN_COLOR",
+    "name": "Cor principal",
+    "value_id": "2450291",
+    "value_name": "Marrom",
+    "values": [
+     {
+      "id": "2450291",
+      "name": "Marrom",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MODEL",
+    "name": "Modelo",
+    "value_id": null,
+    "value_name": "AUSTRALIA 4841.100",
+    "values": [
+     {
+      "id": null,
+      "name": "AUSTRALIA 4841.100",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SELLER_PACKAGE_HEIGHT",
+    "name": "Altura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "37 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "37 cm",
+      "struct": {
+       "number": 37,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_LENGTH",
+    "name": "Comprimento da embalagem do vendor",
+    "value_id": null,
+    "value_name": "12 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "12 cm",
+      "struct": {
+       "number": 12,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WEIGHT",
+    "name": "Peso da embalagem do vendor",
+    "value_id": null,
+    "value_name": "740 g",
+    "values": [
+     {
+      "id": null,
+      "name": "740 g",
+      "struct": {
+       "number": 740,
+       "unit": "g"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WIDTH",
+    "name": "Largura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "16 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "16 cm",
+      "struct": {
+       "number": 16,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_SKU",
+    "name": "SKU",
+    "value_id": null,
+    "value_name": "01084937",
+    "values": [
+     {
+      "id": null,
+      "name": "01084937",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE",
+    "name": "Tamanho",
+    "value_id": null,
+    "value_name": "37 BR",
+    "values": [
+     {
+      "id": null,
+      "name": "37 BR",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE_GRID_ID",
+    "name": "ID da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_id"
+   },
+   {
+    "id": "SIZE_GRID_ROW_ID",
+    "name": "ID da linha da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075:4",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075:4",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_row_id"
+   }
+  ],
+  "warnings": [],
+  "listing_source": "",
+  "variations": [],
+  "status": "paused",
+  "sub_status": [
+   "paused_by_seller"
+  ],
+  "tags": [
+   "user_product_listing",
+   "good_quality_thumbnail",
+   "immediate_payment",
+   "cart_eligible"
+  ],
+  "warranty": null,
+  "catalog_product_id": null,
+  "domain_id": "MLB-SANDALS_AND_CLOGS",
+  "seller_custom_field": null,
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2026-09-03T15:19:24.285Z",
+  "last_updated": "2026-09-05T00:22:48.573Z",
+  "health": null,
+  "catalog_listing": false,
+  "item_relations": [],
+  "channels": [
+   "marketplace"
+  ],
+  "_descricao": "Actvitta Australia 4841.100 Marrom-claro 37 Br\n\nCOMO CONFERIR O SEU NÚMERO\nApoie o pé no chão sobre uma folha e meça do calcanhar até a ponta do dedo\nmais longo.\nFicou entre dois números? Nos chame antes de comprar que conferimos a\nnumeração deste modelo para você.\n\nO QUE VOCÊ RECEBE\n1 par de chinelo Actvitta AUSTRALIA 4841.100, cor Marrom-claro, numeração 37 BR.\nProduto novo.\n\nENVIO\nEnviamos por Mercado Envios com código de rastreio.\n\nChinelaria Leilane Neves - loja física em Votuporanga/SP."
+ },
+ "MLB7584944714": {
+  "id": "MLB7584944714",
+  "site_id": "MLB",
+  "title": "Actvitta Australia 4841.100 Marrom-claro 38 Br",
+  "family_name": "Actvitta Australia 4841.100",
+  "family_id": 139487076766676,
+  "seller_id": 2332812759,
+  "category_id": "MLB273770",
+  "user_product_id": "MLBU5072039495",
+  "official_store_id": null,
+  "price": 226.9,
+  "base_price": 226.9,
+  "original_price": null,
+  "inventory_id": null,
+  "currency_id": "BRL",
+  "initial_quantity": 1,
+  "available_quantity": 1,
+  "sold_quantity": 0,
+  "sale_terms": [],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_special",
+  "start_time": "2026-09-03T15:19:26.575Z",
+  "stop_time": "2046-08-29T04:00:00.000Z",
+  "end_time": "2046-08-29T04:00:00.000Z",
+  "expiration_time": "2026-11-22T15:19:27.548Z",
+  "condition": "new",
+  "permalink": "https://produto.mercadolivre.com.br/MLB-7584944714-actvitta-australia-4841100-marrom-claro-38-br-_JM",
+  "thumbnail_id": "725394-MLB117139836455_092026",
+  "thumbnail": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-I.jpg",
+  "pictures": [
+   {
+    "id": "725394-MLB117139836455_092026",
+    "url": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "size": "500x280",
+    "max_size": "1200x673",
+    "quality": ""
+   },
+   {
+    "id": "791780-MLB115689977854_092026",
+    "url": "http://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "640466-MLB115688983454_092026",
+    "url": "http://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "831704-MLB117139161641_092026",
+    "url": "http://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "832919-MLB117139660931_092026",
+    "url": "http://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "size": "500x277",
+    "max_size": "1200x667",
+    "quality": ""
+   },
+   {
+    "id": "813956-MLB115689568018_092026",
+    "url": "http://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "630699-MLB115689304256_092026",
+    "url": "http://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "944842-MLB115689859822_092026",
+    "url": "http://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   }
+  ],
+  "video_id": null,
+  "descriptions": [],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+   "mode": "me2",
+   "methods": [],
+   "tags": [
+    "mandatory_free_shipping"
+   ],
+   "dimensions": null,
+   "local_pick_up": false,
+   "free_shipping": true,
+   "logistic_type": "drop_off",
+   "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+   "comment": "Galeria Porecatu Referencia: Ao lado da Farmácia Droga Raia",
+   "address_line": "Avenida Brasil 5018",
+   "zip_code": "15500051",
+   "city": {
+    "id": "QlItU1BWb3R1cG9yYW5nYQ",
+    "name": "Votuporanga"
+   },
+   "state": {
+    "id": "BR-SP",
+    "name": "São Paulo"
+   },
+   "country": {
+    "id": "BR",
+    "name": "Brasil"
+   },
+   "search_location": {
+    "neighborhood": {
+     "id": "TVhYSmFyZGltIFPDo28gSnVkYXMgVGFkZXVUV5",
+     "name": "Jardim São Judas Tadeu"
+    },
+    "city": {
+     "id": "TVhYVm90dXBvcmFuZ2FUVXhDVUZOQlQwODVOM",
+     "name": "Votuporanga"
+    },
+    "state": {
+     "id": "TUxCUFNBT085N2E4",
+     "name": "São Paulo"
+    }
+   },
+   "latitude": -20.407955,
+   "longitude": -49.9778402,
+   "id": 1481297087
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": {
+   "latitude": -20.407955,
+   "longitude": -49.9778402
+  },
+  "coverage_areas": [],
+  "attributes": [
+   {
+    "id": "BRAND",
+    "name": "Marca",
+    "value_id": null,
+    "value_name": "Actvitta",
+    "values": [
+     {
+      "id": null,
+      "name": "Actvitta",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "COLOR",
+    "name": "Cor",
+    "value_id": "283154",
+    "value_name": "Marrom-claro",
+    "values": [
+     {
+      "id": "283154",
+      "name": "Marrom-claro",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "FOOTWEAR_TYPE",
+    "name": "Tipo de calçado",
+    "value_id": "517586",
+    "value_name": "Chinelo",
+    "values": [
+     {
+      "id": "517586",
+      "name": "Chinelo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GENDER",
+    "name": "Gênero",
+    "value_id": "339665",
+    "value_name": "Feminino",
+    "values": [
+     {
+      "id": "339665",
+      "name": "Feminino",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GTIN",
+    "name": "Código universal de produto",
+    "value_id": null,
+    "value_name": "7900407637645",
+    "values": [
+     {
+      "id": null,
+      "name": "7900407637645",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "ITEM_CONDITION",
+    "name": "Condição do item",
+    "value_id": "2230284",
+    "value_name": "Novo",
+    "values": [
+     {
+      "id": "2230284",
+      "name": "Novo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MAIN_COLOR",
+    "name": "Cor principal",
+    "value_id": "2450291",
+    "value_name": "Marrom",
+    "values": [
+     {
+      "id": "2450291",
+      "name": "Marrom",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MODEL",
+    "name": "Modelo",
+    "value_id": null,
+    "value_name": "AUSTRALIA 4841.100",
+    "values": [
+     {
+      "id": null,
+      "name": "AUSTRALIA 4841.100",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SELLER_PACKAGE_HEIGHT",
+    "name": "Altura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "37 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "37 cm",
+      "struct": {
+       "number": 37,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_LENGTH",
+    "name": "Comprimento da embalagem do vendor",
+    "value_id": null,
+    "value_name": "12 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "12 cm",
+      "struct": {
+       "number": 12,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WEIGHT",
+    "name": "Peso da embalagem do vendor",
+    "value_id": null,
+    "value_name": "740 g",
+    "values": [
+     {
+      "id": null,
+      "name": "740 g",
+      "struct": {
+       "number": 740,
+       "unit": "g"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WIDTH",
+    "name": "Largura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "16 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "16 cm",
+      "struct": {
+       "number": 16,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_SKU",
+    "name": "SKU",
+    "value_id": null,
+    "value_name": "01084938",
+    "values": [
+     {
+      "id": null,
+      "name": "01084938",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE",
+    "name": "Tamanho",
+    "value_id": null,
+    "value_name": "38 BR",
+    "values": [
+     {
+      "id": null,
+      "name": "38 BR",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE_GRID_ID",
+    "name": "ID da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_id"
+   },
+   {
+    "id": "SIZE_GRID_ROW_ID",
+    "name": "ID da linha da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075:5",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075:5",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_row_id"
+   }
+  ],
+  "warnings": [],
+  "listing_source": "",
+  "variations": [],
+  "status": "paused",
+  "sub_status": [
+   "paused_by_seller"
+  ],
+  "tags": [
+   "good_quality_thumbnail",
+   "user_product_listing",
+   "immediate_payment",
+   "cart_eligible"
+  ],
+  "warranty": null,
+  "catalog_product_id": null,
+  "domain_id": "MLB-SANDALS_AND_CLOGS",
+  "seller_custom_field": null,
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2026-09-03T15:19:26.751Z",
+  "last_updated": "2026-09-05T00:17:04.826Z",
+  "health": null,
+  "catalog_listing": false,
+  "item_relations": [],
+  "channels": [
+   "marketplace"
+  ],
+  "_descricao": "Actvitta Australia 4841.100 Marrom-claro 38 Br\nCOMO CONFERIR O SEU NÚMERO\nApoie o pé no chão sobre uma folha e meça do calcanhar até a ponta do dedo\nmais longo.\nFicou entre dois números? Nos chame antes de comprar que conferimos a\nnumeração deste modelo para você.\n\nO QUE VOCÊ RECEBE\n1 par de chinelo Actvitta AUSTRALIA 4841.100, cor Marrom-claro, numeração 38 BR.\nProduto novo.\n\nENVIO\nEnviamos por Mercado Envios com código de rastreio.\n\nChinelaria Leilane Neves - loja física em Votuporanga/SP."
+ },
+ "MLB7584944738": {
+  "id": "MLB7584944738",
+  "site_id": "MLB",
+  "title": "Actvitta Australia 4841.100 Marrom-claro 39 Br",
+  "family_name": "Actvitta Australia 4841.100",
+  "family_id": 139487076766676,
+  "seller_id": 2332812759,
+  "category_id": "MLB273770",
+  "user_product_id": "MLBU5072039559",
+  "official_store_id": null,
+  "price": 226.9,
+  "base_price": 226.9,
+  "original_price": null,
+  "inventory_id": null,
+  "currency_id": "BRL",
+  "initial_quantity": 2,
+  "available_quantity": 2,
+  "sold_quantity": 0,
+  "sale_terms": [],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_special",
+  "start_time": "2026-09-03T15:19:29.043Z",
+  "stop_time": "2046-08-29T04:00:00.000Z",
+  "end_time": "2046-08-29T04:00:00.000Z",
+  "expiration_time": "2026-11-22T15:19:29.958Z",
+  "condition": "new",
+  "permalink": "https://produto.mercadolivre.com.br/MLB-7584944738-actvitta-australia-4841100-marrom-claro-39-br-_JM",
+  "thumbnail_id": "725394-MLB117139836455_092026",
+  "thumbnail": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-I.jpg",
+  "pictures": [
+   {
+    "id": "725394-MLB117139836455_092026",
+    "url": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "size": "500x280",
+    "max_size": "1200x673",
+    "quality": ""
+   },
+   {
+    "id": "791780-MLB115689977854_092026",
+    "url": "http://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "640466-MLB115688983454_092026",
+    "url": "http://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "831704-MLB117139161641_092026",
+    "url": "http://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "832919-MLB117139660931_092026",
+    "url": "http://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "size": "500x277",
+    "max_size": "1200x667",
+    "quality": ""
+   },
+   {
+    "id": "813956-MLB115689568018_092026",
+    "url": "http://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "630699-MLB115689304256_092026",
+    "url": "http://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "944842-MLB115689859822_092026",
+    "url": "http://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   }
+  ],
+  "video_id": null,
+  "descriptions": [],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+   "mode": "me2",
+   "methods": [],
+   "tags": [
+    "mandatory_free_shipping"
+   ],
+   "dimensions": null,
+   "local_pick_up": false,
+   "free_shipping": true,
+   "logistic_type": "drop_off",
+   "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+   "comment": "Galeria Porecatu Referencia: Ao lado da Farmácia Droga Raia",
+   "address_line": "Avenida Brasil 5018",
+   "zip_code": "15500051",
+   "city": {
+    "id": "QlItU1BWb3R1cG9yYW5nYQ",
+    "name": "Votuporanga"
+   },
+   "state": {
+    "id": "BR-SP",
+    "name": "São Paulo"
+   },
+   "country": {
+    "id": "BR",
+    "name": "Brasil"
+   },
+   "search_location": {
+    "neighborhood": {
+     "id": "TVhYSmFyZGltIFPDo28gSnVkYXMgVGFkZXVUV5",
+     "name": "Jardim São Judas Tadeu"
+    },
+    "city": {
+     "id": "TVhYVm90dXBvcmFuZ2FUVXhDVUZOQlQwODVOM",
+     "name": "Votuporanga"
+    },
+    "state": {
+     "id": "TUxCUFNBT085N2E4",
+     "name": "São Paulo"
+    }
+   },
+   "latitude": -20.407955,
+   "longitude": -49.9778402,
+   "id": 1481297087
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": {
+   "latitude": -20.407955,
+   "longitude": -49.9778402
+  },
+  "coverage_areas": [],
+  "attributes": [
+   {
+    "id": "BRAND",
+    "name": "Marca",
+    "value_id": null,
+    "value_name": "Actvitta",
+    "values": [
+     {
+      "id": null,
+      "name": "Actvitta",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "COLOR",
+    "name": "Cor",
+    "value_id": "283154",
+    "value_name": "Marrom-claro",
+    "values": [
+     {
+      "id": "283154",
+      "name": "Marrom-claro",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "FOOTWEAR_TYPE",
+    "name": "Tipo de calçado",
+    "value_id": "517586",
+    "value_name": "Chinelo",
+    "values": [
+     {
+      "id": "517586",
+      "name": "Chinelo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GENDER",
+    "name": "Gênero",
+    "value_id": "339665",
+    "value_name": "Feminino",
+    "values": [
+     {
+      "id": "339665",
+      "name": "Feminino",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GTIN",
+    "name": "Código universal de produto",
+    "value_id": null,
+    "value_name": "7900407637652",
+    "values": [
+     {
+      "id": null,
+      "name": "7900407637652",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "ITEM_CONDITION",
+    "name": "Condição do item",
+    "value_id": "2230284",
+    "value_name": "Novo",
+    "values": [
+     {
+      "id": "2230284",
+      "name": "Novo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MAIN_COLOR",
+    "name": "Cor principal",
+    "value_id": "2450291",
+    "value_name": "Marrom",
+    "values": [
+     {
+      "id": "2450291",
+      "name": "Marrom",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MODEL",
+    "name": "Modelo",
+    "value_id": null,
+    "value_name": "AUSTRALIA 4841.100",
+    "values": [
+     {
+      "id": null,
+      "name": "AUSTRALIA 4841.100",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SELLER_PACKAGE_HEIGHT",
+    "name": "Altura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "37 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "37 cm",
+      "struct": {
+       "number": 37,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_LENGTH",
+    "name": "Comprimento da embalagem do vendor",
+    "value_id": null,
+    "value_name": "12 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "12 cm",
+      "struct": {
+       "number": 12,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WEIGHT",
+    "name": "Peso da embalagem do vendor",
+    "value_id": null,
+    "value_name": "825 g",
+    "values": [
+     {
+      "id": null,
+      "name": "825 g",
+      "struct": {
+       "number": 825,
+       "unit": "g"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WIDTH",
+    "name": "Largura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "20 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "20 cm",
+      "struct": {
+       "number": 20,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_SKU",
+    "name": "SKU",
+    "value_id": null,
+    "value_name": "01084939",
+    "values": [
+     {
+      "id": null,
+      "name": "01084939",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE",
+    "name": "Tamanho",
+    "value_id": null,
+    "value_name": "39 BR",
+    "values": [
+     {
+      "id": null,
+      "name": "39 BR",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE_GRID_ID",
+    "name": "ID da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_id"
+   },
+   {
+    "id": "SIZE_GRID_ROW_ID",
+    "name": "ID da linha da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075:6",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075:6",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_row_id"
+   }
+  ],
+  "warnings": [],
+  "listing_source": "",
+  "variations": [],
+  "status": "paused",
+  "sub_status": [
+   "paused_by_seller"
+  ],
+  "tags": [
+   "good_quality_thumbnail",
+   "user_product_listing",
+   "immediate_payment",
+   "cart_eligible"
+  ],
+  "warranty": null,
+  "catalog_product_id": null,
+  "domain_id": "MLB-SANDALS_AND_CLOGS",
+  "seller_custom_field": null,
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2026-09-03T15:19:29.218Z",
+  "last_updated": "2026-09-05T00:17:17.568Z",
+  "health": null,
+  "catalog_listing": false,
+  "item_relations": [],
+  "channels": [
+   "marketplace"
+  ],
+  "_descricao": "Actvitta Australia 4841.100 Marrom-claro 39 Br\nCOMO CONFERIR O SEU NÚMERO\nApoie o pé no chão sobre uma folha e meça do calcanhar até a ponta do dedo\nmais longo.\nFicou entre dois números? Nos chame antes de comprar que conferimos a\nnumeração deste modelo para você.\n\nO QUE VOCÊ RECEBE\n1 par de chinelo Actvitta AUSTRALIA 4841.100, cor Marrom-claro, numeração 39 BR.\nProduto novo.\n\nENVIO\nEnviamos por Mercado Envios com código de rastreio.\n\nChinelaria Leilane Neves - loja física em Votuporanga/SP."
+ },
+ "MLB5183583049": {
+  "id": "MLB5183583049",
+  "site_id": "MLB",
+  "title": "Actvitta Australia 4841.100 Marrom-claro 40 Br",
+  "family_name": "Actvitta Australia 4841.100",
+  "family_id": 139487076766676,
+  "seller_id": 2332812759,
+  "category_id": "MLB273770",
+  "user_product_id": "MLBU5072037703",
+  "official_store_id": null,
+  "price": 226.9,
+  "base_price": 226.9,
+  "original_price": null,
+  "inventory_id": null,
+  "currency_id": "BRL",
+  "initial_quantity": 2,
+  "available_quantity": 2,
+  "sold_quantity": 0,
+  "sale_terms": [],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_special",
+  "start_time": "2026-09-03T15:19:31.457Z",
+  "stop_time": "2046-08-29T04:00:00.000Z",
+  "end_time": "2046-08-29T04:00:00.000Z",
+  "expiration_time": "2026-11-22T15:19:32.352Z",
+  "condition": "new",
+  "permalink": "https://produto.mercadolivre.com.br/MLB-5183583049-actvitta-australia-4841100-marrom-claro-40-br-_JM",
+  "thumbnail_id": "725394-MLB117139836455_092026",
+  "thumbnail": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-I.jpg",
+  "pictures": [
+   {
+    "id": "725394-MLB117139836455_092026",
+    "url": "http://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_725394-MLB117139836455_092026-O.jpg",
+    "size": "500x280",
+    "max_size": "1200x673",
+    "quality": ""
+   },
+   {
+    "id": "791780-MLB115689977854_092026",
+    "url": "http://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_791780-MLB115689977854_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "640466-MLB115688983454_092026",
+    "url": "http://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_640466-MLB115688983454_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "831704-MLB117139161641_092026",
+    "url": "http://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_831704-MLB117139161641_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "832919-MLB117139660931_092026",
+    "url": "http://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_832919-MLB117139660931_092026-O.jpg",
+    "size": "500x277",
+    "max_size": "1200x667",
+    "quality": ""
+   },
+   {
+    "id": "813956-MLB115689568018_092026",
+    "url": "http://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_813956-MLB115689568018_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   },
+   {
+    "id": "630699-MLB115689304256_092026",
+    "url": "http://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_630699-MLB115689304256_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1103x1200",
+    "quality": ""
+   },
+   {
+    "id": "944842-MLB115689859822_092026",
+    "url": "http://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "secure_url": "https://http2.mlstatic.com/D_944842-MLB115689859822_092026-O.jpg",
+    "size": "459x500",
+    "max_size": "1102x1200",
+    "quality": ""
+   }
+  ],
+  "video_id": null,
+  "descriptions": [],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+   "mode": "me2",
+   "methods": [],
+   "tags": [
+    "mandatory_free_shipping"
+   ],
+   "dimensions": null,
+   "local_pick_up": false,
+   "free_shipping": true,
+   "logistic_type": "drop_off",
+   "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+   "comment": "Galeria Porecatu Referencia: Ao lado da Farmácia Droga Raia",
+   "address_line": "Avenida Brasil 5018",
+   "zip_code": "15500051",
+   "city": {
+    "id": "QlItU1BWb3R1cG9yYW5nYQ",
+    "name": "Votuporanga"
+   },
+   "state": {
+    "id": "BR-SP",
+    "name": "São Paulo"
+   },
+   "country": {
+    "id": "BR",
+    "name": "Brasil"
+   },
+   "search_location": {
+    "neighborhood": {
+     "id": "TVhYSmFyZGltIFPDo28gSnVkYXMgVGFkZXVUV5",
+     "name": "Jardim São Judas Tadeu"
+    },
+    "city": {
+     "id": "TVhYVm90dXBvcmFuZ2FUVXhDVUZOQlQwODVOM",
+     "name": "Votuporanga"
+    },
+    "state": {
+     "id": "TUxCUFNBT085N2E4",
+     "name": "São Paulo"
+    }
+   },
+   "latitude": -20.407955,
+   "longitude": -49.9778402,
+   "id": 1481297087
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": {
+   "latitude": -20.407955,
+   "longitude": -49.9778402
+  },
+  "coverage_areas": [],
+  "attributes": [
+   {
+    "id": "BRAND",
+    "name": "Marca",
+    "value_id": null,
+    "value_name": "Actvitta",
+    "values": [
+     {
+      "id": null,
+      "name": "Actvitta",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "COLOR",
+    "name": "Cor",
+    "value_id": "283154",
+    "value_name": "Marrom-claro",
+    "values": [
+     {
+      "id": "283154",
+      "name": "Marrom-claro",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "FOOTWEAR_TYPE",
+    "name": "Tipo de calçado",
+    "value_id": "517586",
+    "value_name": "Chinelo",
+    "values": [
+     {
+      "id": "517586",
+      "name": "Chinelo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GENDER",
+    "name": "Gênero",
+    "value_id": "339665",
+    "value_name": "Feminino",
+    "values": [
+     {
+      "id": "339665",
+      "name": "Feminino",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "GTIN",
+    "name": "Código universal de produto",
+    "value_id": null,
+    "value_name": "7900407637669",
+    "values": [
+     {
+      "id": null,
+      "name": "7900407637669",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "ITEM_CONDITION",
+    "name": "Condição do item",
+    "value_id": "2230284",
+    "value_name": "Novo",
+    "values": [
+     {
+      "id": "2230284",
+      "name": "Novo",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MAIN_COLOR",
+    "name": "Cor principal",
+    "value_id": "2450291",
+    "value_name": "Marrom",
+    "values": [
+     {
+      "id": "2450291",
+      "name": "Marrom",
+      "struct": null
+     }
+    ],
+    "value_type": "list"
+   },
+   {
+    "id": "MODEL",
+    "name": "Modelo",
+    "value_id": null,
+    "value_name": "AUSTRALIA 4841.100",
+    "values": [
+     {
+      "id": null,
+      "name": "AUSTRALIA 4841.100",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SELLER_PACKAGE_HEIGHT",
+    "name": "Altura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "35 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "35 cm",
+      "struct": {
+       "number": 35,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_LENGTH",
+    "name": "Comprimento da embalagem do vendor",
+    "value_id": null,
+    "value_name": "12 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "12 cm",
+      "struct": {
+       "number": 12,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WEIGHT",
+    "name": "Peso da embalagem do vendor",
+    "value_id": null,
+    "value_name": "740 g",
+    "values": [
+     {
+      "id": null,
+      "name": "740 g",
+      "struct": {
+       "number": 740,
+       "unit": "g"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_PACKAGE_WIDTH",
+    "name": "Largura da embalagem do vendor",
+    "value_id": null,
+    "value_name": "14 cm",
+    "values": [
+     {
+      "id": null,
+      "name": "14 cm",
+      "struct": {
+       "number": 14,
+       "unit": "cm"
+      }
+     }
+    ],
+    "value_type": "number_unit"
+   },
+   {
+    "id": "SELLER_SKU",
+    "name": "SKU",
+    "value_id": null,
+    "value_name": "01084940",
+    "values": [
+     {
+      "id": null,
+      "name": "01084940",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE",
+    "name": "Tamanho",
+    "value_id": null,
+    "value_name": "40 BR",
+    "values": [
+     {
+      "id": null,
+      "name": "40 BR",
+      "struct": null
+     }
+    ],
+    "value_type": "string"
+   },
+   {
+    "id": "SIZE_GRID_ID",
+    "name": "ID da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_id"
+   },
+   {
+    "id": "SIZE_GRID_ROW_ID",
+    "name": "ID da linha da guia de tamanhos",
+    "value_id": null,
+    "value_name": "7742075:7",
+    "values": [
+     {
+      "id": null,
+      "name": "7742075:7",
+      "struct": null
+     }
+    ],
+    "value_type": "grid_row_id"
+   }
+  ],
+  "warnings": [],
+  "listing_source": "",
+  "variations": [],
+  "status": "paused",
+  "sub_status": [
+   "paused_by_seller"
+  ],
+  "tags": [
+   "good_quality_thumbnail",
+   "user_product_listing",
+   "immediate_payment",
+   "cart_eligible"
+  ],
+  "warranty": null,
+  "catalog_product_id": null,
+  "domain_id": "MLB-SANDALS_AND_CLOGS",
+  "seller_custom_field": null,
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2026-09-03T15:19:31.609Z",
+  "last_updated": "2026-09-05T00:23:10.600Z",
+  "health": null,
+  "catalog_listing": false,
+  "item_relations": [],
+  "channels": [
+   "marketplace"
+  ],
+  "_descricao": "Actvitta Australia 4841.100 Marrom-claro 40 Br\n\nCOMO CONFERIR O SEU NÚMERO\nApoie o pé no chão sobre uma folha e meça do calcanhar até a ponta do dedo\nmais longo.\nFicou entre dois números? Nos chame antes de comprar que conferimos a\nnumeração deste modelo para você.\n\nO QUE VOCÊ RECEBE\n1 par de chinelo Actvitta AUSTRALIA 4841.100, cor Marrom-claro, numeração 40 BR.\nProduto novo.\n\nENVIO\nEnviamos por Mercado Envios com código de rastreio.\n\nChinelaria Leilane Neves - loja física em Votuporanga/SP."
+ }
+}

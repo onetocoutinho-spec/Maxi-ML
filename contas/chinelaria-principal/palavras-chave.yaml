@@ -1,0 +1,10 @@
+# Termos vigiados para a Chinelaria Leilane Neves.
+palavras_chave:
+  - termo: "babuche feminino"
+    top_n: 30
+  - termo: "babuche masculino"
+    top_n: 30
+  - termo: "babuche antiderrapante"
+    top_n: 20
+  - termo: "chinelo slide feminino"
+    top_n: 30

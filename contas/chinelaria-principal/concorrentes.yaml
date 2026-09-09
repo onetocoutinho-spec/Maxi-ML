@@ -1,0 +1,58 @@
+# ============================================================
+# PRODUTOS DE CATÁLOGO VIGIADOS
+#
+# Aqui entra a ficha de catálogo de um produto — aquela página com
+# /p/MLB... na URL. O sistema puxa TODOS os vendedores dela a cada
+# rodada, então concorrente novo naquele produto aparece sozinho, sem
+# ninguém precisar cadastrar nada.
+#
+# Você não precisa listar os produtos de catálogo dos seus PRÓPRIOS
+# anúncios: esses entram na vigilância automaticamente. Esta lista é
+# para fichas onde você ainda NÃO vende e quer acompanhar mesmo assim.
+#
+# 'comparar_com' liga a ficha ao SEU anúncio equivalente — é o que
+# habilita o alerta de preço. Sem ele, a ficha é acompanhada mas não
+# gera alerta de preço, porque comparar um babuche masculino 42 com um
+# seu feminino 36 só ensina a ignorar alerta.
+#
+# O jeito prático de cadastrar é pelo comando, que confere na API se o
+# link é mesmo ficha antes de gravar:
+#
+#   python cli.py vigiar chinelaria-principal LINK_DA_FICHA --comparar-com SEU_MLB
+# ============================================================
+
+produtos_vigiados: []
+
+# A preencher depois da primeira coleta: com os anúncios dela no banco,
+# `python cli.py cobertura chinelaria-principal --detalhado` mostra quais
+# já estão em ficha de catálogo, e o raio-x aponta as fichas onde ela
+# ainda não vende mas concorre.
+#
+# Exemplo do formato:
+# produtos_vigiados:
+#   - produto: "MLB74599021"
+#     apelido: "Babuche feminino antiderrapante (ficha do concorrente)"
+#     comparar_com: "MLB6920349886"   # o anúncio equivalente dela
+
+
+# ============================================================
+# POR QUE NÃO DÁ PARA VIGIAR UM ANÚNCIO SOLTO
+#
+# Existia aqui uma lista 'concorrentes:', para colar o seller_id do
+# concorrente. Ela foi removida porque parou de funcionar: o Mercado
+# Livre devolve access_denied (403) para qualquer leitura de anúncio de
+# terceiro por ID, tanto em /items/ID quanto no multiget /items?ids=.
+# Verificado com controle, num anúncio que o sistema lê sem problema
+# quando pedido pela ficha de catálogo.
+#
+# A consequência precisa estar clara para quem opera:
+#
+#   DESCOBRIR concorrente fora do catálogo   -> dá, pela pesquisa de
+#                                               mercado do raio-x
+#   ACOMPANHAR concorrente fora do catálogo  -> não dá, por nenhum
+#                                               caminho oficial
+#
+# Quem vende fora do catálogo entra no raio-x como retrato do momento,
+# não como vigilância contínua. Vale avisar a Leilane disso na entrada:
+# em calçado, boa parte da concorrência vende fora de ficha.
+# ============================================================

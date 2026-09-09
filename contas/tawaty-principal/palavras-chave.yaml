@@ -1,0 +1,10 @@
+# Termos vigiados para CASA TAWATY.
+palavras_chave:
+  - termo: "motosserra stihl"
+    top_n: 30
+  - termo: "motosserra stihl ms 162"
+    top_n: 20
+  - termo: "sabre motosserra"
+    top_n: 20
+  - termo: "corrente motosserra"
+    top_n: 20

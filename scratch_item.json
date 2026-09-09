@@ -1,0 +1,942 @@
+{
+  "id": "MLB6777799700",
+  "site_id": "MLB",
+  "title": "Poltrona Beny Tecido Linho Leve Quadrada Decorativa Sala Grafite Liso",
+  "family_name": "Poltrona Beny Tecido Linho Leve Quadrada Decorativa Sala",
+  "family_id": 7916113843868368,
+  "seller_id": 162819909,
+  "category_id": "MLB416807",
+  "user_product_id": "MLBU3962373623",
+  "official_store_id": null,
+  "price": 889.0,
+  "base_price": 889.0,
+  "original_price": null,
+  "inventory_id": null,
+  "currency_id": "BRL",
+  "initial_quantity": 10000,
+  "available_quantity": 10000,
+  "sold_quantity": 0,
+  "sale_terms": [
+    {
+      "id": "WARRANTY_TYPE",
+      "name": "Tipo de garantia",
+      "value_id": "2230279",
+      "value_name": "Garantia de fábrica",
+      "value_struct": null,
+      "values": [
+        {
+          "id": "2230279",
+          "name": "Garantia de fábrica",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    },
+    {
+      "id": "WARRANTY_TIME",
+      "name": "Tempo de garantia",
+      "value_id": null,
+      "value_name": "3 meses",
+      "value_struct": {
+        "number": 3,
+        "unit": "meses"
+      },
+      "values": [
+        {
+          "id": null,
+          "name": "3 meses",
+          "struct": {
+            "number": 3,
+            "unit": "meses"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    }
+  ],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_pro",
+  "start_time": "2026-05-14T19:06:48.279Z",
+  "stop_time": "2046-05-09T04:00:00.000Z",
+  "end_time": "2046-05-09T04:00:00.000Z",
+  "expiration_time": "2026-11-21T11:00:16.099Z",
+  "condition": "new",
+  "permalink": "https://produto.mercadolivre.com.br/MLB-6777799700-poltrona-beny-tecido-linho-leve-quadrada-decorativa-sala-grafite-liso-_JM",
+  "thumbnail_id": "788884-MLA110746763178_052026",
+  "thumbnail": "http://http2.mlstatic.com/D_788884-MLA110746763178_052026-I.jpg",
+  "pictures": [
+    {
+      "id": "788884-MLA110746763178_052026",
+      "url": "http://http2.mlstatic.com/D_788884-MLA110746763178_052026-O.jpg",
+      "secure_url": "https://http2.mlstatic.com/D_788884-MLA110746763178_052026-O.jpg",
+      "size": "500x500",
+      "max_size": "1024x1024",
+      "quality": ""
+    },
+    {
+      "id": "904501-MLB110745806484_052026",
+      "url": "http://http2.mlstatic.com/D_904501-MLB110745806484_052026-O.jpg",
+      "secure_url": "https://http2.mlstatic.com/D_904501-MLB110745806484_052026-O.jpg",
+      "size": "500x466",
+      "max_size": "1200x1119",
+      "quality": ""
+    },
+    {
+      "id": "754929-MLB111703633417_052026",
+      "url": "http://http2.mlstatic.com/D_754929-MLB111703633417_052026-O.jpg",
+      "secure_url": "https://http2.mlstatic.com/D_754929-MLB111703633417_052026-O.jpg",
+      "size": "500x473",
+      "max_size": "1200x1137",
+      "quality": ""
+    },
+    {
+      "id": "939204-MLB110745598472_052026",
+      "url": "http://http2.mlstatic.com/D_939204-MLB110745598472_052026-O.jpg",
+      "secure_url": "https://http2.mlstatic.com/D_939204-MLB110745598472_052026-O.jpg",
+      "size": "500x463",
+      "max_size": "1200x1113",
+      "quality": ""
+    },
+    {
+      "id": "670410-MLB111703633419_052026",
+      "url": "http://http2.mlstatic.com/D_670410-MLB111703633419_052026-O.jpg",
+      "secure_url": "https://http2.mlstatic.com/D_670410-MLB111703633419_052026-O.jpg",
+      "size": "500x438",
+      "max_size": "1200x1052",
+      "quality": ""
+    }
+  ],
+  "video_id": null,
+  "descriptions": [],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+    "mode": "me2",
+    "methods": [],
+    "tags": [
+      "self_service_out",
+      "mandatory_free_shipping",
+      "self_service_available"
+    ],
+    "dimensions": null,
+    "local_pick_up": true,
+    "free_shipping": true,
+    "logistic_type": "cross_docking",
+    "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+    "comment": "Referencia: A DOCA DE CARGA FICA DO LADO DA FABRICA N.E PAREDE AZUL COM NUMERO PRETO 114",
+    "address_line": "Rua Oswaldo Pantaleão 114",
+    "zip_code": "15521096",
+    "city": {
+      "id": "QlItU1BWYWxlbnRpbSBHZW50aWw",
+      "name": "Valentim Gentil"
+    },
+    "state": {
+      "id": "BR-SP",
+      "name": "São Paulo"
+    },
+    "country": {
+      "id": "BR",
+      "name": "Brasil"
+    },
+    "search_location": {
+      "city": {
+        "id": "TVhYVmFsZW50aW0gR2VudGlsVFV4Q1VGTkJUM",
+        "name": "Valentim Gentil"
+      },
+      "state": {
+        "id": "TUxCUFNBT085N2E4",
+        "name": "São Paulo"
+      }
+    },
+    "latitude": -20.421432,
+    "longitude": -50.077358,
+    "id": 1632669249
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": {
+    "latitude": -20.421432,
+    "longitude": -50.077358
+  },
+  "coverage_areas": [],
+  "attributes": [
+    {
+      "id": "GIFTABLE",
+      "name": "Regalavel",
+      "value_id": "54973164",
+      "value_name": "vppfull",
+      "values": [
+        {
+          "id": "54973164",
+          "name": "vppfull",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "IS_CORNER_SHAPED",
+      "name": "É de canto",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "IS_L_SHAPED_SOFA",
+      "name": "É com chaise",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "IS_MODULAR",
+      "name": "É modular",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "IS_SLEEPER_SOFA",
+      "name": "É sofá-cama",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "IS_U_SHAPED",
+      "name": "É em forma de U",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "ACCESSORIES_INCLUDED",
+      "name": "Acessórios incluídos",
+      "value_id": "13219188",
+      "value_name": "Almofada",
+      "values": [
+        {
+          "id": "13219188",
+          "name": "Almofada",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "BACK_FILL_MATERIAL",
+      "name": "Material de enchimento do encosto",
+      "value_id": "18455897",
+      "value_name": "Espuma",
+      "values": [
+        {
+          "id": "18455897",
+          "name": "Espuma",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "BRAND",
+      "name": "Marca",
+      "value_id": "55456939",
+      "value_name": "facilita brasil",
+      "values": [
+        {
+          "id": "55456939",
+          "name": "facilita brasil",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "COLOR",
+      "name": "Cor",
+      "value_id": "2324",
+      "value_name": "Grafite",
+      "values": [
+        {
+          "id": "2324",
+          "name": "Grafite",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "DEPTH",
+      "name": "Profundidade",
+      "value_id": null,
+      "value_name": "37 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "37 cm",
+          "struct": {
+            "number": 37,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "FABRIC_DESIGN",
+      "name": "Desenho do tecido",
+      "value_id": "24721100",
+      "value_name": "Liso",
+      "values": [
+        {
+          "id": "24721100",
+          "name": "Liso",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "GTIN",
+      "name": "Código universal de produto",
+      "value_id": null,
+      "value_name": "7897220147379",
+      "values": [
+        {
+          "id": null,
+          "name": "7897220147379",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "HEIGHT",
+      "name": "Altura",
+      "value_id": null,
+      "value_name": "29 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "29 cm",
+          "struct": {
+            "number": 29,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "INCLUDES_ASSEMBLY_MANUAL",
+      "name": "Inclui manual de montagem",
+      "value_id": "242085",
+      "value_name": "Sim",
+      "values": [
+        {
+          "id": "242085",
+          "name": "Sim",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "INCLUDES_MATTRESS",
+      "name": "Inclui colchão",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "INSTALLATION_SERVICE",
+      "name": "Serviço de instalação",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "IS_RECLINABLE",
+      "name": "É reclinável",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "IS_SOFA_IN_A_BOX",
+      "name": "É sofá na caixa",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "ITEM_CONDITION",
+      "name": "Condição do item",
+      "value_id": "2230284",
+      "value_name": "Novo",
+      "values": [
+        {
+          "id": "2230284",
+          "name": "Novo",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    },
+    {
+      "id": "LINE",
+      "name": "Linha",
+      "value_id": "884",
+      "value_name": "Premium",
+      "values": [
+        {
+          "id": "884",
+          "name": "Premium",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "MAIN_COLOR",
+      "name": "Cor principal",
+      "value_id": "2450294",
+      "value_name": "Cinza",
+      "values": [
+        {
+          "id": "2450294",
+          "name": "Cinza",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    },
+    {
+      "id": "MATTRESS_LENGTH",
+      "name": "Comprimento do colchão",
+      "value_id": null,
+      "value_name": "7 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "7 cm",
+          "struct": {
+            "number": 7,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "MATTRESS_WIDTH",
+      "name": "Largura do colchão",
+      "value_id": null,
+      "value_name": "7 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "7 cm",
+          "struct": {
+            "number": 7,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "MAX_WEIGHT_SUPPORTED",
+      "name": "Peso máximo suportado",
+      "value_id": null,
+      "value_name": "250 kg",
+      "values": [
+        {
+          "id": null,
+          "name": "250 kg",
+          "struct": {
+            "number": 250,
+            "unit": "kg"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "MODEL",
+      "name": "Modelo",
+      "value_id": null,
+      "value_name": "Cadeira assento estofado Moderna Forte Travesseiro",
+      "values": [
+        {
+          "id": null,
+          "name": "Cadeira assento estofado Moderna Forte Travesseiro",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "PACKAGE_DATA_SOURCE",
+      "name": "Origem do dado do pacote de fábrica",
+      "value_id": "52228225",
+      "value_name": "SELLER",
+      "values": [
+        {
+          "id": "52228225",
+          "name": "SELLER",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "PACKAGE_HEIGHT",
+      "name": "Altura da embalagem",
+      "value_id": null,
+      "value_name": "35 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "35 cm",
+          "struct": {
+            "number": 35,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "PACKAGE_LENGTH",
+      "name": "Comprimento da embalagem",
+      "value_id": null,
+      "value_name": "29 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "29 cm",
+          "struct": {
+            "number": 29,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "PACKAGE_WEIGHT",
+      "name": "Peso da embalagem",
+      "value_id": null,
+      "value_name": "2000 g",
+      "values": [
+        {
+          "id": null,
+          "name": "2000 g",
+          "struct": {
+            "number": 2000,
+            "unit": "g"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "PACKAGE_WIDTH",
+      "name": "Largura da embalagem",
+      "value_id": null,
+      "value_name": "40 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "40 cm",
+          "struct": {
+            "number": 40,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "PACKAGING_BOXES_NUMBER",
+      "name": "Quantidade de caixas de embalagem",
+      "value_id": null,
+      "value_name": "1",
+      "values": [
+        {
+          "id": null,
+          "name": "1",
+          "struct": null
+        }
+      ],
+      "value_type": "number"
+    },
+    {
+      "id": "PIECES_NUMBER",
+      "name": "Quantidade de peças",
+      "value_id": null,
+      "value_name": "1",
+      "values": [
+        {
+          "id": null,
+          "name": "1",
+          "struct": null
+        }
+      ],
+      "value_type": "number"
+    },
+    {
+      "id": "PRODUCT_TYPE",
+      "name": "Tipo de produto",
+      "value_id": "12977492",
+      "value_name": "Poltrona",
+      "values": [
+        {
+          "id": "12977492",
+          "name": "Poltrona",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    },
+    {
+      "id": "REQUIRES_ASSEMBLY",
+      "name": "Requer montagem",
+      "value_id": "242085",
+      "value_name": "Sim",
+      "values": [
+        {
+          "id": "242085",
+          "name": "Sim",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "SEATERS_NUMBER",
+      "name": "Quantidade de lugares",
+      "value_id": "4485163",
+      "value_name": "1",
+      "values": [
+        {
+          "id": "4485163",
+          "name": "1",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    },
+    {
+      "id": "SEAT_FOAM_DENSITY",
+      "name": "Densidade da espuma do assento",
+      "value_id": "18646457",
+      "value_name": "D26",
+      "values": [
+        {
+          "id": "18646457",
+          "name": "D26",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "SELLER_PACKAGE_HEIGHT",
+      "name": "Altura da embalagem do vendor",
+      "value_id": null,
+      "value_name": "92 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "92 cm",
+          "struct": {
+            "number": 92,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "SELLER_PACKAGE_LENGTH",
+      "name": "Comprimento da embalagem do vendor",
+      "value_id": null,
+      "value_name": "60 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "60 cm",
+          "struct": {
+            "number": 60,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "SELLER_PACKAGE_WEIGHT",
+      "name": "Peso da embalagem do vendor",
+      "value_id": null,
+      "value_name": "21710 g",
+      "values": [
+        {
+          "id": null,
+          "name": "21710 g",
+          "struct": {
+            "number": 21710,
+            "unit": "g"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "SELLER_PACKAGE_WIDTH",
+      "name": "Largura da embalagem do vendor",
+      "value_id": null,
+      "value_name": "81 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "81 cm",
+          "struct": {
+            "number": 81,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "SELLER_SKU",
+      "name": "SKU",
+      "value_id": null,
+      "value_name": "POLTBENY_LINHO_CINZA",
+      "values": [
+        {
+          "id": null,
+          "name": "POLTBENY_LINHO_CINZA",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "STRUCTURE_MATERIALS",
+      "name": "Materiais da estrutura",
+      "value_id": "2431881",
+      "value_name": "Madeira",
+      "values": [
+        {
+          "id": "2431881",
+          "name": "Madeira",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "STYLE",
+      "name": "Estilo",
+      "value_id": "432204",
+      "value_name": "Moderno",
+      "values": [
+        {
+          "id": "432204",
+          "name": "Moderno",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    },
+    {
+      "id": "SYI_PYMES_ID",
+      "name": "syi pymes id",
+      "value_id": null,
+      "value_name": "ae68011c-34f9-4f99-b17d-517494c88a6a",
+      "values": [
+        {
+          "id": null,
+          "name": "ae68011c-34f9-4f99-b17d-517494c88a6a",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "UPHOLSTERY_MATERIAL",
+      "name": "Material do estofamento",
+      "value_id": "462318",
+      "value_name": "Linho",
+      "values": [
+        {
+          "id": "462318",
+          "name": "Linho",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "WEIGHT",
+      "name": "Peso",
+      "value_id": null,
+      "value_name": "2 kg",
+      "values": [
+        {
+          "id": null,
+          "name": "2 kg",
+          "struct": {
+            "number": 2,
+            "unit": "kg"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "WIDTH",
+      "name": "Largura",
+      "value_id": null,
+      "value_name": "40 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "40 cm",
+          "struct": {
+            "number": 40,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "WITH_REMOVABLE_COVER",
+      "name": "Com tecido removível",
+      "value_id": "242084",
+      "value_name": "Não",
+      "values": [
+        {
+          "id": "242084",
+          "name": "Não",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    },
+    {
+      "id": "WITH_REMOVABLE_LEGS",
+      "name": "Com pés desmontáveis",
+      "value_id": "242085",
+      "value_name": "Sim",
+      "values": [
+        {
+          "id": "242085",
+          "name": "Sim",
+          "struct": null
+        }
+      ],
+      "value_type": "boolean"
+    }
+  ],
+  "warnings": [],
+  "listing_source": "",
+  "variations": [],
+  "status": "under_review",
+  "sub_status": [
+    "waiting_for_patch"
+  ],
+  "tags": [
+    "catalog_listing_eligible",
+    "user_product_listing",
+    "good_quality_thumbnail",
+    "immediate_payment",
+    "cart_eligible"
+  ],
+  "warranty": "Garantia de fábrica: 3 meses",
+  "catalog_product_id": "MLB65106611",
+  "domain_id": "MLB-SOFAS_FUTONS_AND_ARMCHAIRS",
+  "seller_custom_field": null,
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2026-05-14T19:06:48.514Z",
+  "last_updated": "2026-09-08T13:25:58.805Z",
+  "health": null,
+  "catalog_listing": false,
+  "item_relations": [],
+  "channels": [
+    "marketplace"
+  ]
+}

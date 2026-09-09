@@ -1,0 +1,123 @@
+# ============================================================
+# PARA ONDE OS ALERTAS VÃO
+#
+# 'provedor' escolhe qual bloco abaixo é usado. Os outros ficam
+# ignorados — dá para deixar tudo preenchido e só trocar o nome.
+#
+# Provedores: evolution | zapi | meta | telegram | console
+#
+# Credenciais NÃO ficam aqui. Coloque em .env na raiz do projeto
+# (veja .env.example) e referencie com ${NOME_DA_VARIAVEL}.
+# ============================================================
+
+# ATENÇÃO: este arquivo guarda a SUA configuração. Não deve ser sobrescrito
+# por atualizações — se receber uma versão nova, compare em vez de substituir.
+provedor: telegram
+
+# Para onde mandar. Formato internacional, só dígitos: 55 + DDD + número.
+destino: "55DDDNUMERO"
+
+# ---------- quando falar ----------
+regras:
+  # Alertas críticos: manda assim que aparecem, em qualquer rodada.
+  criticos_imediato: true
+
+  # Alertas não-críticos: só entram no resumo diário, nunca sozinhos.
+  nao_criticos_so_no_resumo: true
+
+  # Teto por rodada. Se estourar, manda os N mais graves e diz quantos ficaram.
+  # Existe para o dia em que algo dá errado e gera 200 alertas: você recebe
+  # uma mensagem útil em vez de 200 mensagens que te fazem silenciar o número.
+  max_alertas_por_mensagem: 8
+
+  # Horários aceitam "HH:MM". O envio acontece na PRIMEIRA rodada igual ou
+  # posterior ao horário, uma vez por dia — então não precisa de uma rodada
+  # exatamente em cima da hora, e se a máquina estiver desligada no horário o
+  # resumo sai na próxima rodada em vez de se perder.
+  #
+  # O resumo fala do dia ANTERIOR, fechado. Por isso sai cedo: às 6h30 o dia
+  # corrente ainda não tem venda nem mudança para contar.
+  #
+  # Ele também ignora a janela de silêncio de propósito — a janela existe
+  # para alerta que interrompe, e o resumo é o oposto disso: é a leitura que
+  # se procura de manhã.
+  horario_do_resumo: "06:30"
+
+  # Mapa de concorrentes: é caro (uma consulta por produto, por vendedor e
+  # por frete), então roda uma vez por dia, antes do resumo.
+  horario_do_mapa: "04:30"
+
+  # Resumo semanal de concorrência: 0=segunda ... 6=domingo. -1 desliga.
+  dia_do_resumo_semanal: 0
+  horario_do_resumo_semanal: "07:30"
+
+  # CEP usado para calcular o frete dos concorrentes. Use um CEP da região
+  # onde estão a maioria dos clientes — frete de item volumoso muda muito.
+  cep_referencia: "01001000"
+
+  # Frete deixa o mapa bem mais lento. Desligue se a rotina estiver demorando.
+  mapa_com_frete: true
+
+  # Vigia contínuo (vigia.bat): segundos entre ciclos. Mínimo aceito: 60.
+  # 300 = 5 minutos, e é o ponto onde a informação ainda é acionável sem
+  # torrar chamada de API. Abaixo de 120 raramente muda uma decisão.
+  intervalo_vigia_segundos: 300
+
+  # Quantos fretes de concorrente conferir POR RODADA. Cada um é uma chamada
+  # à API. A prioridade vai para os anúncios vinculados aos seus. Suba se
+  # quiser cobertura maior, desça se a rotina estiver pesada.
+  max_fretes_por_rodada: 40
+
+  # Quantos anúncios têm as CAMPANHAS do Mercado Livre conferidas por rodada.
+  # Uma chamada por anúncio. Campanha não nasce de minuto em minuto, então o
+  # rodízio dá conta: com 6 por rodada, 28 anúncios passam em meia hora.
+  promocoes_por_rodada: 6
+
+  # Silêncio noturno: fora desta janela, só acumula e manda na próxima rodada
+  # dentro do horário. Crítico de madrugada raramente é acionável.
+  #
+  # A hora é comparada inteira: inicio <= hora < fim. Então 'fim: 24' deixa
+  # ativo até 23:59:59 — que é o silêncio das 23:59 às 7h pedido em 27/08.
+  janela_ativa:
+    inicio: 7
+    fim: 24
+
+# ============================================================
+# PROVEDORES
+# ============================================================
+
+# --- Evolution API (open source, você hospeda — sem custo de licença) ---
+evolution:
+  base_url: "https://sua-evolution.com.br"
+  instancia: "zion"
+  api_key: "${EVOLUTION_API_KEY}"
+
+# --- Z-API (serviço brasileiro, mensalidade) ---
+zapi:
+  instancia: "${ZAPI_INSTANCIA}"
+  token: "${ZAPI_TOKEN}"
+  client_token: "${ZAPI_CLIENT_TOKEN}"
+
+# --- WhatsApp Cloud API (oficial da Meta) ---
+meta:
+  phone_number_id: "${META_PHONE_NUMBER_ID}"
+  access_token: "${META_ACCESS_TOKEN}"
+  versao: "v21.0"
+
+# --- Telegram (grátis, útil como reserva) ---
+telegram:
+  bot_token: "${TELEGRAM_BOT_TOKEN}"
+
+  # Todos os destinos. Aceita um só ou uma lista; repetido é descartado.
+  #
+  # Id negativo é GRUPO — é assim mesmo, não é erro de digitação. Grupo vale
+  # por todos os membros: quem entra passa a receber, quem sai para, sem
+  # ninguém mexer neste arquivo.
+  #
+  # ARMADILHA: se o grupo virar supergrupo (o Telegram faz isso sozinho ao
+  # crescer, ou ao ligar histórico para novos membros), o id MUDA e o bot
+  # para de entregar EM SILÊNCIO. Se as mensagens sumirem, rode
+  # `python cli.py contatos` e confira o id.
+  chat_id:
+    - "${TELEGRAM_CHAT_ID}"   # Neto Coutinho, conversa direta
+    - "-5448736659"           # grupo ALERTA CLIENTES ML MENTORIA

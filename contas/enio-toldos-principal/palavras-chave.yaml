@@ -1,0 +1,34 @@
+# Termos de busca no CATÁLOGO — Ênio Toldos (ShoppLima)
+#
+# Reescritos em cima dos títulos reais dos 38 anúncios coletados.
+# Os termos genéricos anteriores traziam lixo: "toldo articulado" devolvia
+# MANIVELA de toldo, "toldo retrátil" devolvia GAZEBO. Termo genérico em
+# catálogo casa com acessório, não com o produto.
+
+palavras_chave:
+
+  # ---------- toldos: como ele realmente titula ----------
+  - termo: "toldo policarbonato janela porta"
+    max_produtos: 4
+  - termo: "toldo policarbonato pergolado"
+    max_produtos: 4
+  - termo: "toldo metal policarbonato modular"
+    max_produtos: 4
+  - termo: "toldo policarbonato fume"
+    max_produtos: 3
+
+  # ---------- móveis (fábrica da Maxi) ----------
+  # É aqui que a busca de catálogo rende mais: móvel tem ficha única,
+  # então a comparação sai limpa.
+  - termo: "rack para tv 65 polegadas ripado"
+    max_produtos: 4
+  - termo: "mesa bistrô dobrável madeira maciça"
+    max_produtos: 4
+  - termo: "mesa dobrável 70x70"
+    max_produtos: 3
+  - termo: "balcão cozinha cooktop 4 bocas"
+    max_produtos: 3
+  - termo: "aparador off white nature"
+    max_produtos: 3
+  - termo: "painel bancada tv"
+    max_produtos: 3

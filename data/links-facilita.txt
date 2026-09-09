@@ -1,0 +1,23 @@
+AUTORIZACAO - FACILITA BRASIL
+gerados 27/08/2026 as 16:21 UTC
+
+O CODIGO QUE VOLTA VALE 10 MINUTOS. Devolva o endereco na hora.
+Abra em JANELA ANONIMA, logado na conta daquela loja.
+Voce vai cair numa pagina do Postman - e esperado, nao deu erro.
+Copie a BARRA DE ENDERECO inteira dessa pagina e mande de volta.
+
+========================================================================
+FACILITA BRASIL   (/pagina/mayararoncolatocambrais)
+
+https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=1884682230083689&redirect_uri=https%3A%2F%2Foauth.pstmn.io%2Fv1%2Fcallback&state=_WL8RjjgRZ5nSkVvMF5qHw
+
+========================================================================
+FACILITA BRASIL (2)   (/pagina/faciliitabrasil)
+
+https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=1884682230083689&redirect_uri=https%3A%2F%2Foauth.pstmn.io%2Fv1%2Fcallback&state=rO0fBxMk_mEFATmRYjodTA
+
+========================================================================
+Decoralli   (/pagina/wedmirmariabezerrildasilva)
+
+https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=1884682230083689&redirect_uri=https%3A%2F%2Foauth.pstmn.io%2Fv1%2Fcallback&state=jfktN6q6WfPE2v0i_TzDmQ
+

@@ -1,0 +1,38 @@
+# Termos que você quer vigiar. Para cada um, o sistema grava:
+#   - o top N de concorrentes (preço, vendas, vendedor, frete)
+#   - a posição dos SEUS anúncios no mesmo resultado
+#
+# Montados a partir dos anúncios da loja em 27/08/2026. São 9 termos: o
+# suficiente para cobrir as quatro famílias que ela vende sem virar barulho.
+
+palavras_chave:
+  - termo: "poltrona decorativa"
+    top_n: 30
+    observacao: "maior volume da loja — linha Mona, madeira maciça"
+
+  - termo: "poltrona do papai reclinavel"
+    top_n: 30
+    observacao: "linha Eros, couro"
+
+  - termo: "poltrona decorativa madeira macica"
+    top_n: 20
+    observacao: "cauda longa, diferencia do estofado barato"
+
+  - termo: "sofa cama"
+    top_n: 30
+
+  - termo: "sofa cama retratil"
+    top_n: 20
+
+  - termo: "sofa 2 lugares"
+    top_n: 30
+
+  - termo: "sofa 2 lugares linho"
+    top_n: 20
+    observacao: "linha Beny 140cm"
+
+  - termo: "namoradeira estofada"
+    top_n: 20
+
+  - termo: "poltrona couro reclinavel sala"
+    top_n: 20

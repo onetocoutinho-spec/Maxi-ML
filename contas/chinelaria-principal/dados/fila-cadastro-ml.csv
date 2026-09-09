@@ -1,0 +1,122 @@
+﻿ordem;codigo;titulo;marca;preco_tiktok;custo;margem_bruta_pct;faixa;estoque;valor_estoque;tamanhos;com_ean;peso_kg;pendencias;fotos
+1;2585111;Babuche LED Infantil Molekinho 2874.407;Molekinho;141.9;61.14;56.9;>= R$79;136;19298.4;10;10;0.35;-;22
+2;2660653;Sandalia Plataforma Feminino Zaxy Conectada;Zaxy;194.9;84.2;56.8;>= R$79;43;8380.7;12;12;0.5;-;24
+3;2609529;Tamanco Modare Sandalia Ortopedica feminina Ultra Conforto;Modare;152.9;68.49;55.2;>= R$79;52;7950.8;16;16;0.6;-;0
+4;2640259;Chinelo Slide Feminino Nuvem Zaxy Air 19419;Zaxy;110.9;44.31;60.0;>= R$79;64;7097.6;18;18;0.32;-;15
+5;2664065;Chinelo Slide Masculino Rider 12529 R Soft Plus;Rider;163.9;70.15;57.2;>= R$79;43;7047.7;14;14;0.6;-;16
+6;2545565;Tenis Actvitta Feminino Casual Conforto Light Foam Pro Macio;Actvitta;274.9;116.66;57.6;>= R$79;24;6597.6;7;7;0.62;-;7
+7;2650850;Chinelo Dedo Feminino Havaianas Slim Glitter II;Havaianas;89.9;36.72;59.2;>= R$79;61;5483.9;15;15;0.23;-;0
+8;2447312;Tamanco Feminino Modare Slide Conforto Lançamento Original;Modare;173.9;79.31;54.4;>= R$79;29;5043.1;12;12;0.65;-;26
+9;2342603;Tamanco Azaleia 18908 Fabi Light;Azaleia;89.9;37.54;58.2;>= R$79;54;4854.6;24;24;0.6;-;14
+10;2544990;;Cartago;99.9;42.09;57.9;>= R$79;47;4695.3;8;8;0.56;sem titulo na exportacao;4
+11;2581241;Tênis Actvitta Feminino Confortável Leve Academia Corrida;Actvitta;274.9;116.66;57.6;>= R$79;17;4673.3;7;7;0.6;-;0
+12;2568442;Rasteira Feminina Vizzano 6371.1005;Vizzano;131.9;56.26;57.3;>= R$79;30;3957.0;21;21;0.41;-;17
+13;2647725;;Actvitta;99.9;47.01;52.9;>= R$79;33;3296.7;24;24;0.21;sem titulo na exportacao;12
+14;2620426;Papete Slide Feminina Zaxy 19359;Zaxy;104.9;44.31;57.8;>= R$79;22;2307.8;12;12;0.31;-;15
+15;2601358;Papete Slide Feminino Beira Rio 8488.122;Beira Rio;110.9;45.0;59.4;>= R$79;20;2218.0;9;9;0.415;-;0
+16;2640305;Papete Slide Modare Micr Perf Suprem;Modare;119.99;61.02;49.1;>= R$79;18;2159.82;7;7;0.58;-;0
+17;2349858;Bolsa Moleca 50007.1 Casual Gorgurão;Moleca;120.9;46.56;61.5;>= R$79;13;1571.7;6;6;0.55;-;36
+18;2598698;Chinelo Rasteira Feminina Slide Vizzano;Vizzano;88.9;36.2;59.3;>= R$79;17;1511.3;21;21;0.38;-;18
+19;2347549;Bolsa Moleca Zíper Neo Gorgurão 50048.3;Moleca;141.9;56.04;60.5;>= R$79;10;1419.0;6;6;0.65;-;12
+20;2487172;Bolsa infantil menina Molekinha 20019.2 Lurex;Molekinha;120.9;51.59;57.3;>= R$79;8;967.2;2;2;0.31;-;9
+21;2568459;Rasteira Feminina Vizzano 6553.101;Vizzano;104.9;44.47;57.6;>= R$79;4;419.6;14;14;0.5;-;20
+22;2344016;Papete Slide Modare 7208.101 Nobuck;Modare;119.99;61.54;48.7;>= R$79;1019;122269.81;40;35;0.56;EAN faltando em 5 de 40 tamanhos;0
+23;2659766;Papete Slide Feminino Modare Nobuck Onça 7208.101;Modare;152.9;66.19;56.7;>= R$79;196;29968.4;24;20;0.57;EAN faltando em 4 de 24 tamanhos;0
+24;2362313;Chinelo Havaianas Brasil;Havaianas;73.9;27.99;62.1;< R$79;319;23574.1;40;38;0.36;"EAN faltando em 2 de 40 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";20
+25;2546293;Babuche Molekinho 2874.202 Gaspea Eva;Molekinho;99.9;42.61;57.3;>= R$79;221;22077.9;14;10;0.5;EAN faltando em 4 de 14 tamanhos;16
+26;2481816;Babuche Molekinha 2591.103 Injetada EVA;Molekinha;99.9;43.54;56.4;>= R$79;216;21578.4;20;18;0.57;EAN faltando em 2 de 20 tamanhos;25
+27;2035241;Chinelo Tamanco Modare 7142.106;Modare;110.9;47.53;57.1;>= R$79;191;21181.9;50;46;0.65;EAN faltando em 4 de 50 tamanhos;41
+28;2601946;Tênis Feminino Calce Facil Casual Slip On Macio Actvitta;Actvitta;216.9;78.43;63.8;>= R$79;80;17352.0;14;13;0.45;EAN faltando em 1 de 14 tamanhos;22
+29;2361827;Chinelo Havaianas Top Liso TOP;Havaianas;46.9;19.99;57.4;< R$79;369;17306.1;59;53;0.39;"EAN faltando em 6 de 59 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";51
+30;2548926;Tênis Feminino Casual Modare 7401.102 London;Modare;242.9;107.12;55.9;>= R$79;68;16517.2;22;21;0.69;EAN faltando em 1 de 22 tamanhos;28
+31;2388326;Chinelo Slide Under Armour 3027787;Under Armour;163.9;58.3;64.4;>= R$79;83;13603.7;18;16;0.56;EAN faltando em 2 de 18 tamanhos;24
+32;2664207;;Cartago;110.9;46.77;57.8;>= R$79;120;13308.0;14;12;0.4;"EAN faltando em 2 de 14 tamanhos; sem titulo na exportacao";16
+33;2360426;Chinelo Havaianas Slim Liso - chinelo dedo havaianas slim liso;Havaianas;53.9;24.52;54.5;< R$79;230;12397.0;119;81;0.4;"EAN faltando em 38 de 119 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";63
+34;2642786;Chinelo Havaianas Top Liso com Piercing Feminino Original;Havaianas;82.9;30.58;63.1;>= R$79;145;12020.5;37;0;0.33;EAN faltando em 37 de 37 tamanhos;33
+35;2358788;Tênis Masculino Calce Facil Casual Slip On Macio Actvitta;Actvitta;216.9;82.49;62.0;>= R$79;55;11929.5;18;15;0.715;EAN faltando em 3 de 18 tamanhos;9
+36;2387439;Chinelo Havaianas Top Tiras;Havaianas;46.9;19.99;57.4;< R$79;251;11771.9;20;11;0.38;"EAN faltando em 9 de 20 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";6
+37;2368040;;Cartago;89.9;37.41;58.4;>= R$79;129;11597.1;21;19;0.54;"EAN faltando em 2 de 21 tamanhos; sem titulo na exportacao";16
+38;2387850;Sandalia Salto Bloco Feminina Modare 7187.100;Modare;179.9;79.31;55.9;>= R$79;59;10614.1;34;33;0.699;EAN faltando em 1 de 34 tamanhos;0
+39;2560576;Babuche Infantil Molekinha 22591.408 Arco Iris;Molekinha;141.9;54.16;61.8;>= R$79;74;10500.6;7;6;0.3;EAN faltando em 1 de 7 tamanhos;10
+40;2545490;Sandália Infantil Ipanema 27403;Ipanema;45.9;17.23;62.5;< R$79;216;9914.4;15;14;0.49;"EAN faltando em 1 de 15 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";13
+41;2666608;;Cartago;78.9;32.73;58.5;< R$79;120;9468.0;14;12;0.4;"EAN faltando em 2 de 14 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";16
+42;2362304;;Havaianas;36.9;14.81;59.9;< R$79;240;8856.0;24;22;0.38;"EAN faltando em 2 de 24 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";9
+43;2606511;Chinelo Feminino Square Havaianas Jelly jel buttercream;Havaianas;83.9;27.48;67.2;>= R$79;104;8725.6;15;9;0.265;EAN faltando em 6 de 15 tamanhos;14
+44;2606512;Chinelo Havaianas Glitter Glam E Edge Feminina Brilho;Havaianas;89.9;31.4;65.1;>= R$79;97;8720.3;15;10;0.24;EAN faltando em 5 de 15 tamanhos;18
+45;2359737;Chinelo Havaianas Slim Square Feminino Original;Havaianas;57.9;29.47;49.1;< R$79;141;8163.9;39;29;0.37;"EAN faltando em 10 de 39 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";20
+46;2652172;Tamanco Plataforma Feminino Modare 7226;Modare;163.9;70.78;56.8;>= R$79;48;7867.2;16;14;0.68;EAN faltando em 2 de 16 tamanhos;12
+47;2583322;Chinelo Infantil Menino Cartago 12625 Palermo;Cartago;60.9;24.61;59.6;< R$79;110;6699.0;10;7;0.25;"EAN faltando em 3 de 10 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";3
+48;2548526;Chinelo Slide Molekinho 2417.100 Slide Eva;Molekinho;67.9;28.23;58.4;< R$79;97;6586.3;10;10;0.61;preco < R$79: frete gratis subsidiado nao se aplica;16
+49;2398721;Chinelo Havaianas Slim Tropical;Havaianas;84.9;36.63;56.9;>= R$79;77;6537.3;14;8;0.28;EAN faltando em 6 de 14 tamanhos;0
+50;2600635;;Cartago;64.9;25.73;60.4;< R$79;99;6425.1;14;12;0.41;"EAN faltando em 2 de 14 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";18
+51;2604780;;Cartago;120.9;49.24;59.3;>= R$79;53;6407.7;14;12;0.52;"EAN faltando em 2 de 14 tamanhos; sem titulo na exportacao";6
+52;2651931;Tamanco Plataforma Feminino Modare 7226.102;Modare;163.9;70.78;56.8;>= R$79;39;6392.1;16;14;0.68;EAN faltando em 2 de 16 tamanhos;14
+53;2605637;Sandalia Infantil Molekinho 2135.137;Molekinho;78.9;29.61;62.5;< R$79;80;6312.0;30;24;0.2;"EAN faltando em 6 de 30 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";24
+54;2626342;Tenis Casual Feminina Modare 7416.100;Modare;216.9;90.98;58.1;>= R$79;29;6290.1;8;7;0.51;EAN faltando em 1 de 8 tamanhos;9
+55;2644016;Sandalia Papete Feminino Modare London 7200.113;Modare;184.9;84.17;54.5;>= R$79;34;6286.6;16;14;0.55;EAN faltando em 2 de 16 tamanhos;10
+56;2604605;Tamanco Feminino Anabela Modare 7151.115;Modare;157.9;68.49;56.6;>= R$79;39;6158.1;16;15;0.53;EAN faltando em 1 de 16 tamanhos;0
+57;2664154;Sandalia Papete Feminino Ipanema 27572 Shine;Ipanema;57.9;23.38;59.6;< R$79;103;5963.7;18;18;0.4;preco < R$79: frete gratis subsidiado nao se aplica;32
+58;2608308;Sandalia Salto Bloco Feminina Modare 7187.100;Modare;179.9;78.29;56.5;>= R$79;32;5756.8;16;14;0.65;EAN faltando em 2 de 16 tamanhos;0
+59;2658077;Tenis Sport Feminino Actvitta Australia 4863.302 p;Actvitta;396.9;172.11;56.6;>= R$79;14;5556.6;8;7;0.55;EAN faltando em 1 de 8 tamanhos;4
+60;2366259;;Cartago;78.9;29.53;62.6;< R$79;70;5523.0;14;12;0.51;"EAN faltando em 2 de 14 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";15
+61;2657927;;Actvitta;417.9;181.11;56.7;>= R$79;13;5432.7;9;8;0.62;"EAN faltando em 1 de 9 tamanhos; sem titulo na exportacao";4
+62;2581614;Chinelo Tamanco Slide Feminino Modare 7142.101;Modare;120.9;49.06;59.4;>= R$79;44;5319.6;30;24;0.5;EAN faltando em 6 de 30 tamanhos;0
+63;2526416;Chinelo Dedo Havaianas Top Herois;Havaianas;78.9;27.48;65.2;< R$79;67;5286.3;8;4;0.7;"EAN faltando em 4 de 8 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";6
+64;2358805;Chinelo Havaianas Brasil;Havaianas;68.9;32.97;52.1;< R$79;75;5167.5;69;47;0.39;"EAN faltando em 22 de 69 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";0
+65;2364666;Chinelo Havaianas Power 2.0 cinza;Havaianas;78.9;43.44;44.9;< R$79;64;5049.6;22;21;0.55;"EAN faltando em 1 de 22 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";0
+66;2398720;Chinelo Slim Havaianas Palette Glow;Havaianas;76.9;38.16;50.4;< R$79;65;4998.5;12;9;0.34;"EAN faltando em 3 de 12 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";13
+67;2619942;Papete Slide Feminina Moleca 5500.125;Moleca;179.9;78.29;56.5;>= R$79;27;4857.3;16;14;0.65;EAN faltando em 2 de 16 tamanhos;8
+68;2366748;;Cartago;46.9;19.79;57.8;< R$79;99;4643.1;12;12;0.61;"preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";10
+69;2658078;;Actvitta;385.9;167.7;56.5;>= R$79;12;4630.8;8;7;0.55;"EAN faltando em 1 de 8 tamanhos; sem titulo na exportacao";4
+70;2656876;;Actvitta;406.9;176.71;56.6;>= R$79;11;4475.9;9;8;0.6;"EAN faltando em 1 de 9 tamanhos; sem titulo na exportacao";4
+71;2669797;Tenis Sport Infantil Menina Molekinha 2584.214 Kansas;Molekinha;184.9;79.64;56.9;>= R$79;24;4437.6;22;18;0.6;EAN faltando em 4 de 22 tamanhos;0
+72;2658055;;Actvitta;226.9;98.06;56.8;>= R$79;19;4311.1;16;14;0.51;"EAN faltando em 2 de 16 tamanhos; sem titulo na exportacao";8
+73;2658119;;Actvitta;194.9;75.03;61.5;>= R$79;21;4092.9;22;18;0.75;"EAN faltando em 4 de 22 tamanhos; sem titulo na exportacao";8
+74;2363772;Chinelo Havaianas Aloha;Havaianas;59.9;28.25;52.8;< R$79;67;4013.3;15;15;0.55;preco < R$79: frete gratis subsidiado nao se aplica;9
+75;2666713;;Cartago;46.9;18.71;60.1;< R$79;83;3892.7;14;8;0.4;"EAN faltando em 6 de 14 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";24
+76;2640602;Babuche EVA Yvate Faixa 1816;Yvate;78.9;29.5;62.6;< R$79;49;3866.1;10;0;0.26;"EAN faltando em 10 de 10 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";4
+77;2655011;;Actvitta;269.9;116.66;56.8;>= R$79;14;3778.6;8;7;0.52;"EAN faltando em 1 de 8 tamanhos; sem titulo na exportacao";4
+78;2606513;Sandália Slim Square Glitter Contour Havaianas;Havaianas;89.9;31.4;65.1;>= R$79;42;3775.8;10;5;0.25;EAN faltando em 5 de 10 tamanhos;18
+79;2640234;Papete Slide Feminina Moleca Suprema 5490.132;Moleca;110.9;49.06;55.8;>= R$79;34;3770.6;16;14;0.5;EAN faltando em 2 de 16 tamanhos;10
+80;2366747;;Cartago;46.9;19.69;58.0;< R$79;77;3611.3;12;12;0.42;"preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";14
+81;2545583;Babuche Moleca 5832.100;Moleca;99.9;38.84;61.1;>= R$79;36;3596.4;24;19;0.5;EAN faltando em 5 de 24 tamanhos;21
+82;2393120;Chinelo Havaianas Top Basic;Havaianas;61.9;26.65;56.9;< R$79;58;3590.2;14;10;0.3;"EAN faltando em 4 de 14 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";9
+83;2670378;Chinelo Havaianas Top Liso Branco com Piercing Cereja;Havaianas;84.9;32.0;62.3;>= R$79;42;3565.8;7;0;0.4;EAN faltando em 7 de 7 tamanhos;0
+84;2607927;Chinelo Baby Dedo Masculino Havaianas Brasil Logo BM blog;Havaianas;60.9;25.99;57.3;< R$79;58;3532.2;14;14;0.13;preco < R$79: frete gratis subsidiado nao se aplica;15
+85;2650838;;Havaianas;46.9;20.94;55.4;< R$79;72;3376.8;15;15;0.28;"preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";28
+86;2561540;;Havaianas;84.9;40.51;52.3;>= R$79;39;3311.1;17;15;0.25;"EAN faltando em 2 de 17 tamanhos; sem titulo na exportacao";25
+87;2657245;Tenis Casual Feminino Modare Suprema 7417.102 branco/bege;Modare;300.9;135.73;54.9;>= R$79;10;3009.0;8;7;0.67;EAN faltando em 1 de 8 tamanhos;4
+88;2620862;;Cartago;62.9;24.61;60.9;< R$79;47;2956.3;8;8;0.31;"preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";5
+89;2600712;;Cartago;88.9;34.46;61.2;>= R$79;33;2933.7;14;12;0.585;"EAN faltando em 2 de 14 tamanhos; sem titulo na exportacao";0
+90;2640603;Babuche EVA Yvate Faixa 1816;Yvate;78.9;29.5;62.6;< R$79;37;2919.3;6;0;0.26;"EAN faltando em 6 de 6 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";4
+91;2550276;Babuche LED Infantil Molekinho 2874.40;Molekinho;120.9;53.48;55.8;>= R$79;24;2901.6;14;10;0.3;EAN faltando em 4 de 14 tamanhos;7
+92;2667102;Chinelo Dedo Feminino Ipanema 27573 Shine Pin;Ipanema;41.9;16.37;60.9;< R$79;69;2891.1;18;18;0.4;preco < R$79: frete gratis subsidiado nao se aplica;0
+93;2635581;;Havaianas;83.9;25.51;69.6;>= R$79;34;2852.6;5;3;0.28;"EAN faltando em 2 de 5 tamanhos; sem titulo na exportacao";6
+94;2588141;Chinelo Rasteira Feminino Slide Modare 7162.330;Modare;110.9;44.47;59.9;>= R$79;24;2661.6;17;14;0.5;EAN faltando em 3 de 17 tamanhos;0
+95;2544386;Chinelo Dedo Ipanema 27507 Pluma;Ipanema;41.9;20.54;51.0;< R$79;59;2472.1;18;18;0.4;preco < R$79: frete gratis subsidiado nao se aplica;9
+96;2363773;Chinelo Havaianas Dual BRANCO CINZA GELO;Havaianas;74.9;36.63;51.1;< R$79;33;2471.7;26;26;0.49;preco < R$79: frete gratis subsidiado nao se aplica;12
+97;2664229;Chinelo Dedo Baby Menino Rider Preto 12674;Rider;36.9;14.03;62.0;< R$79;65;2398.5;7;6;0.3;"EAN faltando em 1 de 7 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";0
+98;2363789;Chinelo Havaianas Top Basic;Havaianas;46.9;23.55;49.8;< R$79;50;2345.0;21;18;0.37;"EAN faltando em 3 de 21 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";9
+99;2564876;Chinelo Masculino Havaianas Top Athletic FC;Havaianas;57.9;20.94;63.8;< R$79;40;2316.0;8;5;0.3;"EAN faltando em 3 de 8 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";5
+100;2391440;Chinelo Havaianas Slim Point point ferrungem/smok gree;Havaianas;84.9;45.17;46.8;>= R$79;27;2292.3;35;18;0.4;EAN faltando em 17 de 35 tamanhos;27
+101;2392305;;Cartago;61.9;29.69;52.0;< R$79;35;2166.5;14;12;0.49;"EAN faltando em 2 de 14 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";16
+102;2600630;;Cartago;53.9;21.04;61.0;< R$79;40;2156.0;12;12;0.42;"preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";6
+103;2640553;Babuche Plataforma Yvate Liso 2502;Yvate;99.9;37.9;62.1;>= R$79;19;1898.1;12;0;0.33;EAN faltando em 12 de 12 tamanhos;8
+104;2526967;Tamanco Feminino Modare Slide Conforto Lançamento Original;Modare;173.9;78.29;55.0;>= R$79;9;1565.1;12;10;0.62;EAN faltando em 2 de 12 tamanhos;0
+105;2546287;Chinelo Havaianas Top Summer Vibes;Havaianas;63.9;24.99;60.9;< R$79;23;1469.7;10;10;0.51;preco < R$79: frete gratis subsidiado nao se aplica;12
+106;2389164;Chinelo Havaianas Top Surfer;Havaianas;74.9;30.36;59.5;< R$79;18;1348.2;5;4;0.32;"EAN faltando em 1 de 5 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";0
+107;2389096;Chinelo Slim Havaianas Elegance Print;Havaianas;47.9;20.51;57.2;< R$79;27;1293.3;10;5;0.35;"EAN faltando em 5 de 10 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";0
+108;2340253;Chinelo Tamanco Modare 7142.106;Modare;110.9;41.41;62.7;>= R$79;11;1219.9;18;16;0.56;EAN faltando em 2 de 18 tamanhos;0
+109;2659430;;KIDSTEP;46.9;7.75;83.5;< R$79;26;1219.4;12;0;0.2;"EAN faltando em 12 de 12 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";4
+110;2398392;;Havaianas;39.9;15.99;59.9;< R$79;29;1157.1;14;10;0.46;"EAN faltando em 4 de 14 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";6
+111;2608307;Papete Slide Feminina Moleca 5556.100;Moleca;136.9;59.08;56.8;>= R$79;8;1095.2;8;7;0.65;EAN faltando em 1 de 8 tamanhos;14
+112;2659414;;KIDSTEP;46.9;7.75;83.5;< R$79;22;1031.8;6;0;0.2;"EAN faltando em 6 de 6 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";4
+113;2659428;Babuche Infantil Menina Kidstep Capivara 2169.109;KIDSTEP;46.9;7.75;83.5;< R$79;20;938.0;13;0;0.2;"EAN faltando em 13 de 13 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";4
+114;2626343;Tenis Casual Feminina Modare 7416.202;Modare;226.9;97.72;56.9;>= R$79;4;907.6;8;7;0.51;EAN faltando em 1 de 8 tamanhos;9
+115;2664228;Chinelo Dedo Baby Menina Rider Rosa 12674;Rider;36.9;14.03;62.0;< R$79;23;848.7;7;6;0.3;"EAN faltando em 1 de 7 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";0
+116;2659413;;KIDSTEP;46.9;7.75;83.5;< R$79;18;844.2;6;0;0.2;"EAN faltando em 6 de 6 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";4
+117;2659431;;KIDSTEP;46.9;7.75;83.5;< R$79;16;750.4;6;0;0.2;"EAN faltando em 6 de 6 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";4
+118;2659429;;KIDSTEP;46.9;7.75;83.5;< R$79;14;656.6;6;0;0.2;"EAN faltando em 6 de 6 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica; sem titulo na exportacao";4
+119;2358786;Chinelo Havaianas Elegance Liso;Havaianas;30.9;15.7;49.2;< R$79;16;494.4;13;10;0.35;"EAN faltando em 3 de 13 tamanhos; preco < R$79: frete gratis subsidiado nao se aplica";6
+120;2400168;Chinelo Tamanco Slide Feminino Modare 7142.101;Modare;120.9;46.94;61.2;>= R$79;3;362.7;8;7;0.6;EAN faltando em 1 de 8 tamanhos;0
+121;2581596;Chinelo Tamanco Modare 7142.106;Modare;115.9;49.7;57.1;>= R$79;1;115.9;9;8;0.5;EAN faltando em 1 de 9 tamanhos;0

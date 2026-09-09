@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "permissions": {
+    "allow": [
+      "Bash(.venv/Scripts/python.exe cli.py contas*)",
+      "Bash(.venv/Scripts/python.exe cli.py checar*)",
+      "Bash(.venv/Scripts/python.exe cli.py alertas*)",
+      "Bash(.venv/Scripts/python.exe cli.py diagnostico*)",
+      "Bash(.venv/Scripts/python.exe cli.py cobertura*)",
+      "Bash(.venv/Scripts/python.exe cli.py precos*)",
+      "Bash(.venv/Scripts/python.exe cli.py promocoes*)",
+      "Bash(.venv/Scripts/python.exe scripts/painel_loja.py*)",
+      "Bash(.venv/Scripts/python.exe scripts/painel_metricas.py*)"
+    ],
+    "ask": [
+      "Edit(.env)",
+      "Edit(contas/*/.env)",
+      "Edit(config/*.yaml)",
+      "Edit(contas/*/conta.yaml)",
+      "Edit(contas/*/palavras-chave.yaml)",
+      "Edit(contas/*/concorrentes.yaml)",
+      "Write(.env)",
+      "Write(contas/*/.env)",
+      "Write(config/*.yaml)",
+      "Write(contas/*/conta.yaml)",
+      "Write(contas/*/palavras-chave.yaml)",
+      "Write(contas/*/concorrentes.yaml)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/travar-escrita-ml.py\"",
+            "timeout": 10,
+            "statusMessage": "Conferindo se o comando escreve na conta..."
+          }
+        ]
+      }
+    ]
+  }
+}

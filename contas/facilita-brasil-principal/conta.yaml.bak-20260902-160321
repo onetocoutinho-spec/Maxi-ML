@@ -1,0 +1,46 @@
+# Parâmetros operacionais desta conta.
+# O que identifica a conta (user_id, papel) mora em config/clientes.yaml.
+# Aqui ficam só as regras de negócio dela.
+
+parametros:
+  # AJUSTAR com o número real da Mayara — 18 é o padrão do template,
+  # não uma informação dela.
+  margem_minima_percentual: 18
+
+  # Custo médio de frete que você absorve, se aplicável
+  frete_medio: 0
+
+  # RESERVA, não é o número usado. A comissão real é medida por anúncio com
+  # `python cli.py tarifas facilita-brasil-principal` e fica no banco — o ML
+  # cobra por CATEGORIA, e na conta do Ênio isso variou de 10,5% a 16,5%.
+  # Estes valores só entram em anúncio que ainda não foi medido.
+  comissao:
+    gold_special: 0.12   # clássico
+    gold_pro: 0.17       # premium
+
+  # Quantos resultados varrer por palavra-chave (máx. 50 por chamada)
+  top_n_busca: 30
+
+  # Observações que o agente deve levar em conta ao operar esta conta
+  # Estofado é item volumoso: o frete grátis sai do bolso do vendedor e
+  # costuma pesar mais que a comissão. Enquanto isto estiver zerado, todo
+  # piso calculado para esta conta sai otimista.
+  frete_medio: 0
+
+  regras_do_negocio: >
+    Estofados — poltronas decorativas, poltronas do papai reclináveis, sofás,
+    sofás-cama e namoradeiras.
+
+    Item volumoso: o frete pesa muito e sai da margem do vendedor quando o
+    anúncio tem frete grátis. Antes de reagir a um concorrente mais barato,
+    conferir se ele não está cobrando frete à parte.
+
+    TRÊS CONTAS DO MESMO DONO: facilita-brasil-principal, facilita-brasil-loja2
+    e facilita-decoralli. Elas vendem a MESMA Poltrona Mona em madeira maciça.
+    Quando duas aparecerem na mesma busca, isso é canibalização entre contas do
+    próprio cliente — não é concorrente. Recomendar baixar preço numa delas
+    para "ganhar" da outra é destruir margem dos dois lados.
+
+    Sobreposição com outro cliente da carteira: a linha de móveis do Ênio
+    Toldos (ShoppLima) disputa a mesma prateleira de sala de estar. Se as
+    duas aparecerem na mesma busca, é canibalização entre clientes seus.

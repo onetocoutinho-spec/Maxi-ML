@@ -1,0 +1,10 @@
+# Vendedores nomeados que você quer acompanhar por inteiro.
+# Descubra o seller_id abrindo um anúncio dele e chamando:
+#   GET https://api.mercadolibre.com/items/MLB123456789
+# o campo é 'seller_id'.
+
+concorrentes:
+  - seller_id: "000000000"
+    apelido: "Nome do concorrente"
+    limite: 50
+    motivo: "briga direto no mesmo produto"

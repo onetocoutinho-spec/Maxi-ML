@@ -1,0 +1,493 @@
+"""
+Preço mínimo por anúncio: até onde dá para descer sem vender no prejuízo.
+
+Por que este módulo existe
+--------------------------
+O sistema sabe dizer "o SKYIFLEX está 29,2% abaixo dos seus R$ 1.932,99" — e
+para ali. Essa frase não é uma decisão: sem o custo do produto, ninguém sabe se
+acompanhar o preço é defender participação ou vender no prejuízo. Alerta que
+não vira decisão é barulho educado.
+
+Aqui entra o custo real, informado pelo cliente numa planilha, e sai o **piso**
+de cada anúncio: o menor preço que ainda entrega a margem mínima combinada.
+Com o piso, o mesmo alerta passa a terminar com "dá para acompanhar" ou "abaixo
+do seu piso — não acompanhe".
+
+A conta
+-------
+Vendendo a P, o que sobra é P menos o custo, menos a comissão do Mercado Livre
+(que é percentual sobre P), menos imposto (idem), menos o frete que VOCÊ
+absorve quando o anúncio é frete grátis.
+
+    lucro = P − custo − P·comissão − P·imposto − frete_absorvido + rebate
+    exigir lucro/P ≥ margem
+        ⟹  P ≥ (custo + frete − rebate) / (1 − comissão − imposto − margem)
+
+O frete absorvido não é chute: desde a versão de hoje o sistema mede o custo
+real do frete de cada anúncio seu uma vez por dia. Quando o anúncio tem frete
+grátis, esse valor entra na conta; quando não tem, quem paga é o comprador e
+ele fica de fora.
+
+O rebate é a parte do desconto que o Mercado Livre banca numa campanha, e que
+volta como redução de tarifa (ver `db.rebates_ativos`). Entra como custo
+NEGATIVO fixo, não como desconto de alíquota. Ficou de fora até 02/09/2026, e
+a falta dele acusava "abaixo do piso" anúncios com 13% de margem real — a
+operação chegou a sair de duas promoções boas por causa disso. É a mesma conta
+que `scripts/cadastrar_promos.py` faz; as duas precisam concordar.
+"""
+from __future__ import annotations
+
+import csv
+import re
+import sqlite3
+import unicodedata
+from pathlib import Path
+
+from .utils import agora_utc
+
+# Um mesmo dado vem com nome diferente em cada planilha. Em vez de exigir um
+# cabeçalho exato — que na prática significa devolver o arquivo para o cliente
+# arrumar —, reconhecemos os nomes usados de verdade.
+COLUNAS = {
+    "identificador": ("item_id", "itemid", "mlb", "anuncio", "anuncio_id", "id",
+                      "sku", "codigo", "cod", "referencia", "titulo", "produto",
+                      "descricao"),
+    "custo":         ("custo", "custo_unitario", "custo_unit", "preco_de_custo",
+                      "preco_custo", "custo_produto", "valor_de_custo", "cmv"),
+    "embalagem":     ("embalagem", "custo_embalagem", "caixa"),
+    "frete":         ("frete", "frete_proprio", "custo_frete", "frete_pago",
+                      "logistica"),
+    "imposto":       ("imposto", "impostos", "imposto_percentual", "tributos",
+                      "aliquota", "simples"),
+    "outros":        ("outros", "custo_extra", "extras", "adicional"),
+}
+
+
+def _chave(texto: str) -> str:
+    """Cabeçalho sem acento, sem espaço e em minúsculas."""
+    texto = unicodedata.normalize("NFKD", str(texto or ""))
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", "_", texto.strip().lower()).strip("_")
+
+
+def _numero(valor) -> float | None:
+    """
+    Aceita "1.234,56", "1234.56", "R$ 89,90" e "12%".
+
+    Planilha brasileira vem com vírgula decimal e ponto de milhar; ler isso com
+    float() direto dá erro ou, pior, lê 1.234 como mil duzentos e trinta e
+    quatro dividido por mil.
+    """
+    if valor is None:
+        return None
+    if isinstance(valor, (int, float)):
+        return float(valor)
+    texto = str(valor).strip().replace("R$", "").replace("%", "").strip()
+    if not texto:
+        return None
+    texto = texto.replace(" ", "")
+    if "," in texto and "." in texto:
+        texto = texto.replace(".", "").replace(",", ".")
+    elif "," in texto:
+        texto = texto.replace(",", ".")
+    try:
+        return float(texto)
+    except ValueError:
+        return None
+
+
+def _percentual(valor) -> float | None:
+    """12 e 0,12 querem dizer a mesma coisa. Acima de 1 é porcentagem."""
+    n = _numero(valor)
+    if n is None:
+        return None
+    return n / 100.0 if n > 1 else n
+
+
+def ler_planilha(caminho: Path) -> tuple[list[dict], list[str]]:
+    """
+    Lê a planilha de custos e devolve (linhas, avisos).
+
+    Aceita CSV (com vírgula ou ponto e vírgula) e XLSX. Nunca levanta exceção
+    por causa de conteúdo: um arquivo meio errado deve render um relatório do
+    que não deu para entender, não um traceback.
+    """
+    avisos: list[str] = []
+    if not caminho.exists():
+        return [], [f"não encontrei {caminho.name}"]
+
+    brutas: list[dict] = []
+    if caminho.suffix.lower() in (".xlsx", ".xlsm"):
+        try:
+            from openpyxl import load_workbook
+        except ImportError:
+            return [], ["para ler .xlsx falta a biblioteca openpyxl. "
+                        "Salve a planilha como CSV e coloque no lugar do .xlsx."]
+        aba = load_workbook(caminho, data_only=True).active
+        linhas = list(aba.values)
+        if not linhas:
+            return [], ["a planilha está vazia"]
+        cabecalho = [_chave(c) for c in linhas[0]]
+        for linha in linhas[1:]:
+            brutas.append(dict(zip(cabecalho, linha)))
+    else:
+        texto = caminho.read_text(encoding="utf-8-sig", errors="replace")
+        amostra = texto[:2000]
+        separador = ";" if amostra.count(";") > amostra.count(",") else ","
+        leitor = csv.DictReader(texto.splitlines(), delimiter=separador)
+        for linha in leitor:
+            brutas.append({_chave(k): v for k, v in linha.items() if k})
+
+    if not brutas:
+        return [], ["não achei nenhuma linha de dados"]
+
+    presentes = set(brutas[0])
+    mapa: dict[str, str] = {}
+    for campo, apelidos in COLUNAS.items():
+        for apelido in apelidos:
+            if apelido in presentes:
+                mapa[campo] = apelido
+                break
+
+    if "identificador" not in mapa:
+        return [], [f"não achei a coluna que identifica o anúncio. "
+                    f"Colunas lidas: {', '.join(sorted(presentes)) or '(nenhuma)'}. "
+                    f"Use uma chamada item_id, MLB, SKU ou titulo."]
+    if "custo" not in mapa:
+        return [], [f"não achei a coluna de custo. "
+                    f"Colunas lidas: {', '.join(sorted(presentes))}. "
+                    f"Use uma chamada custo, custo_unitario ou preco_de_custo."]
+
+    itens = []
+    sem_custo = 0
+    for bruta in brutas:
+        ident = str(bruta.get(mapa["identificador"]) or "").strip()
+        custo = _numero(bruta.get(mapa["custo"]))
+        if not ident:
+            continue
+        if custo is None:
+            sem_custo += 1
+            continue
+        itens.append({
+            "identificador": ident,
+            "custo": custo,
+            "embalagem": _numero(bruta.get(mapa.get("embalagem"))) or 0.0,
+            "frete_proprio": _numero(bruta.get(mapa.get("frete"))) or 0.0,
+            "imposto": _percentual(bruta.get(mapa.get("imposto"))) or 0.0,
+            "outros": _numero(bruta.get(mapa.get("outros"))) or 0.0,
+        })
+
+    if sem_custo:
+        avisos.append(f"{sem_custo} linha(s) sem custo preenchido foram ignoradas")
+    avisos.append("colunas reconhecidas: " +
+                  ", ".join(f"{k} ← {v}" for k, v in mapa.items()))
+    return itens, avisos
+
+
+def _so_alfanumerico(texto: str) -> str:
+    """
+    Reduz um SKU ao que nele é estável.
+
+    O mesmo produto aparece como SOFABENY-CINZA180, SOFABENYCINZA180 e
+    SOFABENY180_CINZA na mesma planilha. Separador e caixa não distinguem
+    produto nenhum — só atrapalham o casamento.
+    """
+    sem_acento = "".join(
+        c for c in unicodedata.normalize("NFD", str(texto or ""))
+        if unicodedata.category(c) != "Mn")
+    return re.sub(r"[^A-Za-z0-9]", "", sem_acento).upper()
+
+
+def casar_com_anuncios(itens: list[dict], anuncios: list[sqlite3.Row]) -> tuple[dict, list[dict]]:
+    """
+    Liga cada linha da planilha a um anúncio.
+
+    Três chaves, nesta ordem: o MLB no texto, depois igualdade de título, depois
+    título parecido. Casamento por semelhança é o único jeito prático quando o
+    cliente manda a planilha do ERP dele, que não conhece MLB nenhum — mas é
+    também o que mais erra, então o que não casar volta na lista de sobras em
+    vez de ser adivinhado.
+
+    UM SKU CASA COM TODOS OS ANÚNCIOS QUE O USAM, não só com o primeiro.
+    A mesma peça costuma estar no ar várias vezes — o par Clássico + Premium,
+    a cópia na conta irmã — e todas carregam o mesmo SKU. Enquanto o SKU
+    marcava um anúncio só, o custo entrava em um e os outros apareciam como
+    "sem custo cadastrado": na FACILITA isso escondia o custo de 109 dos 178
+    ativos, com o cliente convicto de que tinha mandado a planilha inteira —
+    e tinha. O MLB continua marcando um anúncio só, porque é identificador
+    único; o título também, porque é aproximado e espalhar erro é pior.
+    """
+    por_mlb = {a["item_id"]: a for a in anuncios}
+    por_titulo = {_chave(a["titulo"]): a for a in anuncios}
+
+    # SKU do vendedor. É a chave que quase toda planilha de custo usa — o
+    # cliente organiza o custo dele por SKU, não por MLB. Casar por aqui é
+    # exato; sem isto, sobra o título, que é aproximado e erra.
+    # A comparação ignora hífen, underline, acento e caixa porque o mesmo SKU
+    # aparece escrito de N formas: SOFABENY-CINZA180, SOFABENYCINZA180,
+    # SOFABENY180_CINZA.
+    por_sku: dict[str, list] = {}
+    for a in anuncios:
+        try:
+            bruto = a["sku"]
+        except (KeyError, IndexError, TypeError):
+            bruto = None
+        if bruto:
+            por_sku.setdefault(_so_alfanumerico(bruto), []).append(a)
+
+    casados: dict[str, dict] = {}
+    sobras: list[dict] = []
+
+    for item in itens:
+        ident = item["identificador"]
+        achados = []
+
+        m = re.search(r"(ML[A-Z]?\d{6,})", ident.upper().replace("-", ""))
+        if m and m.group(1) in por_mlb:
+            achados = [por_mlb[m.group(1)]]
+        if not achados:
+            achados = list(por_sku.get(_so_alfanumerico(ident), ()))
+        if not achados:
+            achado = por_titulo.get(_chave(ident))
+            if achado is not None:
+                achados = [achado]
+        if not achados:
+            alvo = _chave(ident)
+            if len(alvo) >= 10:
+                for chave, anuncio in por_titulo.items():
+                    if alvo in chave or chave in alvo:
+                        achados = [anuncio]
+                        break
+
+        if not achados:
+            sobras.append(item)
+            continue
+        for achado in achados:
+            casados[achado["item_id"]] = {**item, "titulo": achado["titulo"]}
+
+    return casados, sobras
+
+
+def piso_de_preco(custo_total: float, comissao: float, imposto: float,
+                  margem: float, frete_absorvido: float = 0.0,
+                  rebate: float = 0.0) -> float | None:
+    """
+    Menor preço que ainda entrega a margem pedida.
+
+    Devolve None quando a soma de comissão, imposto e margem chega a 100%: aí
+    não existe preço que feche a conta, e devolver um número gigante seria pior
+    que admitir que a pergunta não tem resposta.
+
+    O rebate entra como custo NEGATIVO fixo, não como desconto de percentual:
+    o ML devolve um valor em reais, calculado sobre o preço original, e não
+    muda a alíquota que ele cobra. É a mesma forma que
+    `scripts/cadastrar_promos.py` usa — as duas contas precisam concordar,
+    porque discordar já custou duas promoções boas em 02/09/2026.
+    """
+    denominador = 1.0 - comissao - imposto - margem
+    if denominador <= 0.01:
+        return None
+    return (custo_total + frete_absorvido - rebate) / denominador
+
+
+def calcular(con: sqlite3.Connection, conta, itens_da_planilha: list[dict]) -> list[dict]:
+    """Piso, empate e folga de cada anúncio que tiver custo cadastrado."""
+    from . import db
+    ultimo = db.ultima_coleta(con, "snap_anuncio", conta.slug)
+    if not ultimo:
+        return []
+    anuncios = con.execute(
+        "SELECT * FROM snap_anuncio WHERE conta_slug = ? AND coletado_em = ?",
+        (conta.slug, ultimo)).fetchall()
+
+    casados, _ = casar_com_anuncios(itens_da_planilha, anuncios)
+    parametros = conta.parametros or {}
+    comissoes = parametros.get("comissao") or {}
+    margem_alvo = float(parametros.get("margem_minima_percentual", 0)) / 100.0
+
+    # A tarifa medida ganha da configurada, sempre. O conta.yaml guarda um
+    # número redondo por tipo de anúncio; o ML cobra por categoria, e a
+    # diferença chega a 5 pontos no mesmo cliente. Enquanto um anúncio nunca
+    # tiver sido medido (`cli.py tarifas SLUG`), ele cai no conta.yaml.
+    medidas = db.tarifas_medidas(con, conta.slug)
+    vitrines = db.vitrines_recentes(con, conta.slug)
+    # O que o ML devolve de tarifa na campanha que está valendo. Sem isso o
+    # piso ignora dinheiro que entra e acusa "abaixo do piso" quem não está.
+    rebates = db.rebates_ativos(con, conta.slug)
+    # O frete é medido por rodízio (8 anúncios por ciclo do vigia), então a
+    # coluna do snapshot da vez é nula na maioria. Sem esta reserva, o frete
+    # entrava na conta só para os poucos medidos naquela rodada e sumia na
+    # seguinte — mesmo remédio de vitrines_recentes.
+    fretes = db.fretes_recentes(con, conta.slug)
+
+    saida = []
+    for anuncio in anuncios:
+        custo = casados.get(anuncio["item_id"])
+        if not custo:
+            continue
+
+        medida = medidas.get(anuncio["item_id"])
+        taxa_fixa = 0.0
+        if medida and medida.get("taxa_pct") is not None:
+            comissao = float(medida["taxa_pct"])
+            taxa_fixa = float(medida.get("taxa_fixa") or 0.0)
+            origem_comissao = "medida"
+        else:
+            comissao = float(comissoes.get(anuncio["tipo_anuncio"], 0) or 0)
+            origem_comissao = "conta.yaml"
+        if comissao > 1:
+            comissao /= 100.0
+
+        # Frete só entra quando é você quem paga.
+        #
+        # A ordem é frete_lista, depois a planilha. `frete_custo` NÃO entra: ele
+        # guarda o que o COMPRADOR paga, que em anúncio com frete grátis é zero
+        # por definição — usá-lo fazia o frete sumir da conta exatamente onde
+        # ele pesa. Medido na FACILITA em 02/09/2026: mediana de R$ 74,03 por
+        # peça, 7,3% do preço, chegando a 27,8% numa poltrona de R$ 799. Com
+        # isso na conta, a margem mediana das promoções cai de 22,5% para 15,2%.
+        frete = 0.0
+        if anuncio["frete_gratis"]:
+            try:
+                frete = (float(anuncio["frete_lista"] or 0)
+                         or float(fretes.get(anuncio["item_id"]) or 0)
+                         or float(custo["frete_proprio"]))
+            except (KeyError, IndexError, TypeError):
+                frete = float(custo["frete_proprio"])
+        # A taxa fixa por unidade é custo, não percentual: entra somada ao
+        # custo em vez de ao denominador.
+        custo_total = custo["custo"] + custo["embalagem"] + custo["outros"] + taxa_fixa
+
+        rebate = float(rebates.get(anuncio["item_id"], 0.0))
+        piso = piso_de_preco(custo_total, comissao, custo["imposto"], margem_alvo,
+                             frete, rebate)
+        empate = piso_de_preco(custo_total, comissao, custo["imposto"], 0.0,
+                               frete, rebate)
+        from .utils import preco_real
+        # vitrine, não tabela — e com a última medição não nula como reserva,
+        # porque o ciclo curto do vigia grava preco_vitrine nulo e sem isso o
+        # piso seria comparado com o preço de cadastro.
+        preco = preco_real(anuncio, vitrines)
+        saida.append({
+            "item_id": anuncio["item_id"], "titulo": anuncio["titulo"],
+            "preco": preco, "custo_total": custo_total, "frete_absorvido": frete,
+            "rebate": rebate,
+            "comissao": comissao, "imposto": custo["imposto"],
+            "origem_comissao": origem_comissao, "taxa_fixa": taxa_fixa,
+            "margem_alvo": margem_alvo, "piso": piso, "empate": empate,
+            "folga_reais": (preco - piso) if (piso and preco) else None,
+            "folga_pct": ((preco - piso) / preco * 100) if (piso and preco) else None,
+            "abaixo_do_piso": bool(piso and preco and preco < piso),
+        })
+    return saida
+
+
+def caminho_da_planilha(conta) -> Path | None:
+    """A primeira planilha de custos que existir na pasta da conta."""
+    for nome in ("custos.csv", "custos.xlsx", "precificacao.csv", "precificacao.xlsx"):
+        alvo = conta.dir / nome
+        if alvo.exists():
+            return alvo
+    return None
+
+
+def carregar(con: sqlite3.Connection, conta) -> list[dict]:
+    """Atalho para quem só quer o resultado: sem planilha, lista vazia."""
+    caminho = caminho_da_planilha(conta)
+    if not caminho:
+        return []
+    itens, _ = ler_planilha(caminho)
+    if not itens:
+        return []
+    return calcular(con, conta, itens)
+
+
+IDADE_MAXIMA_DIAS = 90
+
+
+def idade_da_planilha(caminho: Path) -> int | None:
+    """Dias desde a última alteração do arquivo."""
+    if not caminho or not caminho.exists():
+        return None
+    from datetime import datetime, timezone
+    modificado = datetime.fromtimestamp(caminho.stat().st_mtime, timezone.utc)
+    return (agora_utc() - modificado).days
+
+
+def panorama(con: sqlite3.Connection, conta) -> dict:
+    """
+    Como está a cobertura de custo desta conta. Serve para o painel de todas.
+
+    Custo velho é pior que custo faltando: faltando, o alerta só não dá
+    veredito; velho, ele dá o veredito ERRADO com a mesma confiança. Por isso
+    a idade do arquivo entra aqui como número, não como detalhe.
+    """
+    from . import db
+    caminho = caminho_da_planilha(conta)
+    ultimo = db.ultima_coleta(con, "snap_anuncio", conta.slug)
+    ativos = con.execute(
+        "SELECT COUNT(*) FROM snap_anuncio WHERE conta_slug = ? AND coletado_em = ? "
+        "AND status = 'active'", (conta.slug, ultimo)).fetchone()[0] if ultimo else 0
+
+    base = {"conta": conta, "planilha": caminho, "ativos": ativos,
+            "idade": idade_da_planilha(caminho), "com_custo": 0,
+            "abaixo_do_piso": 0, "sobras": 0, "erro": None}
+    if not caminho:
+        return base
+
+    itens, avisos = ler_planilha(caminho)
+    if not itens:
+        base["erro"] = avisos[0] if avisos else "planilha ilegível"
+        return base
+
+    resultado = calcular(con, conta, itens)
+    anuncios = con.execute(
+        "SELECT * FROM snap_anuncio WHERE conta_slug = ? AND coletado_em = ?",
+        (conta.slug, ultimo)).fetchall() if ultimo else []
+    _, sobras = casar_com_anuncios(itens, anuncios)
+
+    base["com_custo"] = len(resultado)
+    base["abaixo_do_piso"] = sum(1 for r in resultado if r["abaixo_do_piso"])
+    base["sobras"] = len(sobras)
+    return base
+
+
+def modelo_para_o_cliente(con: sqlite3.Connection, conta, destino: Path) -> int:
+    """
+    Gera a planilha PARA O CLIENTE PREENCHER, já com os anúncios que ainda não
+    têm custo cadastrado.
+
+    Pedir "me manda os custos" devolve planilha do ERP, com código interno que
+    não casa com MLB nenhum — foi assim que uma linha sobrou no primeiro teste.
+    Mandando a lista pronta, com MLB, título e preço atual, sobra uma coluna
+    para preencher e o casamento passa a ser exato.
+    """
+    from . import db
+    ultimo = db.ultima_coleta(con, "snap_anuncio", conta.slug)
+    if not ultimo:
+        return 0
+    anuncios = con.execute(
+        "SELECT * FROM snap_anuncio WHERE conta_slug = ? AND coletado_em = ? "
+        "AND status = 'active' ORDER BY vendidos DESC", (conta.slug, ultimo)).fetchall()
+
+    ja_tem = set()
+    caminho = caminho_da_planilha(conta)
+    if caminho:
+        itens, _ = ler_planilha(caminho)
+        ja_tem = set(casar_com_anuncios(itens, anuncios)[0])
+
+    faltando = [a for a in anuncios if a["item_id"] not in ja_tem]
+    if not faltando:
+        return 0
+
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    with destino.open("w", encoding="utf-8-sig", newline="") as fh:
+        escritor = csv.writer(fh, delimiter=";")
+        escritor.writerow(["item_id", "titulo", "preco_de_venda_hoje",
+                           "custo", "embalagem", "frete", "imposto"])
+        for a in faltando:
+            # preço de venda vai preenchido só como referência para quem
+            # preenche; o sistema não lê essa coluna.
+            escritor.writerow([a["item_id"], a["titulo"],
+                               f"{a['preco']:.2f}".replace(".", ","), "", "", "", ""])
+    return len(faltando)

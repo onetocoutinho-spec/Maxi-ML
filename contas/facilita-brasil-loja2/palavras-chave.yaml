@@ -1,0 +1,31 @@
+# Termos vigiados nesta conta. Montados a partir dos anúncios da
+# loja em 27/08/2026.
+
+palavras_chave:
+  - termo: "poltrona beny"
+    top_n: 30
+    observacao: "linha própria da conta"
+
+  - termo: "sofa beny namoradeira"
+    top_n: 25
+
+  - termo: "puff redondo estofado"
+    top_n: 20
+
+  - termo: "poltrona decorativa sala"
+    top_n: 30
+
+  - termo: "perfume arabe importado"
+    top_n: 30
+    observacao: "linha de perfume"
+
+  - termo: "al wataniah sabah al ward"
+    top_n: 20
+    observacao: "catálogo — buy box importa"
+
+  - termo: "lattafa fakhar rose"
+    top_n: 20
+    observacao: "catálogo — buy box importa"
+
+  - termo: "perfume feminino 100ml importado"
+    top_n: 25

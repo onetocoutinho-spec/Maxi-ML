@@ -1,0 +1,440 @@
+{
+  "id": "MLB7584200654",
+  "site_id": "MLB",
+  "title": "Babuche Led Infantil Molekinho 2874.407 Eva Preto 27 Br",
+  "seller_id": 2332812759,
+  "category_id": "MLB273770",
+  "user_product_id": "MLBU5104524126",
+  "official_store_id": null,
+  "price": 141.9,
+  "base_price": 141.9,
+  "original_price": null,
+  "inventory_id": null,
+  "currency_id": "BRL",
+  "initial_quantity": 5,
+  "available_quantity": 5,
+  "sold_quantity": 0,
+  "sale_terms": [],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_special",
+  "family_name": "Babuche Led Infantil Molekinho 2874.407 Eva",
+  "family_id": 8258019780319887,
+  "start_time": "2026-09-03T12:42:55.598Z",
+  "stop_time": "2046-08-29T04:00:00.000Z",
+  "end_time": "2046-08-29T04:00:00.000Z",
+  "expiration_time": "2026-11-22T12:42:55.679Z",
+  "condition": "new",
+  "permalink": "http://produto.mercadolivre.com.br/MLB-7584200654-babuche-led-infantil-molekinho-2874407-eva-preto-27-br-_JM",
+  "pictures": [
+    {
+      "id": "745733-MLB115684471756_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "788126-MLB115684471758_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "783333-MLB115684471760_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "659540-MLB115684471762_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "951462-MLB115684471764_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "643778-MLB115684471766_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "729309-MLB115684471768_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "710582-MLB115684471770_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "638049-MLB115684471772_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    },
+    {
+      "id": "762275-MLB115684471774_092026",
+      "url": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "secure_url": "https://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/O-PT.jpg",
+      "size": "500x500",
+      "max_size": "500x500",
+      "quality": ""
+    }
+  ],
+  "video_id": null,
+  "descriptions": [],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+    "mode": "me2",
+    "local_pick_up": false,
+    "free_shipping": true,
+    "methods": [],
+    "dimensions": null,
+    "tags": [
+      "mandatory_free_shipping"
+    ],
+    "logistic_type": "drop_off",
+    "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+    "id": 1481297087,
+    "comment": "Galeria Porecatu Referencia: Ao lado da Farmácia Droga Raia",
+    "address_line": "Avenida Brasil 5018",
+    "zip_code": "15500051",
+    "city": {
+      "id": "QlItU1BWb3R1cG9yYW5nYQ",
+      "name": "Votuporanga"
+    },
+    "state": {
+      "id": "BR-SP",
+      "name": "São Paulo"
+    },
+    "country": {
+      "id": "BR",
+      "name": "Brasil"
+    },
+    "latitude": -20.407955,
+    "longitude": -49.9778402,
+    "search_location": {
+      "neighborhood": {
+        "id": "TVhYSmFyZGltIFPDo28gSnVkYXMgVGFkZXVUV5",
+        "name": "Jardim São Judas Tadeu"
+      },
+      "city": {
+        "id": "TVhYVm90dXBvcmFuZ2FUVXhDVUZOQlQwODVOM",
+        "name": "Votuporanga"
+      },
+      "state": {
+        "id": "TUxCUFNBT085N2E4",
+        "name": "São Paulo"
+      }
+    }
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": {
+    "latitude": -20.407955,
+    "longitude": -49.9778402
+  },
+  "coverage_areas": [],
+  "attributes": [
+    {
+      "id": "BRAND",
+      "name": "Marca",
+      "value_id": null,
+      "value_name": "Molekinho",
+      "values": [
+        {
+          "id": null,
+          "name": "Molekinho",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "MODEL",
+      "name": "Modelo",
+      "value_id": null,
+      "value_name": "2874.407 EVA",
+      "values": [
+        {
+          "id": null,
+          "name": "2874.407 EVA",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "GENDER",
+      "name": "Gênero",
+      "value_id": "339667",
+      "value_name": "Meninos",
+      "values": [
+        {
+          "id": "339667",
+          "name": "Meninos",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    },
+    {
+      "id": "FOOTWEAR_TYPE",
+      "name": "Tipo de calçado",
+      "value_id": "3630524",
+      "value_name": "Mule",
+      "values": [
+        {
+          "id": "3630524",
+          "name": "Mule",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    },
+    {
+      "id": "COLOR",
+      "name": "Cor",
+      "value_id": "52049",
+      "value_name": "Preto",
+      "values": [
+        {
+          "id": "52049",
+          "name": "Preto",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "SIZE",
+      "name": "Tamanho",
+      "value_id": null,
+      "value_name": "27 BR",
+      "values": [
+        {
+          "id": null,
+          "name": "27 BR",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "SIZE_GRID_ID",
+      "name": "ID da guia de tamanhos",
+      "value_id": null,
+      "value_name": "7739769",
+      "values": [
+        {
+          "id": null,
+          "name": "7739769",
+          "struct": null
+        }
+      ],
+      "value_type": "grid_id"
+    },
+    {
+      "id": "SIZE_GRID_ROW_ID",
+      "name": "ID da linha da guia de tamanhos",
+      "value_id": null,
+      "value_name": "7739769:1",
+      "values": [
+        {
+          "id": null,
+          "name": "7739769:1",
+          "struct": null
+        }
+      ],
+      "value_type": "grid_row_id"
+    },
+    {
+      "id": "GTIN",
+      "name": "Código universal de produto",
+      "value_id": null,
+      "value_name": "7900350914565",
+      "values": [
+        {
+          "id": null,
+          "name": "7900350914565",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "SELLER_SKU",
+      "name": "SKU",
+      "value_id": null,
+      "value_name": "01045727",
+      "values": [
+        {
+          "id": null,
+          "name": "01045727",
+          "struct": null
+        }
+      ],
+      "value_type": "string"
+    },
+    {
+      "id": "SELLER_PACKAGE_LENGTH",
+      "name": "Comprimento da embalagem do vendor",
+      "value_id": null,
+      "value_name": "26 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "26 cm",
+          "struct": {
+            "number": 26,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "SELLER_PACKAGE_WIDTH",
+      "name": "Largura da embalagem do vendor",
+      "value_id": null,
+      "value_name": "18 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "18 cm",
+          "struct": {
+            "number": 18,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "SELLER_PACKAGE_HEIGHT",
+      "name": "Altura da embalagem do vendor",
+      "value_id": null,
+      "value_name": "11 cm",
+      "values": [
+        {
+          "id": null,
+          "name": "11 cm",
+          "struct": {
+            "number": 11,
+            "unit": "cm"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "SELLER_PACKAGE_WEIGHT",
+      "name": "Peso da embalagem do vendor",
+      "value_id": null,
+      "value_name": "350 g",
+      "values": [
+        {
+          "id": null,
+          "name": "350 g",
+          "struct": {
+            "number": 350,
+            "unit": "g"
+          }
+        }
+      ],
+      "value_type": "number_unit"
+    },
+    {
+      "id": "ITEM_CONDITION",
+      "name": "Condição do item",
+      "value_id": "2230284",
+      "value_name": "Novo",
+      "values": [
+        {
+          "id": "2230284",
+          "name": "Novo",
+          "struct": null
+        }
+      ],
+      "value_type": "list"
+    }
+  ],
+  "warnings": [
+    {
+      "department": "shipping",
+      "cause_id": 4053,
+      "code": "shipping.lost_me1_by_user",
+      "message": "User has not mode me1",
+      "references": [
+        "user.shipping_preferences.modes"
+      ]
+    },
+    {
+      "department": "items",
+      "cause_id": 350,
+      "code": "item.shipping.mandatory_free_shipping",
+      "message": "Mandatory free shipping added",
+      "references": []
+    }
+  ],
+  "listing_source": "",
+  "variations": [],
+  "thumbnail_id": "745733-MLB115684471756_092026",
+  "thumbnail": "http://http2.mlstatic.com/resources/frontend/statics/processing-image/1.0.0/I-PT.jpg",
+  "status": "paused",
+  "sub_status": [
+    "picture_download_pending"
+  ],
+  "tags": [
+    "cart_eligible",
+    "good_quality_thumbnail",
+    "immediate_payment",
+    "user_product_listing"
+  ],
+  "warranty": null,
+  "catalog_product_id": null,
+  "domain_id": "MLB-SANDALS_AND_CLOGS",
+  "seller_custom_field": null,
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2026-09-03T12:42:55.859Z",
+  "last_updated": "2026-09-03T12:42:55.859Z",
+  "health": null,
+  "catalog_listing": false,
+  "item_relations": [],
+  "channels": [
+    "marketplace"
+  ]
+}
