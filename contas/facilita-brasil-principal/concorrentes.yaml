@@ -1,0 +1,52 @@
+# ============================================================
+# PRODUTOS DE CATÁLOGO VIGIADOS
+#
+# Aqui entra a ficha de catálogo de um produto — aquela página com
+# /p/MLB... na URL. O sistema puxa TODOS os vendedores dela a cada
+# rodada, então concorrente novo naquele produto aparece sozinho, sem
+# ninguém precisar cadastrar nada.
+#
+# Você não precisa listar os produtos de catálogo dos seus PRÓPRIOS
+# anúncios: esses entram na vigilância automaticamente. Esta lista é
+# para fichas onde você ainda NÃO vende e quer acompanhar mesmo assim.
+#
+# 'comparar_com' liga a ficha ao SEU anúncio equivalente — é o que
+# habilita o alerta de preço. Sem ele, a ficha é acompanhada mas não
+# gera alerta de preço, porque comparar um toldo 310x100 com um seu
+# 230x100 só ensina a ignorar alerta.
+#
+# O jeito prático de cadastrar é pelo comando, que confere na API se o
+# link é mesmo ficha antes de gravar:
+#
+#   python cli.py vigiar SLUG_DA_CONTA LINK_DA_FICHA --comparar-com SEU_MLB
+# ============================================================
+
+produtos_vigiados: []
+
+# Exemplo:
+# produtos_vigiados:
+#   - produto: "MLB74599021"
+#     apelido: "Skyiflex 310x100 pergolado fume"
+#     comparar_com: "MLB6920349886"   # seu 305x100 equivalente
+
+
+# ============================================================
+# POR QUE NÃO DÁ PARA VIGIAR UM ANÚNCIO SOLTO
+#
+# Existia aqui uma lista 'concorrentes:', para colar o link do anúncio
+# do concorrente. Ela foi removida porque parou de funcionar: o Mercado
+# Livre devolve access_denied (403) para qualquer leitura de anúncio de
+# terceiro por ID, tanto em /items/ID quanto no multiget /items?ids=.
+# Verificado com controle, num anúncio que o sistema lê sem problema
+# quando pedido pela ficha de catálogo.
+#
+# A consequência precisa estar clara para quem opera:
+#
+#   DESCOBRIR concorrente fora do catálogo   -> dá, pela pesquisa de
+#                                               mercado do raio-x
+#   ACOMPANHAR concorrente fora do catálogo  -> não dá, por nenhum
+#                                               caminho oficial
+#
+# Quem vende fora do catálogo entra no raio-x como retrato do momento,
+# não como vigilância contínua.
+# ============================================================

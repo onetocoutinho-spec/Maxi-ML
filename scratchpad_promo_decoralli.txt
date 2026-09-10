@@ -1,0 +1,26 @@
+  campanhas liberadas ... 7
+  já rodando ............ 10
+
+LIBERADAS — o ML está oferecendo, ninguém aceitou ainda
+  anúncio                        campanha                      preço       piso      sobra  quem paga
+  ----------------------------------------------------------------------------------------------------
+  Sofá-cama Facilita Brasil 1…   Casa e Decor em Oferta    R$ 769,90          —          —  ML 2% / você 52%
+  Sofá-cama Facilita Brasil 1…   Impulsione suas vendas    R$ 769,90          —          —  ML 2% / você 51%
+  Facilita Brasil Premium…       Casa e Decor em Oferta   R$ 1.125,10 R$ 1.065,73   R$ 59,37  ML 2% / você 30%
+  Facilita Brasil Premium…       Casa e Decor em Oferta   R$ 1.125,10 R$ 1.065,73   R$ 59,37  ML 1% / você 23%
+  Facilita Brasil Premium…       Impulsione suas vendas   R$ 1.125,10 R$ 1.065,73   R$ 59,37  ML 1% / você 23%
+  Facilita Brasil Premium…       PRICE_DISCOUNT           R$ 1.159,90 R$ 1.065,73   R$ 94,17  —
+  Facilita Brasil Premium…       PRICE_DISCOUNT           R$ 1.258,00 R$ 1.065,73  R$ 192,27  —
+
+JÁ RODANDO — é o que explica o preço de vitrine de hoje
+  Poltrona Mona Bege Linho…      PRICE_DISCOUNT            R$ 543,78  de R$ 693,99 até 2026-09-10
+  Poltrona Mona Bege Linho…      9.9                       R$ 579,99  de R$ 693,99 até 2026-09-10
+  Puff Elegance Redondo…         9.9                       R$ 595,16  de R$ 899,90 até 2026-09-10
+  Castellar Mobile Poltrona…     PRICE_DISCOUNT            R$ 660,50  de R$ 876,99 até 2026-09-10
+  Castellar Mobile Poltrona…     9.9                       R$ 669,90  de R$ 876,99 até 2026-09-10
+  Puff Elegance Redondo…         PRICE_DISCOUNT            R$ 764,92  de R$ 899,90 até 2026-09-10
+  Sofá-cama Facilita Brasil 1…   PRICE_DISCOUNT           R$ 1.159,99  de R$ 1.656,99 até 2026-09-10
+  Facilita Brasil Premium…       9.9                      R$ 1.238,53  de R$ 1.656,99 até 2026-09-10
+  Facilita Brasil Premium…       9.9                      R$ 1.238,53  de R$ 1.480,00 até 2026-09-10
+  Sofá-cama Facilita Brasil 1…   9.9                      R$ 1.408,45  de R$ 1.656,99 até 2026-09-10
+

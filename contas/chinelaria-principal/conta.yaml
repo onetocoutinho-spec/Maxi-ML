@@ -1,0 +1,71 @@
+# Parâmetros operacionais desta conta.
+# O que identifica a conta (user_id, papel) mora em config/clientes.yaml.
+# Aqui ficam só as regras de negócio dela.
+
+parametros:
+  # ATENÇÃO — NÚMERO AINDA NÃO CONFIRMADO COM A CLIENTE.
+  # Este 20 veio do esqueleto criado em 26/08/2026, não da Leilane. A banda
+  # 12–15 definida pelo Neto em 02/09/2026 vale para Ênio, FACILITA e
+  # Decoralli (móvel/estofado) — calçado tem outro giro e outro ticket, então
+  # não foi herdada aqui de propósito.
+  # Confirmar com a Leilane ANTES de ligar alerta de preço: com a margem
+  # errada o piso sai errado, e o sistema passa a dizer "vende no prejuízo"
+  # (ou "dá para acompanhar") em cima de um número que ninguém validou.
+  margem_minima_percentual: 20
+
+  # Teto da banda. Não trava nada — anúncio acima disso tem folga para baixar
+  # preço e ganhar competitividade. Serve de referência nos relatórios.
+  # Preencher junto com o piso, na mesma conversa com a cliente.
+  # margem_teto_percentual: 15
+
+  # Custo médio de frete que você absorve, se aplicável.
+  # Em calçado o frete é barato perto de móvel, mas o ML tem faixa de frete
+  # grátis obrigatório acima de certo valor — conferir na primeira coleta.
+  frete_medio: 0
+
+  # Comissão informada pelo Neto em 03/09/2026: 12%.
+  # Vale como ponto de partida — o ML cobra por CATEGORIA e vira de faixa em
+  # R$ 700. Assim que houver anúncio no ar, medir de verdade com
+  # `python cli.py tarifas chinelaria-principal`, que grava a taxa real por
+  # anúncio no banco e passa a ter precedência sobre estes números.
+  comissao:
+    gold_special: 0.14   # clássico — MEDIDO em 06/09/2026, não informado.
+                         # /sites/MLB/listing_prices nas 40 combinações de
+                         # categoria e preço da conta: 14% liso, sem taxa fixa,
+                         # de R$ 36,90 a R$ 396,90, tanto em MLB23332 (tênis)
+                         # quanto em MLB273770 (sandálias e chinelos). Não há
+                         # virada de faixa aqui. Substitui o 0.12 informado em
+                         # 03/09, que deixava toda margem 2 pontos otimista.
+    gold_pro: 0.14       # premium — AINDA NÃO MEDIDO; herdou o clássico.
+                         # No ML o premium é sempre mais caro que o clássico
+                         # (costuma ficar 3 a 5 pontos acima). Enquanto isto
+                         # não for medido, piso de anúncio premium sai
+                         # OTIMISTA — não decida promoção de premium por ele.
+                         # A conta não tem nenhum premium hoje.
+
+  # O IMPOSTO não entra aqui. Ele é por linha do custos.csv (coluna 'imposto'),
+  # porque core/precificacao.py lê imposto do item, não da conta.
+  # Informado em 03/09/2026: 12% em todas as linhas.
+
+  # Quantos resultados varrer por palavra-chave (máx. 50 por chamada)
+  top_n_busca: 30
+
+  # Categorias cujos MAIS VENDIDOS serão coletados a cada rodada.
+  # Vazio = usa automaticamente as categorias dos próprios anúncios,
+  # o que costuma ser o certo.
+  categorias_monitoradas: []
+
+  regras_do_negocio: >
+    Modelo "User Products": cada variacao de tamanho/cor e publicada como item
+    separado, compartilhando o mesmo family_name. Atributos obrigatorios:
+    BRAND, MODEL, GENDER, SIZE_GRID_ID, GTIN (ou EMPTY_GTIN_REASON) e SELLER_SKU.
+    Tabelas de medida criadas via POST /catalog/charts por categoria de genero.
+    Nunca alterar family_name de item ja publicado.
+
+    CONSEQUENCIA PRATICA: um mesmo modelo de chinelo aparece como VARIOS
+    anuncios (um por tamanho/cor). Antes de tratar isso como duplicata ou
+    canibalizacao, confira o family_name — irmaos da mesma familia nao
+    concorrem entre si, sao grade.
+
+    Descricao do negocio, politica de preco e quem decide preco: preencher
+    depois da conversa de entrada com a Leilane.

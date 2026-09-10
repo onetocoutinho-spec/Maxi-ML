@@ -1,0 +1,47 @@
+# Parâmetros operacionais desta conta.
+# O que identifica a conta (user_id, papel) mora em config/clientes.yaml.
+# Aqui ficam só as regras de negócio dela.
+
+parametros:
+  # Piso ajustado em 03/09/2026 para 10% de lucro líquido, valendo para as
+  # 3 contas da Facilita. Estava em 18 (padrão do template) — nunca tinha
+  # sido atualizado para a banda 12/15 que as outras duas contas receberam
+  # em 02/09/2026.
+  margem_minima_percentual: 10
+
+  # Teto da banda. Não trava nada — anúncio acima disso tem folga para
+  # baixar preço e ganhar competitividade. Serve de referência nos relatórios.
+  margem_teto_percentual: 15
+
+  # Custo médio de frete que você absorve, se aplicável
+  frete_medio: 0
+
+  # RESERVA, não é o número usado. A comissão real é medida por anúncio
+  # com `python cli.py tarifas facilita-brasil-loja2` e fica no banco — o ML cobra
+  # por CATEGORIA. Estes valores só valem para anúncio ainda não medido.
+  comissao:
+    gold_special: 0.12   # clássico
+    gold_pro: 0.17       # premium
+
+  # Quantos resultados varrer por palavra-chave (máx. 50 por chamada)
+  top_n_busca: 30
+
+  # Observações que o agente deve levar em conta ao operar esta conta
+  regras_do_negocio: >
+    Duas linhas sem relação entre si na mesma conta:
+
+    ESTOFADO — Poltrona Beny, Sofá Beny namoradeira, puff redondo. Item
+    volumoso: o frete grátis sai da margem e pesa mais que a comissão.
+
+    PERFUME IMPORTADO — Al Wataniah (Sabah Al Ward), Lattafa (Fakhar Rose).
+    Lógica oposta à do estofado: item leve, de catálogo, comparável direto,
+    onde o buy box e o preço decidem. Frete quase não pesa.
+
+    Ao analisar alertas, separe as duas: queda de posição em perfume raramente
+    tem a mesma causa que em poltrona.
+
+    TRÊS CONTAS DO MESMO DONO: facilita-brasil-principal, facilita-brasil-loja2
+    e facilita-decoralli. Elas vendem a MESMA Poltrona Mona em madeira maciça.
+    Quando duas aparecerem na mesma busca, isso é canibalização entre contas do
+    próprio cliente — não é concorrente. Recomendar baixar preço numa delas
+    para "ganhar" da outra é destruir margem dos dois lados.

@@ -1,0 +1,19 @@
+# NUNCA versionar credencial
+contas/*/.env
+.env
+
+# dados e saídas
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/*.log
+relatorios/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# fila
+pedidos/*.pedido
+pedidos/feitos/

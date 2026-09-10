@@ -1,0 +1,197 @@
+# ============================================================
+# REGISTRO CENTRAL DE CLIENTES E CONTAS
+# ------------------------------------------------------------
+# Um cliente pode ter 1 ou N contas de Mercado Livre.
+# Este arquivo é a ÚNICA fonte de verdade sobre "quem é quem".
+# Nenhuma credencial mora aqui — cada conta tem seu .env isolado.
+# ============================================================
+
+clientes:
+
+  - id: chinelaria-leilane
+    nome: "Chinelaria Leilane Neves"
+    nicho: "Calçados / babuche"
+    responsavel: "Neto"
+    status: ativo
+    contas:
+      - slug: chinelaria-principal
+        nome_conta: "Chinelaria Leilane Neves"
+        site_id: MLB
+        user_id: "2332812759"  # user_id da conta no ML
+        papel: principal              # principal | secundaria | outlet | teste
+        observacoes: >
+          Modelo "User Products": cada variação tamanho/cor é um item
+          separado compartilhando family_name.
+
+  - id: tawaty
+    nome: "CASA TAWATY"
+    nicho: "Equipamentos agrícolas / motosserras"
+    responsavel: "Neto"
+    status: ativo
+    contas:
+      - slug: tawaty-principal
+        nome_conta: "CASA TAWATY"
+        site_id: MLB
+        user_id: "SUBSTITUIR"
+        papel: principal
+        observacoes: "Fluxo catálogo (STIHL) + anúncio tradicional."
+
+  - id: jb-moveis
+    nome: "JB Móveis e Estofados"
+    nicho: "Móveis e estofados"
+    responsavel: "Neto"
+    status: ativo
+    # QUATRO contas do MESMO dono, todas em móvel e estofado, três já no ar.
+    # Elas dividem 43 fichas de catálogo entre si, 18 nas três — e isso é
+    # INTENCIONAL: a operação vincula a variação que rende mais em cada ficha,
+    # e a mesma linha de produto rende diferente conforme a ficha.
+    # NÃO tratar essa sobreposição como duplicata a limpar.
+    # Isto aqui existe só para impedir que o motor recomende baixar o preço de
+    # uma conta para vencer a irmã: mesmo dono, então ganhar da irmã não traz
+    # venda nova, só corta a margem do grupo.
+    coordenar_preco: true
+    contas:
+      - slug: jb-moveis-principal
+        nome_conta: "JB Móveis e Estofados"
+        site_id: MLB
+        user_id: "493976420"          # JBMOVEISESTOFADOS, conectada 07/09/2026
+        papel: principal
+        observacoes: >
+          Modelo "User Products" (tag user_product_seller). 143 anúncios:
+          99 em ficha de catálogo, 24 com variações, 19 tradicionais.
+          ESTOQUE DECLARADO É FICTÍCIO (mediana 10.000) — não usar para valor
+          parado nem copiar para a conta irmã.
+      - slug: jb-moveis-jelcdecor
+        nome_conta: "JELCDECOR"
+        site_id: MLB
+        user_id: "1627881723"         # conectada 08/09/2026
+        papel: secundaria
+        observacoes: >
+          67 anúncios (48 catálogo, 17 tradicional), 8.607 transações.
+          Poltronas, cadeiras de balanço e camas. Divide 22 fichas com a
+          principal e 30 com a EJPRIME. Estoque declarado é fictício.
+
+      - slug: jb-moveis-ejprime
+        nome_conta: "EJPRIME"
+        site_id: MLB
+        user_id: "2245348587"         # conectada 08/09/2026
+        papel: secundaria
+        observacoes: >
+          111 anúncios (67 catálogo, 39 tradicional, 1 com variações),
+          6.242 transações. Cadeiras de balanço, sofás e capas. Divide 27
+          fichas com a principal e 30 com a JELCDECOR. Estoque fictício.
+
+      - slug: jb-moveis-loja2
+        nome_conta: "JB Móveis e Estofados — quarta conta"
+        site_id: MLB
+        user_id: "SUBSTITUIR"         # conectar e trocar antes de qualquer escrita
+        papel: secundaria
+        observacoes: >
+          Destino do espelhamento do catálogo da principal. Ainda não
+          conectada em 08/09/2026. ANTES de espelhar: alinhar o preço das
+          três que já existem — ver a análise de canibalização no CLAUDE.md
+          de jb-moveis-principal.
+
+  - id: enio-toldos
+    nome: "Ênio Toldos (ShoppLima)"
+    nicho: "Toldos e coberturas / móveis"
+    responsavel: "Neto"
+    status: ativo
+    contas:
+      - slug: enio-toldos-principal
+        nome_conta: "Ênio Toldos (ShoppLima)"
+        site_id: MLB
+        user_id: "3413356742"  # sai sozinho ao rodar scripts/autorizar.py
+        papel: principal
+        observacoes: >
+          Vende toldos e coberturas, mais uma linha de móveis vinda da fábrica
+          da Maxi. Duas naturezas de produto muito diferentes convivendo na
+          mesma conta: toldo é item de projeto/medida, móvel é item de catálogo.
+
+  - id: facilita-brasil
+    nome: "FACILITA BRASIL"
+    nicho: "Estofados / poltronas e sofás · perfume importado"
+    responsavel: "Neto"
+    status: ativo
+    # As três contas são do MESMO dono e vendem a mesma Poltrona Mona em
+    # madeira maciça. Com isto ligado, o motor avisa quando duas delas
+    # aparecem juntas na mesma palavra-chave — que é canibalização, não
+    # concorrência. Sem isto, o sistema recomendaria baixar preço numa para
+    # ganhar da outra, destruindo margem dos dois lados.
+    coordenar_preco: true
+    contas:
+      - slug: facilita-brasil-principal
+        nome_conta: "FACILITA BRASIL"
+        site_id: MLB
+        user_id: "162819909"  # sai sozinho ao rodar scripts/autorizar.py
+        papel: principal
+        observacoes: >
+          Poltronas decorativas (linha Mona), poltronas do papai reclináveis,
+          sofás, sofás-cama e namoradeiras.
+          mercadolivre.com.br/pagina/mayararoncolatocambrais
+
+      - slug: facilita-brasil-loja2
+        nome_conta: "FACILITA BRASIL (loja 2)"
+        site_id: MLB
+        user_id: "SUBSTITUIR"
+        papel: secundaria
+        observacoes: >
+          Duas naturezas na mesma conta: estofado (Poltrona e Sofá Beny, puff)
+          e PERFUME IMPORTADO (Al Wataniah, Lattafa). Perfume é item de
+          catálogo, leve, onde preço e buy box decidem — lógica oposta à do
+          estofado. mercadolivre.com.br/pagina/faciliitabrasil
+
+      - slug: facilita-decoralli
+        nome_conta: "Decoralli"
+        site_id: MLB
+        user_id: "793702421"
+        papel: secundaria
+        observacoes: >
+          Marca própria de poltronas decorativas em madeira maciça — linha
+          Mona, avulsa e em kit de 2. Mesmo dono das contas FACILITA.
+          mercadolivre.com.br/pagina/wedmirmariabezerrildasilva
+
+  - id: maxi-brasil
+    nome: "MAXI DO BRASIL ECOMMERCE LTDA"
+    nicho: "Móveis (fábrica)"
+    responsavel: "Neto"
+    status: ativo
+    contas:
+      - slug: maxi-brasil-principal
+        nome_conta: "MAXI DO BRASIL ECOMMERCE LTDA"
+        site_id: MLB
+        user_id: "1636240046"  # sai sozinho ao rodar scripts/autorizar.py
+        papel: principal
+        observacoes: >
+          Conta da própria Maxi (fábrica), não de cliente terceiro. Login do
+          ML: essencialmoveis2024@gmail.com. Fornece os móveis que o Ênio
+          (ShoppLima) revende — produto repetido entre as duas contas é
+          fábrica x revenda, não canibalização. Entrou no zion-ml por causa
+          da campanha de CUPOM ativa, que não aparece no preço do anúncio.
+
+  # ---------- MODELO: cliente com três contas ----------
+  - id: cliente-tres-contas
+    nome: "Nome do Cliente"
+    nicho: "Definir"
+    responsavel: "Neto"
+    status: rascunho
+    # Quando um cliente tem várias contas, marque como elas se relacionam.
+    # 'coordenar_preco: true' faz o motor de alertas avisar se as contas
+    # do MESMO cliente estiverem se canibalizando na mesma palavra-chave.
+    coordenar_preco: true
+    contas:
+      - slug: cliente-conta-a
+        nome_conta: "Conta A"
+        site_id: MLB
+        user_id: "SUBSTITUIR"
+        papel: principal
+      - slug: cliente-conta-b
+        nome_conta: "Conta B"
+        site_id: MLB
+        user_id: "SUBSTITUIR"
+        papel: secundaria
+      - slug: cliente-conta-c
+        nome_conta: "Conta C"
+        site_id: MLB
+        user_id: "SUBSTITUIR"
+        papel: outlet

@@ -1,0 +1,26 @@
+# Termos vigiados nesta conta. Montados a partir dos anúncios da
+# loja em 27/08/2026.
+
+palavras_chave:
+  - termo: "poltrona mona"
+    top_n: 30
+    observacao: "produto central da conta"
+
+  - termo: "poltrona decorativa madeira macica"
+    top_n: 30
+
+  - termo: "kit 2 poltronas decorativas"
+    top_n: 25
+
+  - termo: "conjunto 2 poltronas sala de estar"
+    top_n: 25
+
+  - termo: "poltrona corino decorativa"
+    top_n: 25
+
+  - termo: "poltrona decorativa linho"
+    top_n: 25
+
+  - termo: "poltrona decorativa sala"
+    top_n: 30
+    observacao: "termo largo, alto volume"

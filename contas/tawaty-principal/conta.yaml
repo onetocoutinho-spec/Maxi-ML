@@ -1,0 +1,12 @@
+parametros:
+  margem_minima_percentual: 15
+  frete_medio: 0
+  comissao:
+    gold_special: 0.12
+    gold_pro: 0.17
+  top_n_busca: 30
+  regras_do_negocio: >
+    Equipamentos agricolas / linha STIHL. Dois fluxos convivem: anuncio ligado
+    ao catalogo (quando o produto existe) e anuncio tradicional (quando nao
+    existe ou o catalogo recusa). Em itens de catalogo, acompanhar buy box de
+    perto: preco e o principal fator de vitoria.

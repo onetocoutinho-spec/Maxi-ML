@@ -1,0 +1,147 @@
+
+perguntando as campanhas de 40 anúncio(s)…
+  campanhas liberadas ... 77
+  já rodando ............ 52
+
+LIBERADAS — o ML está oferecendo, ninguém aceitou ainda
+  anúncio                        campanha                      preço       piso      sobra  quem paga
+  ----------------------------------------------------------------------------------------------------
+  Loja Mobilia Pets Decoração…   LIGHTNING                 R$ 179,00          —          —  —
+  Loja Mobilia Pets Decoração…   LIGHTNING                 R$ 181,00          —          —  —
+  Mesa Bistrô Dobrável…          Casa e Decor em Oferta    R$ 189,90  R$ 231,93  R$ -42,03  ML 2% / você 43%
+  Mesa Bistrô Dobrável…          Impulsione suas vendas    R$ 189,90  R$ 231,93  R$ -42,03  ML 2% / você 43%
+  Mesa Alta Bistro Em Madeira…   Casa e Decor em Oferta    R$ 196,99  R$ 231,93  R$ -34,94  ML 1% / você 42%
+  Mesa Alta Bistro Em Madeira…   Impulsione suas vendas    R$ 196,99  R$ 231,93  R$ -34,94  ML 1% / você 42%
+  Mesa Dobrável 70cmx70cm…       Saia na frente da…        R$ 233,47  R$ 263,57  R$ -30,10  ML 3% / você 32%
+  Toldo Metal Policarbonato…     LIGHTNING                 R$ 266,94  R$ 331,58  R$ -64,64  —
+  Toldo Sunny Metal…             Top Ativacao              R$ 272,56  R$ 343,10  R$ -70,54  ML 4% / você 33%
+  Toldo Metal Policarbonato…     Top Ativacao              R$ 272,56  R$ 331,58  R$ -59,02  ML 3% / você 41%
+  Toldo Metal Policarbonato…     Tudo de Jardim e…         R$ 272,56  R$ 331,58  R$ -59,02  ML 2% / você 42%
+  Toldo Sunny Metal…             Top Ativacao              R$ 348,22  R$ 425,87  R$ -77,65  ML 3% / você 28%
+  Toldo Metal Policarbonato…     Top Ativacao              R$ 363,84  R$ 436,33  R$ -72,49  ML 3% / você 27%
+  Toldo Metal Policarbonato…     Tudo de Jardim e…         R$ 363,84  R$ 436,33  R$ -72,49  ML 3% / você 27%
+  Toldo Metal Policarbonato…     LIGHTNING                 R$ 383,79  R$ 549,57 R$ -165,78  —
+  Toldo Metal Policarbonato…     Top Ativacao              R$ 391,87  R$ 549,57 R$ -157,70  ML 3% / você 54%
+  Toldo Metal Policarbonato…     Tudo de Jardim e…         R$ 391,87  R$ 549,57 R$ -157,70  ML 3% / você 54%
+  Toldo Sunny Metal Leve…        Top Ativacao              R$ 391,87  R$ 498,96 R$ -107,09  ML 4% / você 30%
+  Toldo Metal Policarbonato…     LIGHTNING                 R$ 414,57  R$ 436,33  R$ -21,76  —
+  Toldo Metal Policarbonato…     Impulsione suas vendas    R$ 423,30  R$ 436,33  R$ -13,03  ML 1% / você 18%
+  Toldo Metal Policarbonato…     Impulsione suas vendas    R$ 476,99  R$ 631,58 R$ -154,59  ML 3% / você 28%
+  Toldo Policarbonato 155x100…   Impulsione suas vendas    R$ 507,29  R$ 478,84   R$ 28,45  ML 1% / você 26%
+  Toldo Policarbonato 155x100…   Impulsione suas vendas    R$ 513,85  R$ 468,64   R$ 45,21  ML 2% / você 42%
+  Rack New Aurora Para Tv Até…   Impulsione suas vendas    R$ 514,31  R$ 505,03    R$ 9,28  ML 2% / você 41%
+  Toldo Metal Policarbonato…     Impulsione suas vendas    R$ 572,30  R$ 549,57   R$ 22,73  ML 4% / você 33%
+  Toldo Policarbonato 155x100…   LIGHTNING                 R$ 588,99  R$ 478,84  R$ 110,15  —
+  Toldo Policarbonato 230x100…   LIGHTNING                 R$ 653,46  R$ 629,61   R$ 23,85  —
+  Toldo Policarbonato 230x100…   Impulsione suas vendas    R$ 667,21  R$ 629,61   R$ 37,60  ML 3% / você 43%
+  Toldo Policarbonato 380x100…   Impulsione suas vendas   R$ 1.125,43 R$ 1.008,16  R$ 117,27  ML 4% / você 30%
+  Toldo Policarbonato 380x100…   LIGHTNING                R$ 1.416,44 R$ 1.008,16  R$ 408,28  —
+  Toldo Policarbonato 230x100…   9.9                       R$ 687,85  R$ 629,61   R$ 58,24  —
+  Toldo Policarbonato 155x100…   PRICE_DISCOUNT            R$ 507,29  R$ 478,84   R$ 28,45  —
+  Toldo Policarbonato 155x100…   9.9                       R$ 507,29  R$ 478,84   R$ 28,45  —
+  Toldo Policarbonato 380x100…   PRICE_DISCOUNT           R$ 1.125,43 R$ 1.008,16  R$ 117,27  —
+  Toldo Policarbonato 380x100…   9.9                      R$ 1.125,43 R$ 1.008,16  R$ 117,27  —
+  Toldo Metal Policarbonato…     PRICE_DISCOUNT            R$ 442,00  R$ 436,33    R$ 5,67  —
+  Toldo Metal Policarbonato…     9.9                       R$ 583,90  R$ 549,57   R$ 34,33  —
+  Toldo Metal Policarbonato…     PRICE_DISCOUNT            R$ 476,99  R$ 631,58 R$ -154,59  —
+  Toldo Shoplima…                9.9                      R$ 1.037,00  R$ 681,61  R$ 355,39  —
+  Toldo Policarbonato 380x100…   9.9                      R$ 1.004,83 R$ 1.004,68    R$ 0,15  —
+  Toldo Policarbonato 305x100…   9.9                       R$ 839,77  R$ 755,84   R$ 83,93  —
+  Toldo Sunny Metal…             PRICE_DISCOUNT            R$ 280,99  R$ 343,10  R$ -62,11  —
+  Toldo Sunny Metal…             PRICE_DISCOUNT            R$ 358,99  R$ 425,87  R$ -66,88  —
+  Toldo Sunny Metal…             9.9                       R$ 358,99  R$ 425,87  R$ -66,88  —
+  Mesa Alta Bistro Em Madeira…   PRICE_DISCOUNT            R$ 293,16  R$ 231,93   R$ 61,23  —
+  Mesa Dobrável 70cmx70cm…       PRICE_DISCOUNT            R$ 240,09  R$ 263,57  R$ -23,48  —
+  Rampa Pet Puff Nmg 2 Em 1…     PRICE_DISCOUNT            R$ 340,00          —          —  —
+  Rampa Pet Puff Nmg 2 Em 1…     PRICE_DISCOUNT            R$ 240,00          —          —  —
+  Rampa Pet Puff Nmg 2 Em 1…     PRICE_DISCOUNT            R$ 240,00          —          —  —
+  Rampa Pet Puff 2 Em 1 Para…    PRICE_DISCOUNT            R$ 240,00          —          —  —
+  Loja Mobilia Pets Decoração…   PRICE_DISCOUNT            R$ 262,65          —          —  —
+  Loja Mobilia Pets Decoração…   9.9                       R$ 262,65          —          —  —
+  Loja Mobilia Pets Decoração…   PRICE_DISCOUNT            R$ 194,90          —          —  —
+  Loja Mobilia Pets Decoração…   9.9                       R$ 194,90          —          —  —
+  Toldo Policarbonato 305x100…   PRICE_DISCOUNT            R$ 882,61  R$ 819,88   R$ 62,73  —
+  Toldo Policarbonato 305x100…   9.9                       R$ 882,61  R$ 819,88   R$ 62,73  —
+  Shopplima Cobertura Sol…       9.9                       R$ 506,76  R$ 513,78   R$ -7,02  —
+  Toldo Policarbonato 230x100…   9.9                       R$ 639,74  R$ 590,17   R$ 49,57  —
+  Toldo Policarbonato 305x100…   9.9                       R$ 828,02  R$ 744,09   R$ 83,93  —
+  Toldo Policarbonato 155x100…   PRICE_DISCOUNT            R$ 513,84  R$ 468,64   R$ 45,20  —
+  Toldo Policarbonato 155x100…   9.9                       R$ 513,84  R$ 468,64   R$ 45,20  —
+  Toldo Policarbonato 380x100…   PRICE_DISCOUNT           R$ 1.444,15  R$ 966,66  R$ 477,49  —
+  Toldo Policarbonato 380x100…   9.9                      R$ 1.444,15  R$ 966,66  R$ 477,49  —
+  Toldo Sunny Metal Leve…        PRICE_DISCOUNT            R$ 476,99  R$ 577,59 R$ -100,60  —
+  Toldo De Policarbonato Fumê…   PRICE_DISCOUNT            R$ 403,99  R$ 498,96  R$ -94,97  —
+  Toldo Sunny Metal Leve…        PRICE_DISCOUNT            R$ 358,99  R$ 425,86  R$ -66,87  —
+  Mesa Bistrô Dobrável…          PRICE_DISCOUNT            R$ 293,16  R$ 231,93   R$ 61,23  —
+  Berço 3 Em 1 Americano Slim…   PRICE_DISCOUNT            R$ 613,00          —          —  —
+  Berço 3 Em 1 Americano Slim…   9.9                       R$ 613,00          —          —  —
+  Berço 3 Em 1 Americano Slim…   Dia das Criancas 2026     R$ 613,00          —          —  —
+  Mini Berço 3 Em 1 Americano…   PRICE_DISCOUNT            R$ 950,00          —          —  —
+  Mini Berço 3 Em 1 Americano…   9.9                       R$ 850,00          —          —  —
+  Mini Berço 3 Em 1 Americano…   Dia das Criancas 2026     R$ 850,00          —          —  —
+  Rampa Pet Puff 2 Em 1 Para…    PRICE_DISCOUNT            R$ 240,00          —          —  —
+  Rampa Pet Pufe Rampa Puff…     PRICE_DISCOUNT            R$ 240,00          —          —  —
+  Rampa Pet Multiuso 2 Em 1…     PRICE_DISCOUNT            R$ 240,00          —          —  —
+  Rampa Pet Pufe Rampa Puff…     PRICE_DISCOUNT            R$ 235,00          —          —  —
+
+  28 campanha(s) colocariam o anúncio abaixo do piso. Aceitar essas é vender com margem menor que a combinada.
+
+JÁ RODANDO — é o que explica o preço de vitrine de hoje
+  Loja Mobilia Pets Decoração…   Impulsione suas vendas    R$ 194,90  de R$ 309,00
+  Loja Mobilia Pets Decoração…   Impulsione suas vendas    R$ 194,90  de R$ 309,00
+  Mesa Alta Bistro Em Madeira…   9.9                       R$ 231,96  de R$ 344,90 até 2026-09-10
+  Mesa Bistrô Dobrável…          9.9                       R$ 231,96  de R$ 344,90 até 2026-09-10
+  Rampa Pet Puff Nmg 2 Em 1…     9.9                       R$ 240,00  de R$ 400,00 até 2026-09-10
+  Rampa Pet Puff Nmg 2 Em 1…     9.9                       R$ 240,00  de R$ 400,00 até 2026-09-10
+  Rampa Pet Puff Nmg 2 Em 1…     9.9                       R$ 240,00  de R$ 400,00 até 2026-09-10
+  Rampa Pet Puff 2 Em 1 Para…    9.9                       R$ 240,00  de R$ 600,00 até 2026-09-10
+  Rampa Pet Puff 2 Em 1 Para…    9.9                       R$ 240,00  de R$ 600,00 até 2026-09-10
+  Rampa Pet Pufe Rampa Puff…     9.9                       R$ 240,00  de R$ 400,00 até 2026-09-10
+  Rampa Pet Multiuso 2 Em 1…     9.9                       R$ 240,00  de R$ 400,00 até 2026-09-10
+  Rampa Pet Pufe Rampa Puff…     9.9                       R$ 240,00  de R$ 400,00 até 2026-09-10
+  Mesa Dobrável 70cmx70cm…       Casa e Decor em Oferta    R$ 267,71  de R$ 358,99
+  Mesa Dobrável 70cmx70cm…       Impulsione suas vendas    R$ 275,99  de R$ 358,99
+  Mesa Dobrável 70cmx70cm…       9.9                       R$ 305,15  de R$ 358,99 até 2026-09-10
+  Toldo Metal Policarbonato…     PRICE_DISCOUNT            R$ 331,63  de R$ 490,00 até 2026-09-09
+  Toldo Metal Policarbonato…     Impulsione suas vendas    R$ 331,63  de R$ 490,00
+  Toldo Sunny Metal…             9.9                       R$ 343,15  de R$ 429,00 até 2026-09-10
+  Toldo Sunny Metal…             9.9                       R$ 343,15  de R$ 429,00 até 2026-09-10
+  Toldo Metal Policarbonato…     9.9                       R$ 346,54  de R$ 490,00 até 2026-09-10
+  Toldo Sunny Metal…             PRICE_DISCOUNT            R$ 364,65  de R$ 429,00 até 2026-09-09
+  Toldo Metal Policarbonato…     9.9                       R$ 436,39  de R$ 520,00 até 2026-09-10
+  Toldo Sunny Metal Leve…        9.9                       R$ 449,65  de R$ 529,00 até 2026-09-10
+  Toldo Sunny Metal Leve…        9.9                       R$ 499,03  de R$ 589,00 até 2026-09-10
+  Toldo Sunny Metal Leve…        PRICE_DISCOUNT            R$ 500,65  de R$ 589,00 até 2026-09-09
+  Toldo De Policarbonato Fumê…   9.9                       R$ 500,65  de R$ 589,00 até 2026-09-10
+  Rack New Aurora Para Tv Até…   Casa e Decor em Oferta    R$ 510,87  de R$ 897,99
+  Rack New Aurora Para Tv Até…   PRICE_DISCOUNT            R$ 555,99  de R$ 897,99 até 2026-09-09
+  Toldo Sunny Metal Leve…        9.9                       R$ 577,67  de R$ 699,00 até 2026-09-10
+  Toldo Metal Policarbonato…     PRICE_DISCOUNT            R$ 583,90  de R$ 899,00 até 2026-09-30
+  Toldo Sunny Metal Leve…        PRICE_DISCOUNT            R$ 594,15  de R$ 699,00 até 2026-09-09
+  Toldo Sunny Metal Leve…        9.9                       R$ 594,15  de R$ 699,00 até 2026-09-10
+  Toldo Policarbonato 155x100…   Top Ativacao              R$ 601,39  de R$ 700,90
+  Toldo Policarbonato 155x100…   Tudo de Jardim e…         R$ 601,39  de R$ 700,90
+  Toldo Policarbonato 155x100…   Top Ativacao              R$ 601,39  de R$ 922,00
+  Shopplima Cobertura Sol…       PRICE_DISCOUNT            R$ 619,90  de R$ 920,00 até 2026-09-30
+  Toldo Metal Policarbonato…     9.9                       R$ 655,50  de R$ 690,00 até 2026-09-10
+  Rack New Aurora Para Tv Até…   9.9                       R$ 763,30  de R$ 897,99 até 2026-09-10
+  Toldo Policarbonato 230x100…   Tudo de Jardim e…         R$ 864,26  de R$ 1.246,99
+  Toldo Policarbonato 230x100…   Impulsione suas vendas    R$ 864,26  de R$ 1.220,00
+  Toldo Shoplima…                PRICE_DISCOUNT            R$ 890,99  de R$ 1.220,00 até 2026-09-30
+  Toldo Policarbonato 230x100…   PRICE_DISCOUNT           R$ 1.037,00  de R$ 1.220,00 até 2026-09-09
+  Toldo Policarbonato 230x100…   PRICE_DISCOUNT           R$ 1.059,94  de R$ 1.246,99 até 2026-09-09
+  Toldo Policarbonato 305x100…   Impulsione suas vendas   R$ 1.339,56  de R$ 1.932,99
+  Toldo Policarbonato 305x100…   Impulsione suas vendas   R$ 1.339,56  de R$ 1.600,99
+  Toldo Policarbonato 305x100…   Tudo de Jardim e…        R$ 1.339,56  de R$ 1.600,99
+  Toldo Policarbonato 305x100…   Impulsione suas vendas   R$ 1.339,56  de R$ 1.932,99
+  Toldo Policarbonato 380x100…   Tudo de Jardim e…        R$ 1.446,26  de R$ 1.700,90
+  Toldo Policarbonato 380x100…   Impulsione suas vendas   R$ 1.446,26  de R$ 1.699,00
+  Toldo Policarbonato 380x100…   PRICE_DISCOUNT           R$ 1.490,99  de R$ 1.699,00 até 2026-09-30
+  Toldo Policarbonato 305x100…   PRICE_DISCOUNT           R$ 1.643,05  de R$ 1.932,99 até 2026-09-09
+  Toldo Policarbonato 305x100…   PRICE_DISCOUNT           R$ 1.643,05  de R$ 1.932,99 até 2026-09-09
+
+  Atenção às ofertas relâmpago: o ML aceita preço até muito abaixo do sugerido.
+  Toldo Policarbonato 230x100…: sugerido R$ 1.059,94, mas aceita até R$ 249,40
+  Toldo Policarbonato 155x100…: sugerido R$ 595,77, mas aceita até R$ 140,19
+  Toldo Policarbonato 380x100…: sugerido R$ 1.445,77, mas aceita até R$ 340,19
+

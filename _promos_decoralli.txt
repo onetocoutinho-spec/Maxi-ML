@@ -1,0 +1,315 @@
+
+perguntando as campanhas de 167 anúncio(s)…
+  campanhas liberadas ... 134
+  já rodando ............ 168
+
+LIBERADAS — o ML está oferecendo, ninguém aceitou ainda
+  anúncio                        campanha                      preço       piso      sobra  quem paga
+  ----------------------------------------------------------------------------------------------------
+  Poltrona Decorativa Luxo…      Impulsione suas vendas    R$ 317,00  R$ 631,67 R$ -314,67  ML 1% / você 65%
+  Castellar Mobile Premium…      Impulsione suas vendas    R$ 417,00  R$ 642,02 R$ -225,02  ML 0% / você 42%
+  Poltrona Mona Amber Luxo…      Impulsione suas vendas    R$ 417,00  R$ 631,67 R$ -214,67  ML 1% / você 55%
+  Castellar Mobile Premium…      Impulsione suas vendas    R$ 474,82  R$ 478,87   R$ -4,05  ML 0% / você 4%
+  Poltrona Mona Pés Em…          Saia na frente da…        R$ 515,35  R$ 642,02 R$ -126,67  ML 2% / você 36%
+  Poltrona Mona Bege Linho…      Casa e Decor em Oferta    R$ 527,47          —          —  ML 1% / você 23%
+  Poltrona Mona Bege Linho…      Casa e Decor em Oferta    R$ 543,78  R$ 528,13   R$ 15,65  ML 1% / você 26%
+  Poltrona Mona Bege Linho…      Impulsione suas vendas    R$ 543,78  R$ 528,13   R$ 15,65  ML 1% / você 26%
+  Bella Design Moderno…          Impulsione suas vendas    R$ 572,48  R$ 695,53 R$ -123,05  ML 2% / você 35%
+  Lv Móveis Premium Mona…        Impulsione suas vendas    R$ 616,00  R$ 684,32  R$ -68,32  ML 2% / você 37%
+  Poltrona Corino Decorativa…    Impulsione suas vendas    R$ 631,60  R$ 642,02  R$ -10,42  ML 0% / você 12%
+  Poltrona Decorativa Mona…      Impulsione suas vendas    R$ 652,41  R$ 653,77   R$ -1,36  ML 1% / você 20%
+  Poltrona Decorativa Mona…      Impulsione suas vendas    R$ 663,63  R$ 695,53  R$ -31,90  ML 2% / você 28%
+  Conjunto - 2 Poltronas Mona…   Impulsione suas vendas    R$ 671,00 R$ 1.231,25 R$ -560,25  ML 1% / você 55%
+  Poltrona Corino Decorativa…    Impulsione suas vendas    R$ 680,07  R$ 695,53  R$ -15,46  ML 1% / você 16%
+  Conjunto 2 Poltronas…          Impulsione suas vendas    R$ 681,00 R$ 1.129,30 R$ -448,30  ML 1% / você 55%
+  Conjunto - 2 Poltronas Mona…   Impulsione suas vendas    R$ 694,00 R$ 1.323,83 R$ -629,83  ML 1% / você 55%
+  Conjunto 2 Poltronas…          Impulsione suas vendas    R$ 705,00 R$ 1.214,21 R$ -509,21  ML 1% / você 54%
+  Poltrona Decorativa Mona…      Impulsione suas vendas    R$ 724,73  R$ 702,93   R$ 21,80  ML 1% / você 12%
+  Poltrona Mona Pés Em…          Saia na frente da…        R$ 741,00  R$ 695,53   R$ 45,47  ML 1% / você 16%
+  Conjunto Com 2 Poltronas…      Impulsione suas vendas    R$ 751,00 R$ 1.214,21 R$ -463,21  ML 0% / você 51%
+  Conjunto 2 Poltronas…          Impulsione suas vendas    R$ 755,00 R$ 1.129,30 R$ -374,30  ML 0% / você 51%
+  Sofá-cama Facilita Brasil 1…   Casa e Decor em Oferta    R$ 769,90 R$ 1.044,75 R$ -274,85  ML 2% / você 52%
+  Sofá-cama Facilita Brasil 1…   Impulsione suas vendas    R$ 769,90 R$ 1.044,75 R$ -274,85  ML 2% / você 52%
+  Conjunto 2 Poltronas…          Impulsione suas vendas    R$ 781,00 R$ 1.214,21 R$ -433,21  ML 0% / você 49%
+  Conjunto 2 Poltronas…          Impulsione suas vendas    R$ 808,00 R$ 1.214,21 R$ -406,21  ML 0% / você 48%
+  Sofa Beny Decoralli 140cm 2…   Impulsione suas vendas    R$ 809,50  R$ 872,18  R$ -62,68  ML 1% / você 20%
+  Sofa Beny Decoralli 140cm 2…   Impulsione suas vendas    R$ 809,50  R$ 811,19   R$ -1,69  ML 1% / você 14%
+  Facilita Brasil Sofa Para…     Impulsione suas vendas    R$ 872,90  R$ 699,30  R$ 173,60  ML 2% / você 28%
+  Sofá Decoralli Milão 3…        Impulsione suas vendas    R$ 888,61 R$ 1.370,49 R$ -481,88  ML 2% / você 42%
+  Sofá Decoralli Milão 3…        Impulsione suas vendas    R$ 959,70 R$ 1.484,70 R$ -525,00  ML 2% / você 43%
+  V88 Ecommerce Premium Mona…    Impulsione suas vendas    R$ 960,20  R$ 951,05    R$ 9,15  ML 0% / você 25%
+  V88 Ecommerce Premium Mona…    Casa e Decor em Oferta    R$ 960,20  R$ 951,05    R$ 9,15  ML 0% / você 25%
+  Sofá Cama Azul Suede…          Impulsione suas vendas   R$ 1.045,40          —          —  ML 2% / você 33%
+  Facilita Brasil Premium…       Casa e Decor em Oferta   R$ 1.125,10 R$ 1.044,75   R$ 80,35  ML 2% / você 30%
+  Sofá Cama Bege Suede…          Impulsione suas vendas   R$ 1.125,10 R$ 1.278,99 R$ -153,89  ML 1% / você 23%
+  Facilita Brasil Premium…       Casa e Decor em Oferta   R$ 1.125,10 R$ 1.044,76   R$ 80,34  ML 1% / você 23%
+  Facilita Brasil Premium…       Impulsione suas vendas   R$ 1.125,10 R$ 1.044,76   R$ 80,34  ML 1% / você 23%
+  Sofá Cama Preto Suede…         Impulsione suas vendas   R$ 1.290,09          —          —  ML 1% / você 21%
+  Sofá Cama Bege Suede…          Impulsione suas vendas   R$ 1.410,83 R$ 1.408,30    R$ 2,53  ML 1% / você 14%
+  Sofá Cama Azul Suede…          PRICE_DISCOUNT           R$ 1.045,40          —          —  —
+  Sofá Cama Azul Suede…          9.9                      R$ 1.045,40          —          —  —
+  Facilita Brasil Premium…       PRICE_DISCOUNT           R$ 1.408,45 R$ 1.044,75  R$ 363,70  —
+  Castellar Mobile Premium…      PRICE_DISCOUNT            R$ 417,00  R$ 642,02 R$ -225,02  —
+  Conjunto - 2 Poltronas Mona…   9.9                       R$ 671,00 R$ 1.231,25 R$ -560,25  —
+  Puff Elegance Redondo…         PRICE_DISCOUNT            R$ 529,90  R$ 529,49    R$ 0,41  —
+  Poltrona Mona Luxo Madeira…    PRICE_DISCOUNT            R$ 635,25  R$ 593,24   R$ 42,01  —
+  Conjunto Com 2 Poltronas…      PRICE_DISCOUNT            R$ 726,00 R$ 1.129,30 R$ -403,30  —
+  Conjunto Com 2 Poltronas…      9.9                       R$ 726,00 R$ 1.129,30 R$ -403,30  —
+  Poltrona Mona Pés Em…          PRICE_DISCOUNT            R$ 523,76  R$ 642,02 R$ -118,26  —
+  Poltrona Mona Pés Em…          9.9                       R$ 523,76  R$ 642,02 R$ -118,26  —
+  Poltrona Decorativa Mona…      9.9                       R$ 706,35  R$ 653,77   R$ 52,58  —
+  Poltrona Corino Decorativa…    PRICE_DISCOUNT            R$ 648,00  R$ 631,68   R$ 16,32  —
+  Conjunto 2 Poltronas…          PRICE_DISCOUNT            R$ 781,00 R$ 1.129,30 R$ -348,30  —
+  Conjunto 2 Poltronas…          9.9                       R$ 781,00 R$ 1.129,30 R$ -348,30  —
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.899,05 R$ 1.434,78  R$ 464,27  —
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.122,01 R$ 1.434,64 R$ -312,63  —
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 791,99  R$ 784,48    R$ 7,51  —
+  Puff Grecia Decoralli…         PRICE_DISCOUNT            R$ 849,16  R$ 725,28  R$ 123,88  —
+  Puff Grecia Decoralli…         9.9                       R$ 849,16  R$ 725,28  R$ 123,88  —
+  Puff Grecia Decoralli…         PRICE_DISCOUNT            R$ 949,05  R$ 725,28  R$ 223,77  —
+  Puff Grecia Decoralli…         9.9                       R$ 949,05  R$ 725,28  R$ 223,77  —
+  Puff Grecia Decoralli…         PRICE_DISCOUNT            R$ 949,05  R$ 725,28  R$ 223,77  —
+  Puff Grecia Decoralli…         9.9                       R$ 949,05  R$ 725,28  R$ 223,77  —
+  Puff Grecia Decoralli…         PRICE_DISCOUNT            R$ 949,05  R$ 725,28  R$ 223,77  —
+  Puff Grecia Decoralli…         9.9                       R$ 949,05  R$ 725,28  R$ 223,77  —
+  Puff Poltrona Decoralli…       PRICE_DISCOUNT            R$ 618,95          —          —  —
+  Puff Poltrona Decoralli…       9.9                       R$ 618,95          —          —  —
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 791,99  R$ 818,74  R$ -26,75  —
+  Poltrona Papai Reclinável…     PRICE_DISCOUNT            R$ 708,00  R$ 721,80  R$ -13,80  —
+  Castellar Mobile Premium…      PRICE_DISCOUNT            R$ 431,00  R$ 656,01 R$ -225,01  —
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 791,99  R$ 880,30  R$ -88,31  —
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 826,19  R$ 872,18  R$ -45,99  —
+  Conjunto - 2 Poltronas Mona…   PRICE_DISCOUNT            R$ 694,00 R$ 1.323,83 R$ -629,83  —
+  Facilita Brasil Sofa Para…     PRICE_DISCOUNT            R$ 989,04  R$ 751,88  R$ 237,16  —
+  Conjunto 2 Poltronas…          PRICE_DISCOUNT            R$ 781,00 R$ 1.214,21 R$ -433,21  —
+  Sofa Cama Decoralli Yara 3…    PRICE_DISCOUNT           R$ 1.641,28 R$ 1.653,08  R$ -11,80  —
+  Sofá Decoralli Milão 3…        PRICE_DISCOUNT           R$ 1.354,34 R$ 1.370,49  R$ -16,15  —
+  Sofá Namoradeira Decoralli…    PRICE_DISCOUNT            R$ 835,71 R$ 1.187,28 R$ -351,57  —
+  Sofá Namoradeira Decoralli…    PRICE_DISCOUNT            R$ 835,71          —          —  —
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 826,19 R$ 1.342,51 R$ -516,32  —
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 535,71  R$ 755,73 R$ -220,02  —
+  Poltrona Decoralli Nuvem…      PRICE_DISCOUNT            R$ 481,06  R$ 755,72 R$ -274,66  —
+  Sofa Decoralli Milao 2…        PRICE_DISCOUNT            R$ 906,93 R$ 1.370,49 R$ -463,56  —
+  Sofa Decoralli Milao 2…        PRICE_DISCOUNT            R$ 906,93 R$ 1.676,78 R$ -769,85  —
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 826,19 R$ 1.342,51 R$ -516,32  —
+  Poltrona Decoralli New Mona…   PRICE_DISCOUNT            R$ 518,52          —          —  —
+  Sofá Cama Bege Suede…          9.9                      R$ 1.410,83 R$ 1.408,30    R$ 2,53  —
+  Sofá Cama Bege Suede…          9.9                      R$ 1.410,83 R$ 1.408,30    R$ 2,53  —
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 892,29 R$ 1.015,15 R$ -122,86  —
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 892,29 R$ 1.454,39 R$ -562,10  —
+  Puff Poltrona Decoralli…       PRICE_DISCOUNT            R$ 671,82          —          —  —
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 544,84  R$ 737,73 R$ -192,89  —
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 544,84  R$ 737,73 R$ -192,89  —
+  Sofá Namoradeira Decoralli…    PRICE_DISCOUNT            R$ 902,56 R$ 1.286,21 R$ -383,65  —
+  Poltrona Papai Decoralli…      PRICE_DISCOUNT            R$ 783,45 R$ 1.046,82 R$ -263,37  —
+  Bella Design Moderno…          9.9                       R$ 572,48  R$ 695,53 R$ -123,05  —
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 892,29 R$ 1.454,39 R$ -562,10  —
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 578,58  R$ 991,52 R$ -412,94  —
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 578,58  R$ 830,15 R$ -251,57  —
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 578,58  R$ 954,39 R$ -375,81  —
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 544,84  R$ 775,61 R$ -230,77  —
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 544,84  R$ 939,24 R$ -394,40  —
+  Sofá Decoralli Milão 3…        PRICE_DISCOUNT            R$ 979,49 R$ 1.484,70 R$ -505,21  —
+  Sofá Namoradeira Couro…        PRICE_DISCOUNT           R$ 1.171,68  R$ 981,59  R$ 190,09  —
+  Sofá Namoradeira Couro…        9.9                      R$ 1.171,68  R$ 981,59  R$ 190,09  —
+  Sofá Namoradeira Couro…        PRICE_DISCOUNT           R$ 1.171,68  R$ 981,59  R$ 190,09  —
+  Sofá Namoradeira Couro…        9.9                      R$ 1.171,68  R$ 981,59  R$ 190,09  —
+  Sofá Cama Bege Suede…          9.9                      R$ 1.159,90 R$ 1.278,99 R$ -119,09  —
+  Sofá Cama Bege Suede…          PRICE_DISCOUNT           R$ 1.449,90          —          —  —
+  Sofá Cama Futon Barbearia…     PRICE_DISCOUNT           R$ 1.096,00 R$ 1.150,56  R$ -54,56  —
+  Facilita Brasil Premium…       PRICE_DISCOUNT           R$ 1.159,90 R$ 1.044,75  R$ 115,15  —
+  Facilita Brasil Premium…       PRICE_DISCOUNT           R$ 1.159,90 R$ 1.044,76  R$ 115,14  —
+  Poltrona Papai Reclinável…     PRICE_DISCOUNT            R$ 684,00  R$ 671,32   R$ 12,68  —
+  Poltrona Corino Decorativa…    PRICE_DISCOUNT            R$ 637,42  R$ 628,39    R$ 9,03  —
+  Poltrona Corino Decorativa…    9.9                       R$ 637,42  R$ 628,39    R$ 9,03  —
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 791,99  R$ 784,48    R$ 7,51  —
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 791,99 R$ 1.020,84 R$ -228,85  —
+  Puff Poltrona Decoralli…       PRICE_DISCOUNT            R$ 618,95          —          —  —
+  Puff Poltrona Decoralli…       9.9                       R$ 618,95          —          —  —
+  Sofá Cama Futon Barbearia…     PRICE_DISCOUNT           R$ 1.045,40          —          —  —
+  Sofá Cama Futon Barbearia…     9.9                      R$ 1.045,40          —          —  —
+  Puff Elegance Redondo…         PRICE_DISCOUNT            R$ 549,00  R$ 552,35   R$ -3,35  —
+  Puff Poltrona Decoralli…       PRICE_DISCOUNT            R$ 618,95          —          —  —
+  Puff Poltrona Decoralli…       9.9                       R$ 618,95          —          —  —
+  Conjunto Com 2 Poltronas…      PRICE_DISCOUNT            R$ 751,00 R$ 1.214,21 R$ -463,21  —
+  Bella Design Moderna Futon…    PRICE_DISCOUNT            R$ 685,10  R$ 682,31    R$ 2,79  —
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 504,48  R$ 855,04 R$ -350,56  —
+  Poltrona Mona Pés Em…          9.9                       R$ 572,48  R$ 695,53 R$ -123,05  —
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 892,29 R$ 1.454,39 R$ -562,10  —
+  Bella Design Moderna Futon…    PRICE_DISCOUNT            R$ 740,49  R$ 739,17    R$ 1,32  —
+  Poltrona Decoralli New Mona…   PRICE_DISCOUNT            R$ 560,00          —          —  —
+  Sofá Namoradeira Decoralli…    PRICE_DISCOUNT            R$ 902,56          —          —  —
+  Castellar Mobile Premium…      PRICE_DISCOUNT            R$ 468,25  R$ 478,87  R$ -10,62  —
+
+  74 campanha(s) colocariam o anúncio abaixo do piso. Aceitar essas é vender com margem menor que a combinada.
+
+JÁ RODANDO — é o que explica o preço de vitrine de hoje
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 482,27  de R$ 544,01 até 2026-09-10
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 482,27  de R$ 544,01 até 2026-09-10
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 482,27  de R$ 544,01 até 2026-09-10
+  Poltrona Decoralli Mona…       PRICE_DISCOUNT            R$ 482,27  de R$ 544,01 até 2026-09-10
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 496,45  de R$ 560,00 até 2026-09-10
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 496,45  de R$ 560,00 até 2026-09-10
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 496,45  de R$ 560,00 até 2026-09-10
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 518,52  de R$ 625,00 até 2026-09-10
+  Poltrona Mona Bege Linho…      Impulsione suas vendas    R$ 527,47  de R$ 693,99
+  Puff Elegance Redondo…         9.9                       R$ 529,90  de R$ 593,99 até 2026-09-10
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 531,21  de R$ 599,20 até 2026-09-10
+  Poltrona Mona Bege Linho…      PRICE_DISCOUNT            R$ 543,78  de R$ 749,90 até 2026-09-10
+  Poltrona Mona Bege Linho…      PRICE_DISCOUNT            R$ 543,78  de R$ 693,99 até 2026-09-10
+  Poltrona Mona Bege Linho…      PRICE_DISCOUNT            R$ 543,78  de R$ 693,99 até 2026-09-10
+  Poltrona Mona Bege Linho…      PRICE_DISCOUNT            R$ 543,78  de R$ 693,99 até 2026-09-10
+  Poltrona Mona Bege Linho…      PRICE_DISCOUNT            R$ 543,78  de R$ 693,99 até 2026-09-10
+  Poltrona Decoralli Beny…       PRICE_DISCOUNT            R$ 554,81  de R$ 668,75 até 2026-09-10
+  Puff Elegance Redondo…         9.9                       R$ 568,71  de R$ 645,18 até 2026-09-10
+  Poltrona Mona Bege Linho…      9.9                       R$ 579,99  de R$ 749,90 até 2026-09-10
+  Poltrona Mona Bege Linho…      9.9                       R$ 579,99  de R$ 693,99 até 2026-09-10
+  Poltrona Mona Bege Linho…      9.9                       R$ 579,99  de R$ 693,99 até 2026-09-10
+  Poltrona Mona Bege Linho…      9.9                       R$ 579,99  de R$ 693,99 até 2026-09-10
+  Poltrona Mona Bege Linho…      9.9                       R$ 579,99  de R$ 693,99 até 2026-09-10
+  Puff Elegance Redondo…         9.9                       R$ 595,16  de R$ 899,90 até 2026-09-10
+  Castellar Mobile Premium…      9.9                       R$ 619,12  de R$ 728,37 até 2026-09-10
+  Poltrona Corino Decorativa…    Impulsione suas vendas    R$ 630,98  de R$ 749,90
+  Poltrona Decorativa Mona…      9.9                       R$ 635,39  de R$ 876,99 até 2026-09-10
+  Castellar Mobile Premium…      9.9                       R$ 635,39  de R$ 876,99 até 2026-09-10
+  Poltrona Mona Luxo Madeira…    Impulsione suas vendas    R$ 640,10  de R$ 876,99
+  Poltrona Decorativa Madeira…   9.9                       R$ 644,39  de R$ 876,99 até 2026-09-10
+  Poltrona Decorativa Mona…      Impulsione suas vendas    R$ 649,80  de R$ 876,99
+  Poltrona Decorativa Luxo…      9.9                       R$ 649,86  de R$ 932,99 até 2026-09-10
+  Poltrona Decorativa Luxo…      9.9                       R$ 649,86  de R$ 932,99 até 2026-09-10
+  Poltrona Corino Decorativa…    9.9                       R$ 649,86  de R$ 861,99 até 2026-09-10
+  Castellar Mobile Premium…      Saia na frente da…        R$ 650,90  de R$ 876,99
+  Poltrona Corino Decorativa…    PRICE_DISCOUNT            R$ 651,13  de R$ 722,99 até 2026-09-10
+  Poltrona Decorativa Madeira…   PRICE_DISCOUNT            R$ 659,90  de R$ 876,99 até 2026-09-10
+  Poltrona Mona Luxo Madeira…    9.9                       R$ 659,90  de R$ 876,99 até 2026-09-10
+  Castellar Mobile Premium…      Casa e Decor em Oferta    R$ 659,90  de R$ 876,99
+  Poltrona Decorativa Luxo…      PRICE_DISCOUNT            R$ 659,99  de R$ 932,99 até 2026-09-10
+  Poltrona Mona Amber Luxo…      PRICE_DISCOUNT            R$ 659,99  de R$ 932,99 até 2026-09-10
+  Poltrona Mona Amber Luxo…      9.9                       R$ 659,99  de R$ 932,99 até 2026-09-10
+  Castellar Mobile Poltrona…     PRICE_DISCOUNT            R$ 660,50  de R$ 876,99 até 2026-09-10
+  Poltrona Decorativa Mona…      PRICE_DISCOUNT            R$ 663,63  de R$ 947,15 até 2026-09-10
+  Castellar Mobile Premium…      PRICE_DISCOUNT            R$ 663,63  de R$ 947,15 até 2026-09-10
+  Castellar Mobile Poltrona…     9.9                       R$ 669,90  de R$ 876,99 até 2026-09-10
+  Poltrona Decorativa Mona…      PRICE_DISCOUNT            R$ 669,90  de R$ 876,99 até 2026-09-10
+  Puff Poltrona Decoralli…       9.9                       R$ 671,82  de R$ 809,79 até 2026-09-10
+  Poltrona Corino Decorativa…    9.9                       R$ 674,99  de R$ 722,99 até 2026-09-10
+  Poltrona Corino Decorativa…    PRICE_DISCOUNT            R$ 680,07  de R$ 812,47 até 2026-09-10
+  Poltrona Corino Decorativa…    9.9                       R$ 680,07  de R$ 819,73 até 2026-09-10
+  Poltrona Corino Decorativa…    9.9                       R$ 680,07  de R$ 819,73 até 2026-09-10
+  Bella Design Moderna Futon…    9.9                       R$ 685,10  de R$ 805,99 até 2026-09-10
+  Poltrona Decorativa Mona…      PRICE_DISCOUNT            R$ 687,99  de R$ 830,99 até 2026-09-10
+  Poltrona Decorativa Madeira…   9.9                       R$ 694,34  de R$ 876,99 até 2026-09-10
+  Poltrona Mona Luxo Madeira…    9.9                       R$ 694,34  de R$ 876,99 até 2026-09-10
+  Poltrona Decorativa Mona…      9.9                       R$ 694,50  de R$ 947,15 até 2026-09-10
+  Poltrona Decorativa Mona…      9.9                       R$ 694,50  de R$ 947,15 até 2026-09-10
+  Castellar Mobile Premium…      9.9                       R$ 694,50  de R$ 947,15 até 2026-09-10
+  Castellar Mobile Premium…      9.9                       R$ 694,50  de R$ 947,15 até 2026-09-10
+  Poltrona Corino Decorativa…    PRICE_DISCOUNT            R$ 696,78  de R$ 819,73 até 2026-09-10
+  Poltrona Corino Decorativa…    PRICE_DISCOUNT            R$ 696,78  de R$ 819,73 até 2026-09-10
+  Poltrona Decorativa Luxo…      9.9                       R$ 700,23  de R$ 1.007,63 até 2026-09-10
+  Poltrona Decorativa Luxo…      9.9                       R$ 700,23  de R$ 1.007,63 até 2026-09-10
+  Poltrona Corino Decorativa…    9.9                       R$ 700,23  de R$ 930,95 até 2026-09-10
+  Lv Móveis Premium Mona…        9.9                       R$ 700,23  de R$ 1.007,63 até 2026-09-10
+  Lv Móveis Premium Mona…        9.9                       R$ 700,23  de R$ 1.007,63 até 2026-09-10
+  Poltrona Recepção Black…       9.9                       R$ 700,23  de R$ 930,95 até 2026-09-10
+  Poltrona Corino Decorativa…    Impulsione suas vendas    R$ 701,30  de R$ 812,47
+  Castellar Mobile Poltrona…     9.9                       R$ 711,71  de R$ 876,99 até 2026-09-10
+  Poltrona Corino Decorativa…    9.9                       R$ 715,76  de R$ 812,47 até 2026-09-10
+  Bella Design Moderna Futon…    9.9                       R$ 740,49  de R$ 871,16 até 2026-09-10
+  Castellar Mobile Premium…      9.9                       R$ 745,45  de R$ 876,99 até 2026-09-10
+  Castellar Mobile Poltrona…     PRICE_DISCOUNT            R$ 745,45  de R$ 876,99 até 2026-09-10
+  Poltrona Decorativa Madeira…   PRICE_DISCOUNT            R$ 745,45  de R$ 876,99 até 2026-09-10
+  Castellar Mobile Premium…      PRICE_DISCOUNT            R$ 745,45  de R$ 876,99 até 2026-09-10
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 750,94  de R$ 848,62 até 2026-09-10
+  Poltrona Beny Moderna De…      PRICE_DISCOUNT            R$ 750,94  de R$ 848,62 até 2026-09-10
+  Castellar Mobile Premium…      Impulsione suas vendas    R$ 762,98  de R$ 876,99
+  Puff Elegance Redondo…         PRICE_DISCOUNT            R$ 764,92  de R$ 899,90 até 2026-09-10
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 785,17  de R$ 923,72 até 2026-09-10
+  Poltrona Decorativa Mona…      PRICE_DISCOUNT            R$ 789,44  de R$ 830,99 até 2026-09-10
+  Poltrona Decorativa Mona…      9.9                       R$ 789,44  de R$ 830,99 até 2026-09-10
+  Poltrona Papai Reclinável…     9.9                       R$ 789,90  de R$ 960,99 até 2026-09-10
+  Poltrona Beny Moderna De…      PRICE_DISCOUNT            R$ 791,99  de R$ 1.099,00 até 2026-09-10
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 791,99  de R$ 923,72 até 2026-09-10
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 791,99  de R$ 923,72 até 2026-09-10
+  Poltrona Beny Linho Pes…       PRICE_DISCOUNT            R$ 791,99  de R$ 1.099,00 até 2026-09-10
+  Poltrona Decorativa Luxo…      PRICE_DISCOUNT            R$ 793,05  de R$ 932,99 até 2026-09-10
+  Puff Grecia Decoralli…         9.9                       R$ 804,00  de R$ 999,00 até 2026-09-10
+  Puff Grecia Decoralli…         9.9                       R$ 804,00  de R$ 999,00 até 2026-09-10
+  Puff Grecia Decoralli…         9.9                       R$ 804,00  de R$ 999,00 até 2026-09-10
+  Puff Grecia Decoralli…         9.9                       R$ 804,00  de R$ 999,00 até 2026-09-10
+  Sofá Namoradeira Couro…        9.9                       R$ 817,90  de R$ 1.141,99 até 2026-09-10
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 826,19  de R$ 943,09 até 2026-09-10
+  Poltrona Mona Luxo Madeira…    PRICE_DISCOUNT            R$ 833,14  de R$ 876,99 até 2026-09-10
+  Puff Grecia Decoralli…         PRICE_DISCOUNT            R$ 849,16  de R$ 999,00 até 2026-09-10
+  Puff Grecia Decoralli…         PRICE_DISCOUNT            R$ 849,16  de R$ 999,00 até 2026-09-10
+  Puff Grecia Decoralli…         PRICE_DISCOUNT            R$ 849,16  de R$ 999,00 até 2026-09-10
+  Bella Design Moderno…          PRICE_DISCOUNT            R$ 852,59  de R$ 897,47 até 2026-09-10
+  Poltrona Mona Pés Em…          PRICE_DISCOUNT            R$ 852,59  de R$ 897,47 até 2026-09-10
+  Poltrona Decorativa Luxo…      PRICE_DISCOUNT            R$ 856,49  de R$ 1.007,63 até 2026-09-10
+  Lv Móveis Premium Mona…        PRICE_DISCOUNT            R$ 856,49  de R$ 1.007,63 até 2026-09-10
+  Sofa Beny Decoralli 140cm 2…   PRICE_DISCOUNT            R$ 880,36  de R$ 1.035,71 até 2026-09-10
+  Sofá Namoradeira Couro…        9.9                       R$ 882,71  de R$ 1.233,35 até 2026-09-10
+  Poltrona Corino Decorativa…    PRICE_DISCOUNT            R$ 884,40  de R$ 930,95 até 2026-09-10
+  Poltrona Recepção Black…       PRICE_DISCOUNT            R$ 884,40  de R$ 930,95 até 2026-09-10
+  Poltrona Decorativa Luxo…      PRICE_DISCOUNT            R$ 896,78  de R$ 1.007,63 até 2026-09-10
+  Lv Móveis Premium Mona…        PRICE_DISCOUNT            R$ 896,78  de R$ 1.007,63 até 2026-09-10
+  Poltrona Decorativa Mona…      PRICE_DISCOUNT            R$ 899,79  de R$ 947,15 até 2026-09-10
+  Castellar Mobile Premium…      PRICE_DISCOUNT            R$ 899,79  de R$ 947,15 até 2026-09-10
+  Facilita Brasil Sofa Para…     PRICE_DISCOUNT            R$ 899,90  de R$ 1.239,90 até 2026-09-10
+  Facilita Brasil Sofa Para…     9.9                       R$ 899,90  de R$ 1.239,90 até 2026-09-10
+  Sofa Decoralli Milao 2…        PRICE_DISCOUNT            R$ 910,72  de R$ 1.071,43 até 2026-09-10
+  Facilita Brasil Sofa Para…     9.9                       R$ 917,88  de R$ 1.239,90 até 2026-09-10
+  Poltrona Papai Reclinável…     9.9                       R$ 944,55  de R$ 1.111,23 até 2026-09-10
+  Puff Grecia Decoralli…         PRICE_DISCOUNT            R$ 949,05  de R$ 999,00 até 2026-09-10
+  Sofá Namoradeira Couro…        PRICE_DISCOUNT            R$ 970,70  de R$ 1.141,99 até 2026-09-10
+  V88 Ecommerce Premium Mona…    PRICE_DISCOUNT            R$ 978,42  de R$ 1.290,90 até 2026-09-10
+  Facilita Brasil Sofa Para…     Impulsione suas vendas    R$ 989,04  de R$ 1.239,90
+  Facilita Brasil Sofa Para…     9.9                       R$ 989,04  de R$ 1.239,90 até 2026-09-10
+  Sofa Cama Decoralli Yara 3…    PRICE_DISCOUNT           R$ 1.040,00  de R$ 1.224,01 até 2026-09-10
+  Sofa Cama Decoralli Yara 3…    PRICE_DISCOUNT           R$ 1.040,00  de R$ 1.224,01 até 2026-09-10
+  Sofá Namoradeira Couro…        PRICE_DISCOUNT           R$ 1.048,35  de R$ 1.233,35 até 2026-09-10
+  Facilita Brasil Sofa Para…     PRICE_DISCOUNT           R$ 1.053,92  de R$ 1.239,90 até 2026-09-10
+  Facilita Brasil Sofa Para…     PRICE_DISCOUNT           R$ 1.053,92  de R$ 1.239,90 até 2026-09-10
+  V88 Ecommerce Premium Mona…    PRICE_DISCOUNT           R$ 1.054,26  de R$ 1.290,90 até 2026-09-10
+  V88 Ecommerce Premium Mona…    Impulsione suas vendas   R$ 1.096,00  de R$ 1.290,90
+  Sofá-cama Facilita Brasil 1…   PRICE_DISCOUNT           R$ 1.159,99  de R$ 1.656,99 até 2026-09-10
+  Conjunto 2 Poltronas…          PRICE_DISCOUNT           R$ 1.161,80  de R$ 1.545,99 até 2026-09-10
+  Conjunto 2 Poltronas…          9.9                      R$ 1.161,80  de R$ 1.545,99 até 2026-09-10
+  Conjunto 2 Poltronas…          9.9                      R$ 1.189,99  de R$ 1.545,99 até 2026-09-10
+  Conjunto 2 Poltronas…          PRICE_DISCOUNT           R$ 1.189,99  de R$ 1.545,99 até 2026-09-10
+  Facilita Brasil Sofa Para…     Impulsione suas vendas   R$ 1.202,70  de R$ 1.239,90
+  Facilita Brasil Sofa Para…     Impulsione suas vendas   R$ 1.202,70  de R$ 1.239,90
+  Sofá Cama Marrom Suede…        Casa e Decor em Oferta   R$ 1.231,89  de R$ 1.656,99
+  Sofá Cama Marrom Suede…        Impulsione suas vendas   R$ 1.231,89  de R$ 1.656,99
+  Facilita Brasil Premium…       9.9                      R$ 1.238,53  de R$ 1.656,99 até 2026-09-10
+  Facilita Brasil Premium…       9.9                      R$ 1.238,53  de R$ 1.480,00 até 2026-09-10
+  Conjunto 2 Poltronas…          9.9                      R$ 1.251,86  de R$ 1.545,99 até 2026-09-10
+  Conjunto 2 Poltronas…          9.9                      R$ 1.251,86  de R$ 1.545,99 até 2026-09-10
+  Conjunto Com 2 Poltronas…      9.9                      R$ 1.251,86  de R$ 1.545,99 até 2026-09-10
+  Conjunto 2 Poltronas…          9.9                      R$ 1.251,86  de R$ 1.545,99 até 2026-09-10
+  Sofá Cama Marrom Suede…        9.9                      R$ 1.269,99  de R$ 1.656,99 até 2026-09-10
+  Conjunto - 2 Poltronas Mona…   PRICE_DISCOUNT           R$ 1.289,99  de R$ 1.530,99 até 2026-09-10
+  Sofá Cama Bege Suede…          PRICE_DISCOUNT           R$ 1.299,90  de R$ 1.478,99 até 2026-09-10
+  Conjunto 2 Poltronas…          PRICE_DISCOUNT           R$ 1.314,10  de R$ 1.545,99 até 2026-09-10
+  Conjunto 2 Poltronas…          PRICE_DISCOUNT           R$ 1.314,10  de R$ 1.545,99 até 2026-09-10
+  Conjunto - 2 Poltronas Mona…   9.9                      R$ 1.324,42  de R$ 1.558,14 até 2026-09-10
+  Sofá Cama Preto Suede…         9.9                      R$ 1.329,99  de R$ 1.656,99 até 2026-09-10
+  Sofá Cama Cinza Suede…         9.9                      R$ 1.359,99  de R$ 1.656,99 até 2026-09-10
+  Sofá Cama Terracota Suede…     9.9                      R$ 1.359,99  de R$ 1.656,99 até 2026-09-10
+  Sofá Cama Cinza Suede…         PRICE_DISCOUNT           R$ 1.408,45  de R$ 1.656,99 até 2026-09-10
+  Sofá Cama Preto Suede…         PRICE_DISCOUNT           R$ 1.408,45  de R$ 1.656,99 até 2026-09-10
+  Sofá Cama Marrom Suede…        PRICE_DISCOUNT           R$ 1.408,45  de R$ 1.656,99 até 2026-09-10
+  Sofá Cama Terracota Suede…     PRICE_DISCOUNT           R$ 1.408,45  de R$ 1.656,99 até 2026-09-10
+  Sofá Cama Futon Barbearia…     9.9                      R$ 1.408,45  de R$ 1.656,99 até 2026-09-10
+  Sofá-cama Facilita Brasil 1…   9.9                      R$ 1.408,45  de R$ 1.656,99 até 2026-09-10
+  Sofá Cama Bege Suede…          9.9                      R$ 1.449,90  de R$ 1.656,99 até 2026-09-10
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.466,52  de R$ 1.999,00 até 2026-09-10
+  Sofá Cama Bege Suede…          PRICE_DISCOUNT           R$ 1.576,80  de R$ 1.659,79 até 2026-09-10
+  Sofá Cama Bege Suede…          PRICE_DISCOUNT           R$ 1.576,80  de R$ 1.659,79 até 2026-09-10
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.583,84  de R$ 2.158,92 até 2026-09-10
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.583,84  de R$ 2.158,92 até 2026-09-10
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.583,84  de R$ 2.158,92 até 2026-09-10
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.583,84  de R$ 2.158,92 até 2026-09-10
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.583,84  de R$ 2.158,92 até 2026-09-10
+  Sofa Cama Decoralli Yara 2…    PRICE_DISCOUNT           R$ 1.584,00  de R$ 2.158,92 até 2026-09-10
+

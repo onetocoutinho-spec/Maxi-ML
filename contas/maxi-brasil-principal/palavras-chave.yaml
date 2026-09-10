@@ -1,0 +1,13 @@
+# Termos que você quer vigiar. Para cada um, o sistema grava:
+#   - o top N de concorrentes (preço, vendas, vendedor, frete)
+#   - a posição dos SEUS anúncios no mesmo resultado
+#
+# Comece com 5 a 15 termos por conta. Termo demais só faz barulho.
+#
+# NOTA: o Mercado Livre passou a recusar /sites/MLB/search (403) para
+# aplicativos em geral. Enquanto isso valer, esta lista fica inerte — a
+# concorrência vem de destaques de categoria, catálogo e anúncios vigiados
+# por link (concorrentes.yaml). Preencher aqui não quebra nada, mas também
+# não coleta.
+
+palavras_chave: []

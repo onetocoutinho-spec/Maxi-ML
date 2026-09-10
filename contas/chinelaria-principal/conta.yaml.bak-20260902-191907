@@ -1,0 +1,13 @@
+parametros:
+  margem_minima_percentual: 20
+  frete_medio: 0
+  comissao:
+    gold_special: 0.12
+    gold_pro: 0.17
+  top_n_busca: 30
+  regras_do_negocio: >
+    Modelo "User Products": cada variacao de tamanho/cor e publicada como item
+    separado, compartilhando o mesmo family_name. Atributos obrigatorios:
+    BRAND, MODEL, GENDER, SIZE_GRID_ID, GTIN (ou EMPTY_GTIN_REASON) e SELLER_SKU.
+    Tabelas de medida criadas via POST /catalog/charts por categoria de genero.
+    Nunca alterar family_name de item ja publicado.
