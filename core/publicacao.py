@@ -147,12 +147,31 @@ def montar(cli: MLClient, item_id: str, *,
            herdar_peso: bool = False,
            caixa: str | None = None,
            peso_caixa: str | None = None,
-           origem_bruta: dict | None = None) -> tuple[dict, dict]:
+           origem_bruta: dict | None = None,
+           desvincular_familia: bool = False,
+           familia: str | None = None) -> tuple[dict, dict]:
     """
     Lê o anúncio de origem e devolve (payload, origem).
 
     Estoque nasce em 1 de propósito: se um recadastro escapar publicado com
     preço errado, o estrago é uma unidade. Subir estoque é decisão separada.
+
+    `desvincular_familia=True` tenta criar um produto sem `family_name`
+    nenhum. Medido em 09/09/2026: nas categorias de móveis desta conta o ML
+    recusa com `body.required_fields [family_name]` mesmo assim — a conta
+    inteira exige família em item novo, não é regra por categoria. Ou seja,
+    isto só funciona onde o ML não exigir o campo; não confie nele sem testar
+    com `--publicar` em UM item antes de repetir para outros.
+
+    `familia`, se vier preenchido, é o caminho que sobrevive a essa exigência:
+    declara uma família PRÓPRIA (até 60 caracteres, cortada na palavra) em
+    vez de herdar a da origem. Não elimina a obrigatoriedade — societário nela
+    em vez de lutar contra ela — mas tira o anúncio novo do agrupamento
+    genérico herdado, criando um `user_product_id` novo e independente com o
+    texto que você escolher. Tem precedência sobre `desvincular_familia`.
+    O ML deriva o título visível a partir da família (mais atributos como
+    cor), então confira o título real do anúncio depois de publicar — não
+    é garantido que saia exatamente como a string enviada.
 
     `origem_bruta`, se vier preenchido, substitui a leitura por `cli.get`.
     Existe para o caso de origem e destino serem CONTAS DIFERENTES: o ML
@@ -231,7 +250,11 @@ def montar(cli: MLClient, item_id: str, *,
         # no modelo User Products: as variações de cor do mesmo sofá dividem
         # uma. Herdamos a do anúncio de origem porque é literalmente o mesmo
         # produto — inventar uma nova quebraria o agrupamento no painel.
-        "family_name": origem.get("family_name"),
+        # `familia` manda: família própria, produto novo e independente.
+        # Sem ela, `desvincular_familia` tenta sair do agrupamento (só
+        # funciona onde o ML não exigir o campo). Sem nenhum dos dois,
+        # herda da origem — mesmo produto, mesmo agrupamento no painel.
+        "family_name": familia if familia else (None if desvincular_familia else origem.get("family_name")),
         "price": preco if preco is not None else origem.get("price"),
         "currency_id": origem.get("currency_id") or "BRL",
         "available_quantity": int(estoque),
@@ -256,13 +279,6 @@ def montar(cli: MLClient, item_id: str, *,
         payload.pop("title", None)
     else:
         payload.pop("family_name", None)
-
-    # Nesta categoria a conta opera no modelo User Products, e aí o ML recusa
-    # o POST com `body.required_fields [family_name]`. É o nome da FAMÍLIA do
-    # produto — o que agrupa Clássico e Premium do mesmo item. Copiado da
-    # origem: família igual é a intenção, não coincidência.
-    if origem.get("family_name"):
-        payload["family_name"] = _familia(origem["family_name"])
 
     if origem.get("sale_terms"):
         payload["sale_terms"] = [
@@ -523,7 +539,13 @@ def corrigir_item(cli: MLClient, item_id: str, *,
     resumo["titulo_depois"] = real.get("title")
     resumo["atributos_depois"] = {k: attrs_depois.get(k) for k in (atributos_novos or {})}
     bateu_titulo = titulo_novo is None or resumo["titulo_depois"] == titulo_novo
-    bateu_atributos = all(resumo["atributos_depois"].get(k) == v for k, v in (atributos_novos or {}).items())
+    # limpar um atributo (v == "") faz o ML devolver o campo ausente/None, não
+    # uma string vazia -- comparar só com "==" marcava isso como "não colou"
+    # mesmo quando o valor foi removido com sucesso.
+    bateu_atributos = all(
+        (not v and not resumo["atributos_depois"].get(k)) or resumo["atributos_depois"].get(k) == v
+        for k, v in (atributos_novos or {}).items()
+    )
     resumo["resultado"] = "corrigido" if (bateu_titulo and bateu_atributos) else "aceito mas não colou tudo"
     return resumo
 
@@ -907,6 +929,7 @@ def resumo_do_payload(payload: dict, origem: dict) -> str:
         f"origem      : {origem.get('id')} ({origem.get('status')}, "
         f"envio {(origem.get('shipping') or {}).get('mode')})",
         f"titulo      : {payload.get('title')}",
+        f"family_name : {payload.get('family_name') or '(nenhum — produto independente)'}",
         f"categoria   : {payload.get('category_id')}",
         f"modalidade  : {payload.get('listing_type_id')}",
         f"preco       : {payload.get('price')} {payload.get('currency_id')}",

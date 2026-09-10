@@ -2202,6 +2202,22 @@ def cmd_publicar(args) -> int:
         print(f"{VERM}Informe um MLB de origem ou --lista <arquivo.csv>.{FIM}")
         return 1
 
+    if args.titulo_proprio and not args.titulo and not args.lista:
+        print(f"{VERM}--titulo-proprio sem --titulo não tem efeito: o título "
+              f"autoral é o que --titulo manda. Sem ele, o payload nasce sem "
+              f"título nenhum.{FIM}")
+        return 1
+
+    if args.titulo_proprio and args.familia:
+        print(f"{VERM}--titulo-proprio e --familia são caminhos opostos: um "
+              f"tenta sair do agrupamento, o outro entra nele com família "
+              f"própria. Escolha um.{FIM}")
+        return 1
+
+    if args.familia and args.titulo:
+        print(f"{CINZA}--titulo é ignorado com --familia: o ML deriva o "
+              f"título da família neste modelo, não aceita os dois juntos.{FIM}")
+
     if args.sincronizar:
         if cli_origem is not cli:
             print(f"{VERM}--conta-origem não vale com --sincronizar: o anúncio "
@@ -2211,6 +2227,8 @@ def cmd_publicar(args) -> int:
             return 1
         conflitos = [nome for nome, valor in
                      (("--fotos", args.fotos), ("--titulo", args.titulo),
+                      ("--titulo-proprio", args.titulo_proprio),
+                      ("--familia", args.familia),
                       ("--peso", args.peso), ("--herdar-peso", args.herdar_peso),
                       ("--copiar-descricao", args.copiar_descricao))
                      if valor]
@@ -2301,6 +2319,8 @@ def cmd_publicar(args) -> int:
                     caixa=(linha.get("caixa") or args.caixa or None),
                     peso_caixa=(linha.get("peso_caixa") or args.peso_caixa or None),
                     origem_bruta=origem_bruta,
+                    desvincular_familia=args.titulo_proprio,
+                    familia=(linha.get("familia") or args.familia or None),
                 )
         except (ValueError, Exception) as erro:  # noqa: B014 - erro de rede também para a fila
             print(f"{VERM}{mlb}: {erro}{FIM}")
@@ -3048,6 +3068,21 @@ def main() -> int:
                    help="nasce em 1 de propósito")
     s.add_argument("--preco", type=float, default=None)
     s.add_argument("--titulo", default=None)
+    s.add_argument("--titulo-proprio", action="store_true",
+                   help="tenta sair do agrupamento User Products (family_name) "
+                        "para usar --titulo autoral. Medido em 09/09/2026: nas "
+                        "categorias de móveis desta conta o ML recusa com "
+                        "body.required_fields [family_name] mesmo assim — "
+                        "família é obrigatória na conta toda. Teste em 1 item "
+                        "com --publicar antes de confiar. Onde não funcionar, "
+                        "use --familia.")
+    s.add_argument("--familia", default=None,
+                   help="família PRÓPRIA (até 60 caracteres) em vez de herdar "
+                        "a da origem — cria user_product_id novo e "
+                        "independente, sobrevive à exigência de family_name "
+                        "que --titulo-proprio não sobrevive nesta conta. "
+                        "--titulo é ignorado junto (o ML deriva o título da "
+                        "família); confira o título real depois de publicar.")
     s.add_argument("--modalidade", default=None,
                    help="gold_special (clássico) ou gold_pro (premium)")
     s.add_argument("--peso", default=None,

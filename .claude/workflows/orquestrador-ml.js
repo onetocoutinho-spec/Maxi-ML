@@ -4,7 +4,39 @@ export const meta = {
   phases: [
     { title: 'Plantao', detail: 'varre todas as contas com credencial ativa' },
     { title: 'Diagnostico e decisao', detail: 'um especialista por achado, em paralelo' },
+    { title: 'Estado real', detail: 'batimento do vigia e alertas criticos de 24h, para o painel Malha Zion' },
   ],
+}
+
+const ESTADO_REAL_SCHEMA = {
+  type: 'object',
+  properties: {
+    vigia: {
+      type: 'object',
+      properties: {
+        batimentoIso: { type: 'string' },
+        subiuIso: { type: 'string' },
+      },
+      required: ['batimentoIso', 'subiuIso'],
+    },
+    alertas24h: {
+      type: 'object',
+      properties: {
+        criticos: { type: 'number' },
+        medios: { type: 'number' },
+        porContaCriticos: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: { slug: { type: 'string' }, n: { type: 'number' } },
+            required: ['slug', 'n'],
+          },
+        },
+      },
+      required: ['criticos', 'medios', 'porContaCriticos'],
+    },
+  },
+  required: ['vigia', 'alertas24h'],
 }
 
 const PLANTAO_SCHEMA = {
@@ -152,8 +184,33 @@ for (const cliente of Object.keys(porCliente)) {
   })
 }
 
+phase('Estado real')
+
+const estadoRealPrompt = [
+  'Colete o estado real de dois componentes de apoio, para alimentar o painel',
+  '"Malha Zion" (nao escreva em nada, so leia):',
+  '',
+  '1. Vigia: leia o conteudo de data/vigia.batimento (uma linha, ISO) e a',
+  '   primeira linha de data/vigia.subiu (ISO). Devolva os dois como estao,',
+  '   sem reformatar.',
+  '2. Alertas criticos das ultimas 24h: rode',
+  '   ".venv/Scripts/python.exe cli.py alertas --horas 24" (ou "python cli.py',
+  '   alertas --horas 24" se o venv nao existir nesse ambiente). Cada linha',
+  '   comeca com "!" (critico) ou "·" (informativo) e traz "[conta_slug]" logo',
+  '   depois da hora. Conte o total de linhas "!" e o total de linhas "·", e',
+  '   monte a lista de contas com alerta critico (slug + quantos "!" daquela',
+  '   conta). Ignore linhas de continuacao (as que comecam com espaco ou "•"',
+  '   detalhando um alerta anterior) - elas nao tem seu proprio "!"/"·".',
+].join('\n')
+
+const estadoReal = await agent(estadoRealPrompt, {
+  schema: ESTADO_REAL_SCHEMA,
+  phase: 'Estado real',
+})
+
 return {
   total_achados_do_plantao: achados.length,
   descartados_por_teto: descartados,
   por_cliente: porCliente,
+  estado_real: estadoReal,
 }

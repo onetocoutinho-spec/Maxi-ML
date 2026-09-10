@@ -21,6 +21,13 @@ categoria e faixa de preço ±30%, alargando para a categoria inteira quando
 sobra pouco). Comparação com concorrente externo é outra frente
 (core.confrontos / vigilância de catálogo) e não entra aqui.
 
+SEM_EXPOSICAO é sempre inferido pelo par interno (visita abaixo do p25),
+mas quando existe medição real de posição na busca (snap_posicao, importada
+de skills/posicao-na-busca — a API de busca devolve 403, só dá pra medir
+pelo navegador) ela entra como causa concreta, na frente das hipóteses sem
+dado. É fato lido, não inferência, mesmo que a medição não seja em tempo
+real.
+
 SEM_CONVERSAO tem DUAS réguas, não uma. A relativa (abaixo do p25 de
 conversão do par) fica cega exatamente no caso que mais importa: se a conta
 inteira converte mal, os vizinhos também convertem 0%, o p25 vira 0%, e nada
@@ -126,6 +133,28 @@ def _promocoes_por_item(con: sqlite3.Connection, conta_slug: str) -> dict[str, s
     return saida
 
 
+def _posicoes_por_item(con: sqlite3.Connection, conta_slug: str) -> dict[str, list[dict]]:
+    """Última medição de posição por (item, termo) em snap_posicao — vinda do
+    roteiro skills/posicao-na-busca, lida por um navegador de verdade, não
+    pelo vigia de 5 em 5 minutos (a API de busca devolve 403). Um item pode
+    estar calibrado em mais de um termo em palavras-chave.yaml, e a posição
+    pode divergir entre eles — por isso guarda todas, não só a melhor."""
+    linhas = con.execute(
+        "SELECT s.item_id, s.termo, s.posicao, s.total_result, s.coletado_em "
+        "FROM snap_posicao s JOIN ("
+        "  SELECT item_id, termo, MAX(coletado_em) m FROM snap_posicao "
+        "  WHERE conta_slug = ? GROUP BY item_id, termo"
+        ") u ON u.item_id = s.item_id AND u.termo = s.termo AND u.m = s.coletado_em "
+        "WHERE s.conta_slug = ?", (conta_slug, conta_slug)).fetchall()
+    saida: dict[str, list[dict]] = defaultdict(list)
+    for l in linhas:
+        saida[l["item_id"]].append({
+            "termo": l["termo"], "posicao": l["posicao"],
+            "total_result": l["total_result"], "medido_em": l["coletado_em"],
+        })
+    return dict(saida)
+
+
 def _disputados_no_catalogo(con: sqlite3.Connection, conta_slug: str) -> set[str]:
     """Nossos item_id que têm ao menos um confronto de concorrente
     registrado — mesma leitura que core.diagnostico usa."""
@@ -192,8 +221,32 @@ def _tipo_dominante(itens: list[sqlite3.Row]) -> str | None:
     return max(contagem, key=contagem.get)
 
 
-def _causas_sem_exposicao(item, par, disputados, promo_por_item) -> list[dict]:
+def _causas_sem_exposicao(item, par, disputados, promo_por_item, posicoes_por_item) -> list[dict]:
     causas = []
+
+    # Posição real (medida por navegador, skills/posicao-na-busca) é fato,
+    # não inferência de par interno — entra na frente das causas abaixo.
+    # Quando não existe medição, a causa não vira "sem dado" como foto/
+    # avaliação: aqui existe caminho pra conseguir o dado, então a causa
+    # aponta pra ele em vez de virar beco sem saída.
+    medicoes = posicoes_por_item.get(item["item_id"]) or []
+    if medicoes:
+        for m in medicoes:
+            if m["posicao"] is None:
+                continue
+            total = m["total_result"] if m["total_result"] is not None else "?"
+            causas.insert(0, {
+                "causa": f"posição real na busca: {m['posicao']}º de {total} para \"{m['termo']}\"",
+                "evidencia": f"medido em {m['medido_em']} via skills/posicao-na-busca "
+                             f"— não é leitura em tempo real, é medição manual",
+            })
+    else:
+        causas.append({
+            "causa": "posição na busca ainda não medida",
+            "evidencia": "rodar skills/posicao-na-busca para este item/termo — "
+                         "a API de busca do ML devolve 403, só dá pra medir pelo navegador",
+        })
+
     if not item["catalogo"] and any(p["catalogo"] for p in par):
         pct_par = sum(1 for p in par if p["catalogo"]) / len(par) * 100
         causas.append({
@@ -265,7 +318,7 @@ def _causas_sem_conversao(item, par, frete_por_item, promo_por_item) -> list[dic
 
 
 def _avaliar_item(item, ativos, visitas_por_item, pedidos_por_item, frete_por_item,
-                  disputados, promo_por_item, media_mensal, dias) -> dict:
+                  disputados, promo_por_item, posicoes_por_item, media_mensal, dias) -> dict:
     """
     Devolve o veredito, as causas prováveis, e `receita_bruta_perdida_mes` —
     faturamento, ainda SEM descontar comissão. Quem chama (`analisar`) aplica
@@ -345,7 +398,7 @@ def _avaliar_item(item, ativos, visitas_por_item, pedidos_por_item, frete_por_it
 
     if visitas == 0 or (p25_visitas is not None and visitas < p25_visitas):
         resultado["veredito"] = "SEM_EXPOSICAO"
-        resultado["causas"] = _causas_sem_exposicao(item, par, disputados, promo_por_item)
+        resultado["causas"] = _causas_sem_exposicao(item, par, disputados, promo_por_item, posicoes_por_item)
         # se este anúncio tivesse o volume de visita típico do par (p25) e
         # convertesse na taxa típica do par, faturaria isto a mais por mês.
         if p25_visitas is not None and p25_conv is not None:
@@ -424,6 +477,7 @@ def analisar(con: sqlite3.Connection, conta_slug: str, dias: int = JANELA_DIAS_P
     frete_por_item = _frete_custo_recente(con, conta_slug)
     disputados = _disputados_no_catalogo(con, conta_slug)
     promo_por_item = _promocoes_por_item(con, conta_slug)
+    posicoes_por_item = _posicoes_por_item(con, conta_slug)
     media_mensal = _media_mensal_historica(con, conta_slug)
     tarifas = db.tarifas_medidas(con, conta_slug)
 
@@ -434,7 +488,7 @@ def analisar(con: sqlite3.Connection, conta_slug: str, dias: int = JANELA_DIAS_P
         if item_filtro and item["item_id"] != item_filtro:
             continue
         r = _avaliar_item(item, ativos, visitas_por_item, pedidos_por_item, frete_por_item,
-                          disputados, promo_por_item, media_mensal, dias)
+                          disputados, promo_por_item, posicoes_por_item, media_mensal, dias)
 
         # A tarifa REAL medida (não a do conta.yaml) vira margem líquida por
         # cima do bruto, quando existe. Sem ela, o valor bruto fica de pé —
@@ -477,7 +531,7 @@ def texto_resumo(r: dict, limite: int = 10) -> str:
     for i in r["itens"][:limite]:
         if (i["receita_perdida_mes"] or 0) <= 0 and i["veredito"] in ("SAUDAVEL", "TETO_DE_CATEGORIA"):
             continue
-        if i["receita_perdida_mes"]:
+        if i["receita_perdida_mes"] is not None:
             sufixo = "" if i.get("liquido") else " (bruto, sem tarifa medida)"
             valor = f"R$ {i['receita_perdida_mes']:.2f}/mês{sufixo}"
         else:

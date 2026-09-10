@@ -75,10 +75,11 @@ frente, investigam e devolvem a conclusão — sem despejar o banco inteiro aqui
 | `ml-frete` | quanto a loja paga de frete, e por que o ML não libera envio |
 | `ml-concorrencia` | ficha de catálogo, buy box, canibalização entre as irmãs |
 | `ml-cadastro` | pausado, em revisão, sem envio, sem custo, duplicata |
+| `ml-conversao` | anúncio ativo que não vende: sem exposição, sem conversão ou teto de categoria — e quanto vale consertar |
 | `ml-plantao` | o que mudou desde ontem e o que exige decisão hoje |
 | `ml-publicar` | recadastra pela esteira: simula, mostra, e só sobe com o seu sim |
 
-Os cinco primeiros **analisam e recomendam** e não escrevem. O `ml-publicar`
+Os seis primeiros **analisam e recomendam** e não escrevem. O `ml-publicar`
 escreve, e por isso carrega o protocolo inteiro: `checar` → simular → mostrar →
 autorização daquele item → publicar → conferir o que subiu. A
 trava não é só instrução: `.claude/hooks/travar-escrita-ml.py` roda antes de
@@ -90,6 +91,96 @@ margem" poderia terminar com anúncio publicado.
 Os arquivos de credencial e configuração da lista acima também pedem aprovação
 para serem escritos (`permissions.ask` no `.claude/settings.json`), porque o
 `ml-publicar` precisa de `Write` para montar fila CSV e o hook só cobre Bash.
+
+## O orquestrador inicia a conversa sozinho (melhor esforço)
+
+`.claude/hooks/lembrete-orquestrador.py` roda no evento `SessionStart` (toda
+vez que uma sessão nova abre neste projeto) e, se o `orquestrador-ml` ainda não
+rodou hoje, devolve uma instrução pra sessão rodar sozinha antes de atender o
+que for pedido — publicando um Artifact com o relatório completo e mandando um
+resumo curto pro Telegram via `core.notify.enviar(texto)`.
+
+Dois arquivos guardam o estado disso, escritos pela própria sessão depois de
+cada rodada — não são gerados por nenhum comando do `cli.py`:
+
+- `data/orquestrador.ultima_execucao` — timestamp local da última rodada. É
+  isso que o hook compara com "hoje" pra decidir se está devendo.
+- `data/orquestrador.artifact_url` — URL do Artifact publicado, pra cada
+  rodada **atualizar a mesma página** em vez de criar uma nova por dia.
+
+Isto é melhor esforço, não garantia: nenhum mecanismo aqui acorda o computador
+com o app fechado (rotina de nuvem não alcança `.env`/banco local; `CronCreate`
+morre com a sessão). O `SessionStart` cobre "abriu o app mais tarde"; um
+`CronCreate` de `30 6 * * *`, rearmado a cada sessão nova (o próprio hook lembra
+disso), cobre "deixou o app aberto a noite toda" — mas se o app ficar fechado o
+dia inteiro, ninguém roda nada sozinho.
+
+### Sincronizar o "Painel de Agentes" (estado ao vivo, melhor esforço)
+
+O artifact "Painel de Agentes" (mapa dos agentes) declara a capability `db` e lê o
+documento `estado/sistema` para mostrar dado real em vez de simulação: última
+rodada do orquestrador, batimento do Vigia e alertas críticos das últimas 24h.
+Uma página publicada não lê arquivo local nem chama `localhost` — por isso
+essa leitura só fica fresca quando **a sessão** empurra o dado, o mesmo
+melhor-esforço de cima, não uma garantia de tempo real.
+
+`.claude/workflows/orquestrador-ml.js` já devolve esse estado (fase "Estado
+real": lê `data/vigia.batimento`, `data/vigia.subiu` e conta `!` vs `·` de
+`.venv/Scripts/python.exe cli.py alertas --horas 24`, por conta). Depois que o
+workflow retornar, junto com escrever os dois arquivos de estado de cima, a
+sessão chama o Artifact tool:
+
+```
+action: write_db, url: <URL do Painel de Agentes>, db_op: set,
+collection: estado, doc_id: sistema,
+data: {
+  atualizadoEm: <agora, ISO, pego com `date`>,
+  orquestrador: { ultimaExecucaoIso: <o mesmo valor gravado em orquestrador.ultima_execucao> },
+  vigia: resultado.estado_real.vigia,
+  alertas24h: resultado.estado_real.alertas24h,
+}
+```
+
+Críticos (`!`) são o que importa mostrar em destaque — médios/informativos
+(`·`) hoje passam de 4 mil numa varredura de 24h nas contas Facilita/Maxi
+(concorrência ruidosa, já mapeada), então o painel deliberadamente não
+manda esse número bruto pra tela.
+
+### Disparo real de agente pelo Painel de Agentes (fila `pedidos`, melhor esforço)
+
+Cada um dos 7 agentes formais tem um seletor de conta e um botão "Invocar
+agente" no Painel de Agentes. Isso não é simulação: o clique escreve um pedido real
+em `pedidos/<id-do-agente>` (`{agente, conta, status:'pendente', criadoEm}`)
+no banco do artifact — a página em si não pode chamar `Task`, só pode
+escrever nesse documento e assinar a resposta. Quem lê a fila e executa de
+verdade é **uma sessão do Claude Code com o loop de processamento rodando**
+(mesmo limite de sempre: sem app aberto, sem execução).
+
+O loop, a cada rodada:
+
+1. `read_db` no artifact (url do Painel de Agentes), `collection: pedidos`,
+   `db_op: list` — pega todo mundo com `status: 'pendente'`.
+2. Para cada um, **valida antes de tocar em qualquer coisa**: `agente` tem
+   que ser um dos 7 ids em `.claude/agents/` e `conta` tem que ser um slug
+   com `.env` de verdade (hoje: `chinelaria-principal`,
+   `enio-toldos-principal`, `facilita-brasil-principal`,
+   `facilita-decoralli`, `jb-moveis-principal`, `jb-moveis-jelcdecor`,
+   `jb-moveis-ejprime`, `maxi-brasil-principal`). Qualquer coisa fora dessa
+   lista grava `status:'erro'` e pula — nunca invoca agente com dado que a
+   página não ofereceu no seletor.
+3. Grava `status:'rodando'` (`write_db` `update`), roda `Agent` de verdade
+   com `subagent_type: <agente>` e um prompt citando a conta.
+   **`ml-publicar` entra nesse fluxo, mas com uma linha extra no prompt:
+   simule e mostre, nunca publique de verdade — não há humano acompanhando
+   este disparo pra dar o "sim" que o protocolo dele exige.** Isso não é
+   só instrução: o próprio agente já para antes de escrever sem
+   autorização explícita, então o pior caso é ele simular e ficar esperando.
+4. Grava o resultado de volta (`status:'concluido'`, `resultado:<resposta>`,
+   `concluidoEm`) — ou `status:'erro'` se o Agent falhar.
+
+A página assina `pedidos/<id>` e reage sozinha (nó pulsa, painel atualiza),
+sem precisar recarregar — mas só reflete o que o loop já processou, nunca
+o estado real do disco no instante exato do clique.
 
 As réguas moram em `core/`, não nos agentes: piso em `precificacao.py`, veredito
 de campanha em `promocoes.py`. Agente que recalcula por fora passa a discordar

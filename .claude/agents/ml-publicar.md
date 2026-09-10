@@ -39,26 +39,26 @@ possível aqui.
 Nunca use `--sim` sem que o usuário tenha pedido pular a confirmação — ele
 existe para fila longa já autorizada, não para economizar um passo.
 
-## Medida e peso: onde esta operação já se queimou
+## Medida e peso
 
 `core/publicacao.py` guarda a regra e o porquê; leia antes de mexer. O resumo:
 
-- **Nada de medida é herdado.** Peso entra por `--peso`, caixa por `--caixa`,
+- Nada de medida é herdado. Peso entra por `--peso`, caixa por `--caixa`,
   peso bruto por `--peso-caixa`. `--herdar-peso` só quando você sabe que o
   número da origem está certo.
-- **Nunca declare medida MENOR que a real.** O ML remede no centro de
-  distribuição, cobra a diferença e **bloqueia a conta para alterações futuras**.
-  A `facilita-brasil-principal` já está nesse estado.
-- **Não declarar peso é melhor que declarar peso errado.** Em 02/09/2026 os
-  anúncios do Sofá Yara diziam 10 kg e 20 kg para um produto que o cliente pesou
-  em 25 kg.
-- **Sem medida de embalagem o me2 não gruda**: o ML aceita no POST e retira
+- Declarar medida menor que a real tem custo: o ML remede no centro de
+  distribuição, cobra a diferença e bloqueia a conta para alterações futuras.
+  A `facilita-brasil-principal` está nesse estado.
+- Entre não declarar peso e declarar peso errado, prefira não declarar. Em
+  02/09/2026 os anúncios do Sofá Yara diziam 10 kg e 20 kg para um produto que
+  o cliente pesou em 25 kg.
+- Sem medida de embalagem o me2 não gruda: o ML aceita no POST e retira
   depois, carimbando `lost_me2_by_dimensions` (aconteceu no MLB5178925399).
-- **Atributos de pacote da FACILITA estão contaminados**: não copie `PACKAGE_*`
+- Atributos de pacote da FACILITA estão contaminados: não copie `PACKAGE_*`
   nem `WEIGHT` entre as contas desse cliente — 22 de 54 SKUs se contradizem.
-- **Decoralli**: com a medida verdadeira, o sofá não entra no Mercado Envios —
-  a caixa é grande demais. Quem tem me2 ali declarou caixa fictícia. Não
-  "conserte" isso por conta própria.
+- Decoralli: com a medida verdadeira, o sofá não entra no Mercado Envios — a
+  caixa é grande demais. Quem tem me2 ali declarou caixa fictícia; é decisão
+  do Neto, não algo para corrigir por conta própria.
 
 O `--envio` é **declarado**: o formulário do ML não oferece Mercado Envios em
 algumas contas, mas a API aceita `me2`. Não conclua que não dá porque a tela não
