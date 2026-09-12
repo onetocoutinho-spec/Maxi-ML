@@ -71,10 +71,22 @@ def _configuracao() -> tuple[str, str]:
     return url, segredo
 
 
+# O Zion-OS está atrás do Cloudflare, e o Cloudflare recusa `Python-urllib/*`
+# com 403 ANTES de a requisição chegar na rota. Medido em 12/09/2026: o mesmo
+# GET com este User-Agent devolve 401 (a rota respondendo que o segredo não
+# bate) e com o padrão do urllib devolve 403 — e 403 aqui não é "segredo
+# errado", é "nem chegou".
+#
+# É identificação honesta, não navegador falso: quem lê o log do Cloudflare
+# precisa saber que é a drenagem do zion-ml, não fingir que é gente.
+AGENTE = "zion-ml/1.0 (drenagem de notificacoes do Mercado Livre)"
+
+
 def _chamar(url: str, segredo: str, metodo: str = "GET", corpo: dict | None = None) -> dict:
     dados = json.dumps(corpo).encode() if corpo is not None else None
     req = urllib.request.Request(url, data=dados, method=metodo)
     req.add_header("Authorization", f"Bearer {segredo}")
+    req.add_header("User-Agent", AGENTE)
     if dados:
         req.add_header("Content-Type", "application/json")
     with urllib.request.urlopen(req, timeout=30) as r:
