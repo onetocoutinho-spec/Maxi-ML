@@ -294,6 +294,29 @@ O que continua liberado: `/products/{id}/items` — as ofertas de uma ficha de
 catálogo, com preço, vendedor e frete grátis. É por isso que a vigilância
 observa FICHAS e não anúncios (`core/vigilancia.py`).
 
-Regra para dizer ao cliente, sem rodeio: concorrente fora do catálogo dá para
-DESCOBRIR (busca web, `site:produto.mercadolivre.com.br`), não dá para
-ACOMPANHAR. Prometer acompanhamento aí é prometer alerta que nunca chega.
+**Revisado em 11/09/2026 — sonda com controle na `facilita-brasil-principal`.**
+A lista acima estava incompleta e a regra abaixo estava errada pela metade. O
+`/items/{id}` de terceiro continua 403, mas a DEMANDA dele é legível, medido em
+5 anúncios de 3 categorias, sem exceção:
+
+| Endpoint de terceiro | Resposta | Devolve |
+|---|---|---|
+| `/items/{id}/visits/time_window?last=30&unit=day` | 200 | série diária de 30 dias |
+| `/visits/items?ids=` | 200 | visitas acumuladas |
+| `/questions/search?item={id}` | 200 | perguntas com o texto |
+| `/reviews/item/{id}` | 200 | avaliações com título e conteúdo |
+
+Também respondem, e não estão em uso: `/products/search?site_id=MLB&q=` (busca
+por palavra-chave **no catálogo** — `/sites/MLB/search`, que busca anúncios,
+segue 403), `/trends/MLB/{cat}`, `/highlights/MLB/category/{cat}`,
+`/sites/MLB/domain_discovery/search?q=` e `/categories/{id}/attributes`.
+Cuidado: o `paging.total` de `/products/search` é fuzzy e não serve como
+contagem.
+
+Regra para dizer ao cliente, sem rodeio: de concorrente fora do catálogo dá para
+acompanhar o **interesse e a voz do comprador** (visitas, perguntas,
+avaliações), não dá para acompanhar **preço nem posição**. Prometer alerta de
+preço fora do catálogo é prometer alerta que nunca chega.
+
+O detalhamento, com as tabelas e o controle, está no cofre:
+`wiki/regras/O que dá para ler de concorrente.md`.
