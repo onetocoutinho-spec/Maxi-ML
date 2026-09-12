@@ -227,6 +227,20 @@ class MLClient:
         return diagnostico
 
     def get(self, caminho: str, **params) -> Any:
+        # A central de promoções exige `app_version` em TODO recurso dela, e
+        # sem isso devolve `{"message":"Invalid app_version"}` com 400. A regra
+        # é do ENDPOINT, não de quem chama — por isso mora aqui, e não repetida
+        # em cada método.
+        #
+        # Entrou em 12/09/2026 por um caso que só apareceu com a caixa de
+        # notificações: o ML avisa `public_candidates` e `public_offers` com um
+        # `resource` que aponta para /seller-promotions/..., e quem busca esse
+        # caminho genericamente não tinha como saber do parâmetro. Eram 44
+        # avisos perdidos — inclusive convite de campanha COM PRAZO, que é o
+        # tipo de aviso que não adianta receber atrasado.
+        if caminho.startswith("/seller-promotions/") and "app_version" not in params:
+            params["app_version"] = VERSAO_PROMO
+
         url = caminho if caminho.startswith("http") else f"{BASE}{caminho}"
         for tentativa in range(5):
             try:
