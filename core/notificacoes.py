@@ -119,14 +119,50 @@ def _contas_por_user_id() -> dict[str, Conta]:
     }
 
 
+def _do_envio(corpo) -> dict:
+    """O que o corpo do envio já conta sobre a venda — de graça.
+
+    O dreno JÁ leu `/shipments/{id}` para chegar até aqui, e esse corpo traz
+    `order_id`, `date_created`, `order_cost` e a lista de itens com id, título
+    e quantidade. A primeira versão deste módulo descartava tudo isso e gravava
+    só o custo, deixando `order_id`, `data_pedido` e `item_id` NULOS.
+
+    O preço disso foi medido em 12/09/2026, e foi alto: `cli.py margem-real`
+    filtra por `data_pedido`, então ele passou a devolver "Nada a apurar" em
+    quatro contas que tinham 978 envios no banco — R$ 1,6 milhão de receita
+    mensal sem margem apurável, por causa de campos que estavam na mão e foram
+    jogados fora.
+
+    `data_pedido` aqui é a criação do ENVIO, não a do pedido. É aproximação
+    deliberada: erra por horas, e a régua que a consome trabalha em dias.
+    """
+    if not isinstance(corpo, dict):
+        return {}
+    itens = corpo.get("shipping_items") or []
+    primeiro = itens[0] if itens else {}
+    return {
+        "order_id": str(corpo["order_id"]) if corpo.get("order_id") else None,
+        "data_pedido": str(corpo.get("date_created") or "")[:19] or None,
+        "item_id": primeiro.get("id"),
+        "titulo": primeiro.get("description"),
+        "unidades": sum(int(i.get("quantity") or 0) for i in itens) or None,
+        "receita": corpo.get("order_cost"),
+        "logistic_type": corpo.get("logistic_type"),
+        "status_envio": corpo.get("status"),
+    }
+
+
 def _frete_do_envio(con: sqlite3.Connection, conta: Conta, cli: MLClient,
-                    recurso: str, carimbo: str) -> bool:
+                    recurso: str, carimbo: str, corpo=None) -> bool:
     """Notificação de envio vira frete COBRADO, se ainda não estiver no banco.
 
     É o único tratamento especializado aqui, e existe porque o ganho é direto:
     `frete_venda` guarda o que o ML de fato cobrou do vendedor, que é o número
     que fecha a margem realizada. Antes ele só entrava na coleta, por varredura
     dos pedidos recentes; agora entra quando o envio acontece.
+
+    O `corpo` é o envio que o dreno já leu. Ele vem junto para que a linha
+    nasça COMPLETA — ver `_do_envio`.
 
     Devolve True quando gravou algo. Não é erro não gravar: a maior parte das
     notificações de `shipments` é mudança de status de um envio cujo custo já
@@ -150,7 +186,7 @@ def _frete_do_envio(con: sqlite3.Connection, conta: Conta, cli: MLClient,
     if not custos or custos.get("custo_vendedor") is None:
         return False
 
-    db.gravar_fretes_de_venda(con, [{
+    linha = {
         "lido_em": carimbo, "cliente_id": conta.cliente_id, "conta_slug": conta.slug,
         "shipment_id": envio_id, "order_id": None, "data_pedido": None,
         "item_id": None, "titulo": None, "unidades": None, "receita": None,
@@ -158,7 +194,9 @@ def _frete_do_envio(con: sqlite3.Connection, conta: Conta, cli: MLClient,
         "custo_vendedor": custos.get("custo_vendedor"),
         "promovido": custos.get("promovido"),
         "logistic_type": None, "status_envio": None,
-    }])
+    }
+    linha.update({k: v for k, v in _do_envio(corpo).items() if v is not None})
+    db.gravar_fretes_de_venda(con, [linha])
     return True
 
 
@@ -323,7 +361,8 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
 
         if base["http"] == 200 and topico == "shipments":
             try:
-                fretes += int(_frete_do_envio(con, conta, cli, recurso, carimbo))
+                fretes += int(_frete_do_envio(con, conta, cli, recurso, carimbo,
+                                              corpo))
             except Exception:
                 pass
 

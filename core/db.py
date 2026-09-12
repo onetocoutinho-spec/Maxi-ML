@@ -684,9 +684,17 @@ def gravar_visitas(con: sqlite3.Connection, linhas: Iterable[dict]) -> int:
 def gravar_fretes_de_venda(con: sqlite3.Connection, linhas: Iterable[dict]) -> int:
     """Grava o frete cobrado sem duplicar envio já conhecido.
 
-    O envio é um fato consumado: o primeiro valor lido é o que vale. A exceção
-    é o envio ainda em curso, cujo custo pode ser fechado depois — por isso o
-    UPDATE só entra quando o valor do vendedor ainda estava nulo.
+    O envio é um fato consumado: o primeiro CUSTO lido é o que vale. A exceção
+    é o envio ainda em curso, cujo custo pode ser fechado depois — daí o
+    COALESCE, que só preenche o que ainda estava nulo.
+
+    Identidade (pedido, data, item, título, receita) é outra história: ela
+    PODE chegar depois, e antes de 12/09/2026 não chegava. A versão anterior
+    condicionava o UPDATE inteiro a `custo_vendedor IS NULL`, então uma linha
+    gravada pela caixa de correio — que nascia só com o custo — ficava sem
+    pedido e sem item PARA SEMPRE, e nenhuma coleta posterior a completava.
+    Efeito medido: `margem-real` cego em quatro contas com 978 envios no banco.
+    Agora cada campo se resolve sozinho, e o que já está preenchido manda.
     """
     linhas = list(linhas)
     if not linhas:
@@ -701,11 +709,20 @@ def gravar_fretes_de_venda(con: sqlite3.Connection, linhas: Iterable[dict]) -> i
         " :item_id, :titulo, :unidades, :receita, :custo_comprador, :custo_vendedor, "
         " :promovido, :logistic_type, :status_envio) "
         "ON CONFLICT(shipment_id) DO UPDATE SET "
-        "  custo_vendedor = excluded.custo_vendedor, "
-        "  custo_comprador = excluded.custo_comprador, "
-        "  status_envio = excluded.status_envio, "
-        "  lido_em = excluded.lido_em "
-        "WHERE frete_venda.custo_vendedor IS NULL",
+        # custo: o primeiro valor não-nulo é o que vale
+        "  custo_vendedor  = COALESCE(frete_venda.custo_vendedor, excluded.custo_vendedor), "
+        "  custo_comprador = COALESCE(frete_venda.custo_comprador, excluded.custo_comprador), "
+        # identidade: preenche o que faltava, nunca sobrescreve o que existe
+        "  order_id        = COALESCE(frete_venda.order_id, excluded.order_id), "
+        "  data_pedido     = COALESCE(frete_venda.data_pedido, excluded.data_pedido), "
+        "  item_id         = COALESCE(frete_venda.item_id, excluded.item_id), "
+        "  titulo          = COALESCE(frete_venda.titulo, excluded.titulo), "
+        "  unidades        = COALESCE(frete_venda.unidades, excluded.unidades), "
+        "  receita         = COALESCE(frete_venda.receita, excluded.receita), "
+        "  logistic_type   = COALESCE(frete_venda.logistic_type, excluded.logistic_type), "
+        # status do envio muda com o tempo: aqui a leitura nova é que manda
+        "  status_envio    = COALESCE(excluded.status_envio, frete_venda.status_envio), "
+        "  lido_em         = excluded.lido_em",
         linhas,
     )
     return con.total_changes - antes

@@ -37,6 +37,7 @@ from core.collectors import (
     coletar_buy_box,
     coletar_catalogo,
     coletar_destaques,
+    coletar_frete_das_vendas,
     coletar_meus_anuncios,
     coletar_saude_da_conta,
 )
@@ -1703,7 +1704,7 @@ def cmd_coletar(args) -> int:
             # é o número que fecha a margem realizada. Envio já lido não é
             # relido, então a primeira rodada é cheia e as seguintes são curtas.
             f = etapa("frete das vendas indisponível",
-                      lambda: collectors.coletar_frete_das_vendas(
+                      lambda: coletar_frete_das_vendas(
                           con, conta, cli, carimbo,
                           dias=int(cfg_v.get("dias_de_frete_de_venda", 30)),
                           max_envios=int(cfg_v.get("max_envios_por_rodada", 120))))
