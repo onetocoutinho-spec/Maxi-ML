@@ -41,16 +41,24 @@ from .ml_api import MLClient
 from .notify import _carregar_env_raiz
 from .utils import agora_iso
 
-# Quantos recursos buscar por rodada. Cada notificação custa pelo menos uma
-# chamada ao ML, e um despejo represado chega às centenas — sem teto, uma
-# rodada de recuperação consumiria a cota que as outras contas precisam.
-MAX_BUSCAS = 150
+# Quantos RECURSOS DISTINTOS buscar por rodada — não quantas notificações.
+#
+# A diferença é o que faz a fila descer. Medido em 12/09/2026 sobre 5.273
+# pendentes: o ML avisa 2,7 vezes o mesmo envio e 3,5 vezes o mesmo pedido, uma
+# por mudança de status. Buscar por notificação é refazer o mesmo GET três
+# vezes; buscar por recurso e confirmar todas as notificações que apontam para
+# ele corta o trabalho em quase três.
+#
+# A primeira versão deste módulo tinha teto de 80 POR NOTIFICAÇÃO contra uma
+# chegada de 85 por ciclo: a fila crescia para sempre, e o erro só apareceu
+# quando alguém contou a fila em vez de olhar o lote.
+MAX_RECURSOS = 200
 
-# Quanto pedir ao dreno. Maior que MAX_BUSCAS de propósito: as que não couberem
-# no orçamento de busca continuam pendentes lá e voltam na próxima, e conhecer
-# o tamanho da fila é informação (é assim que se descobre que ela cresce mais
-# rápido do que se drena).
-LOTE_DO_DRENO = 500
+# Quanto pedir ao dreno. Alto de propósito: é assim que se enxerga o tamanho
+# real da fila. Com o lote em 500 o comando dizia "420 na fila" enquanto havia
+# 5.273 — o número era do LOTE, não da fila, e escondia exatamente o problema
+# que precisava ser visto.
+LOTE_DO_DRENO = 1000   # o teto do proprio dreno no Zion-OS; pedir mais e ilusao
 
 
 def _configuracao() -> tuple[str, str]:
@@ -145,18 +153,42 @@ def _frete_do_envio(con: sqlite3.Connection, conta: Conta, cli: MLClient,
     return True
 
 
-def drenar(con: sqlite3.Connection, *, max_buscas: int = MAX_BUSCAS) -> dict:
-    """Busca o que chegou, lê cada recurso e confirma o que fechou.
+def _ja_sabemos(con: sqlite3.Connection, topico: str, recurso: str) -> bool:
+    """Este aviso ainda tem o que ensinar?
 
-    CONFIRMA SÓ O QUE TERMINOU. Falha de rede ou 5xx do ML deixa a notificação
-    pendente de propósito: ela volta na próxima rodada. Confirmar o que não foi
-    lido seria perder o aviso em silêncio, que é exatamente o que este desenho
-    inteiro existe para evitar.
+    Notificação de envio cujo custo já está em `frete_venda` não rende nada: o
+    frete de um envio não muda depois de cobrado, e cada releitura gasta cota
+    que a fila precisa. Como o ML avisa 2,7 vezes o mesmo envio, isso sozinho
+    derruba a maior fatia do trabalho.
 
-    Recusa DEFINITIVA — 403 de posse, 404 — também confirma, com o erro
-    gravado. Insistir num recurso que o ML nunca vai devolver é represar a fila
-    atrás de uma linha morta. E a recusa é informação: 403 de posse num anúncio
-    nosso diz que ele mudou de dono.
+    Vale só para `shipments`, de propósito. Nos outros tópicos o recurso MUDA
+    entre um aviso e outro — é esse o ponto deles.
+    """
+    if topico != "shipments":
+        return False
+    envio = recurso.rstrip("/").split("/")[-1]
+    if not envio.isdigit():
+        return False
+    return bool(con.execute(
+        "SELECT 1 FROM frete_venda WHERE shipment_id = ? AND custo_vendedor IS NOT NULL",
+        (envio,)).fetchone())
+
+
+def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict:
+    """Busca o que chegou, le cada RECURSO uma vez e confirma o que fechou.
+
+    Agrupa por recurso antes de buscar: o ML avisa a mesma coisa varias vezes,
+    e todas as notificacoes que apontam para o mesmo caminho sao respondidas
+    por um GET so. Confirmar as irmas junto e' o que impede a fila de crescer.
+
+    CONFIRMA SO O QUE TERMINOU. Falha de rede ou 5xx deixa pendente de
+    proposito: volta na proxima. Confirmar o que nao foi lido seria perder o
+    aviso em silencio, que e' o que este desenho existe para evitar.
+
+    Recusa DEFINITIVA — 403 de posse, 404, 400 — tambem confirma, com o erro
+    gravado. Insistir num recurso que o ML nunca vai devolver represa a fila
+    atras de uma linha morta, e o 400 do /seller-promotions/candidates provou
+    que isso acontece.
     """
     url, segredo = _configuracao()
     carimbo = agora_iso()
@@ -164,23 +196,31 @@ def drenar(con: sqlite3.Connection, *, max_buscas: int = MAX_BUSCAS) -> dict:
     resposta = _chamar(f"{url}/ml-callback-zionml?limite={LOTE_DO_DRENO}", segredo)
     pendentes = resposta.get("pendentes") or []
     if not pendentes:
-        return {"pendentes": 0, "lidos": 0, "confirmados": 0, "fretes": 0}
+        return {"pendentes": 0, "recursos": 0, "lidos": 0, "pulados": 0,
+                "confirmados": 0, "fretes": 0, "restaram": 0}
 
     contas = _contas_por_user_id()
     clientes: dict[str, MLClient] = {}
+
+    # (topico, recurso) -> as notificacoes que apontam para ele
+    por_recurso: dict[tuple, list[dict]] = {}
+    for n in pendentes:
+        por_recurso.setdefault((str(n.get("topico")), str(n.get("recurso"))), []).append(n)
+
     linhas: list[dict] = []
     confirmar: list[int] = []
-    lidos = fretes = sem_conta = 0
+    lidos = pulados = fretes = sem_conta = 0
 
-    for n in pendentes:
-        if lidos >= max_buscas:
+    for (topico, recurso), avisos in por_recurso.items():
+        if lidos >= max_recursos:
             break
+        n = avisos[0]
         user_id = str(n.get("user_id_ml") or "")
         conta = contas.get(user_id)
-        recurso = str(n.get("recurso") or "")
+        ids = [int(a["id"]) for a in avisos]
 
         base = {
-            "notificacao_id": n.get("notificacao_id"), "topico": n.get("topico"),
+            "notificacao_id": n.get("notificacao_id"), "topico": topico,
             "recurso": recurso, "user_id_ml": user_id,
             "conta_slug": conta.slug if conta else None,
             "cliente_id": conta.cliente_id if conta else None,
@@ -188,22 +228,23 @@ def drenar(con: sqlite3.Connection, *, max_buscas: int = MAX_BUSCAS) -> dict:
             "http": None, "erro": None, "corpo": None,
         }
 
-        # user_id fora do registro: grava e confirma. Não é erro nosso e não
-        # adianta tentar de novo — pode ser conta de outro app apontando para a
-        # mesma URL, e a linha guardada é o que permite descobrir isso.
         if not conta:
-            sem_conta += 1
+            sem_conta += len(ids)
             base["erro"] = "user_id fora do registro de contas"
-            linhas.append(base)
-            confirmar.append(int(n["id"]))
+            linhas.append(base); confirmar.extend(ids)
+            continue
+
+        # Ja sabido: confirma sem gastar chamada. Nao grava linha — nao ha o
+        # que registrar sobre um aviso que nao ensinou nada.
+        if _ja_sabemos(con, topico, recurso):
+            pulados += len(ids)
+            confirmar.extend(ids)
             continue
 
         if conta.slug not in clientes:
             try:
                 clientes[conta.slug] = MLClient(conta.slug, user_id_esperado=conta.user_id)
             except Exception as erro:
-                # Credencial quebrada NÃO confirma: é transitório do nosso lado
-                # e a notificação tem que sobreviver ao conserto.
                 base["erro"] = f"credencial: {erro}"[:300]
                 linhas.append(base)
                 continue
@@ -214,15 +255,15 @@ def drenar(con: sqlite3.Connection, *, max_buscas: int = MAX_BUSCAS) -> dict:
             base["http"] = 200 if corpo is not None else 404
             base["corpo"] = json.dumps(corpo, ensure_ascii=False)[:200_000] if corpo else None
             lidos += 1
-            confirmar.append(int(n["id"]))
+            confirmar.extend(ids)
         except Exception as erro:
             base["erro"] = str(erro)[:300]
             base["http"] = getattr(getattr(erro, "response", None), "status_code", None)
-            # 403 e 404 são definitivos; o resto volta na próxima.
-            if base["http"] in (403, 404):
-                confirmar.append(int(n["id"]))
+            lidos += 1
+            if base["http"] in (400, 403, 404):
+                confirmar.extend(ids)
 
-        if base["http"] == 200 and str(n.get("topico")) == "shipments":
+        if base["http"] == 200 and topico == "shipments":
             try:
                 fretes += int(_frete_do_envio(con, conta, cli, recurso, carimbo))
             except Exception:
@@ -243,14 +284,17 @@ def drenar(con: sqlite3.Connection, *, max_buscas: int = MAX_BUSCAS) -> dict:
 
     confirmados = 0
     if confirmar:
-        # Confirma DEPOIS de gravar. Se o processo morrer entre as duas coisas,
-        # a notificação volta e o INSERT OR IGNORE a descarta — perder trabalho
-        # refeito é barato, perder o aviso não é.
-        resp = _chamar(f"{url}/ml-callback-zionml", segredo, "PATCH", {"ids": confirmar})
-        confirmados = int(resp.get("confirmados") or 0)
+        # Confirma DEPOIS de gravar. Morrendo entre as duas coisas, a
+        # notificacao volta e o INSERT OR IGNORE a descarta — trabalho refeito
+        # e' barato, aviso perdido nao e'.
+        for i in range(0, len(confirmar), 1000):
+            resp = _chamar(f"{url}/ml-callback-zionml", segredo, "PATCH",
+                           {"ids": confirmar[i:i + 1000]})
+            confirmados += int(resp.get("confirmados") or 0)
 
     return {
-        "pendentes": len(pendentes), "lidos": lidos, "confirmados": confirmados,
+        "pendentes": len(pendentes), "recursos": len(por_recurso),
+        "lidos": lidos, "pulados": pulados, "confirmados": confirmados,
         "fretes": fretes, "sem_conta": sem_conta,
-        "restaram": max(0, len(pendentes) - len(confirmar)),
+        "restaram": len(pendentes) - len(confirmar),
     }

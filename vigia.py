@@ -46,7 +46,7 @@ else:
         except Exception:
             pass
 
-from core import db, notify, promocoes, rules, vigilancia
+from core import db, notificacoes, notify, promocoes, rules, vigilancia
 from core.collectors import coletar_meus_anuncios
 from core.config import resolver_contas
 from core.ml_api import MLClient
@@ -250,6 +250,38 @@ def main() -> int:
         max_frete = 0 if a.sem_frete else (40 if largo else 8)
         con = db.conectar()
         total_alertas = 0
+
+        # A caixa de correio do ML, antes das contas.
+        #
+        # Vem primeiro de propósito: o que o ML avisou já mudou, e as regras que
+        # rodam logo abaixo leem o banco. Drenar depois faria o ciclo decidir
+        # com o estado de antes do aviso.
+        #
+        # É UMA chamada para todas as contas — a caixa é única e o ponteiro traz
+        # o user_id. Por isso fica fora do laço.
+        #
+        # Roda em TODO ciclo, não só na passada larga. Notificação é o oposto de
+        # varredura: o valor dela é chegar na hora, e segurá-la por 4 ciclos
+        # devolveria o atraso que ela existe para tirar. O custo acompanha o
+        # movimento real — caixa vazia é uma requisição só.
+        try:
+            d = notificacoes.drenar(con, max_recursos=150)
+            if d["pendentes"]:
+                extra = f", {VERDE}{d['fretes']} fretes{FIM}" if d.get("fretes") else ""
+                pulo = f", {d['pulados']} ja sabidos" if d.get("pulados") else ""
+                sobra = f", {d['restaram']} na fila" if d.get("restaram") else ""
+                print(f"{CINZA}{relogio()}{FIM}  caixa do ML: {d['lidos']} buscados"
+                      f"{pulo}{extra}{sobra}")
+        except RuntimeError as erro_cfg:
+            # Falta ZION_OS_URL/CRON_SECRET. Avisa UMA vez por execução e segue:
+            # o vigia existe para vigiar preço e estoque, e isso não depende da
+            # caixa. Repetir o aviso a cada 5 minutos só ensinaria a ignorá-lo.
+            if not globals().get("_avisou_caixa"):
+                globals()["_avisou_caixa"] = True
+                print(f"{AMAR}{relogio()}  caixa do ML desligada: {erro_cfg}{FIM}")
+        except Exception as erro_caixa:
+            print(f"{CINZA}{relogio()}  caixa do ML indisponível — "
+                  f"{str(erro_caixa)[:80]}{FIM}")
 
         for conta in contas:
             try:

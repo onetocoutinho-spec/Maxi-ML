@@ -1354,7 +1354,7 @@ def cmd_notificacoes(args) -> int:
     from core import notificacoes
     con = db.conectar()
     try:
-        r = notificacoes.drenar(con, max_buscas=int(args.max_buscas))
+        r = notificacoes.drenar(con, max_recursos=int(args.max_recursos))
     except RuntimeError as erro:
         print(f"\n  {AMAR}{erro}{FIM}\n")
         return 1
@@ -1367,7 +1367,14 @@ def cmd_notificacoes(args) -> int:
         return 0
 
     print(f"\n  pendentes na caixa ..... {r['pendentes']}")
-    print(f"  recursos lidos ......... {r['lidos']}")
+    # A distância entre estes dois números é o trabalho que NÃO foi feito à toa:
+    # o ML avisa o mesmo recurso 2 a 3 vezes, e um GET responde por todas.
+    print(f"  recursos distintos ..... {r['recursos']}")
+    print(f"  buscados no ML ......... {r['lidos']}")
+    if r.get("pulados"):
+        # Envio cujo custo já está no banco: confirmado sem gastar chamada.
+        # É aqui que a fila desce mais rápido do que sobe.
+        print(f"  {CINZA}já sabidos, sem buscar . {r['pulados']}{FIM}")
     print(f"  confirmados ............ {r['confirmados']}")
     if r.get("fretes"):
         print(f"  {VERDE}fretes cobrados novos .. {r['fretes']}{FIM}")
@@ -3018,8 +3025,8 @@ def main() -> int:
 
     s = sub.add_parser("notificacoes",
                        help="drena a caixa de correio do ML (o que ele AVISOU)")
-    s.add_argument("--max-buscas", dest="max_buscas", default=150,
-                   help="teto de recursos lidos por rodada (padrao 150)")
+    s.add_argument("--max-recursos", dest="max_recursos", default=200,
+                   help="teto de recursos DISTINTOS buscados por rodada (padrao 200)")
     s.set_defaults(fn=cmd_notificacoes)
 
     s = sub.add_parser("precos",
