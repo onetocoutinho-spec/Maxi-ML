@@ -1285,6 +1285,65 @@ def cmd_posicoes(args) -> int:
     return 0
 
 
+def cmd_margem_real(args) -> int:
+    """Margem das vendas que aconteceram, com o frete que o ML cobrou.
+
+    `precos` responde a que preço vender, usando cotação de frete. Este
+    responde quanto sobrou do que já foi vendido, usando o valor faturado de
+    `/shipments/{id}/costs`. As duas divergem, e a diferença é margem que some
+    sem ninguém ver.
+    """
+    conta = obter_conta(args.alvo)
+    con = db.conectar()
+    linhas = precificacao.margem_realizada(con, conta, dias=int(args.dias))
+    if not linhas:
+        print(f"\n  {AMAR}Nada a apurar.{FIM} Faltam vendas com custo cadastrado "
+              f"E frete cobrado no banco.")
+        print(f"  Rode {CINZA}cli.py coletar {conta.slug}{FIM} para trazer o frete "
+              f"das vendas, e confira a planilha com "
+              f"{CINZA}cli.py precos {conta.slug}{FIM}.\n")
+        return 0
+
+    abaixo = [l for l in linhas if l["abaixo_do_piso"]]
+    prejuizo = [l for l in linhas if (l["lucro_unitario"] or 0) < 0]
+    receita = sum(l["receita"] for l in linhas)
+    lucro = sum(l["lucro_pedido"] for l in linhas)
+    alvo = linhas[0]["margem_alvo_pct"]
+    realizada = lucro / receita * 100 if receita else 0.0
+
+    print(f"\n  {conta.slug} — últimos {args.dias} dias, {len(linhas)} vendas apuradas")
+    print(f"  {'-' * 66}")
+    print(f"  receita ............... {brl(receita)}")
+    print(f"  lucro (frete COBRADO) . {brl(lucro)}")
+    cor_m = VERDE if realizada >= alvo else VERM
+    print(f"  margem realizada ...... {cor_m}{realizada:.1f}%{FIM} "
+          f"(piso da conta: {alvo:.0f}%)")
+    print(f"  abaixo do piso ........ "
+          f"{VERM if abaixo else VERDE}{len(abaixo)}{FIM} de {len(linhas)}")
+    if prejuizo:
+        print(f"  {VERM}no prejuízo ........... {len(prejuizo)}{FIM}")
+
+    # A estimativa erra nos DOIS sentidos, e isso importa: superestimar faz
+    # recusar desconto que cabia, subestimar faz vender no prejuízo achando
+    # que está bem. Mostrar só a média esconderia as duas coisas.
+    erros = [l for l in linhas if l["frete_estimado"]]
+    if erros:
+        print(f"\n  O que a ESTIMATIVA de frete escondeu (estimado → real):")
+        for l in sorted(erros, key=lambda l: -abs(l["erro_do_frete"]))[:3]:
+            seta = "mais caro" if l["erro_do_frete"] > 0 else "mais barato"
+            print(f"    {brl(l['frete_estimado'])} → {brl(l['frete_real'])}"
+                  f"  ({seta})  {truncar(l['titulo'] or '', 34)}")
+
+    print(f"\n  {'margem':>8} {'lucro/un':>11} {'frete':>10}  anúncio")
+    print(f"  {'-' * 66}")
+    for l in sorted(linhas, key=lambda l: (l["margem_pct"] or 0))[:int(args.quantos)]:
+        cor = VERM if l["abaixo_do_piso"] else VERDE
+        print(f"  {cor}{l['margem_pct']:>7.1f}%{FIM} {brl(l['lucro_unitario']):>11} "
+              f"{brl(l['frete_real']):>10}  {truncar(l['titulo'] or '', 32)}")
+    print()
+    return 0
+
+
 def cmd_vendas(args) -> int:
     """
     Mostra os pedidos crus que o sistema enxerga, para comparar com o painel
@@ -2902,6 +2961,13 @@ def main() -> int:
     s.add_argument("--simular", action="store_true",
                    help="mostra o que seria condensado, sem alterar nada")
     s.set_defaults(fn=cmd_compactar)
+
+    s = sub.add_parser("margem-real",
+                       help="margem das vendas que aconteceram, com o frete COBRADO")
+    s.add_argument("alvo", help="slug da conta")
+    s.add_argument("--dias", default=30, help="janela de apuracao (padrao 30)")
+    s.add_argument("--quantos", default=12, help="quantas vendas listar (padrao 12)")
+    s.set_defaults(fn=cmd_margem_real)
 
     s = sub.add_parser("precos",
                        help="confere a planilha de custo e mostra o piso de preço")

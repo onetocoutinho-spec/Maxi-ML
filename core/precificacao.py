@@ -491,3 +491,78 @@ def modelo_para_o_cliente(con: sqlite3.Connection, conta, destino: Path) -> int:
             escritor.writerow([a["item_id"], a["titulo"],
                                f"{a['preco']:.2f}".replace(".", ","), "", "", "", ""])
     return len(faltando)
+
+
+def margem_realizada(con: sqlite3.Connection, conta, dias: int = 30) -> list[dict]:
+    """Margem das vendas que ACONTECERAM, com o frete que o ML cobrou.
+
+    `calcular()` responde "a que preço eu deveria vender", usando cotação de
+    frete. Esta responde "quanto sobrou do que eu vendi", usando
+    `frete_venda.custo_vendedor` — o valor faturado, de `/shipments/{id}/costs`.
+
+    As duas precisam existir. A cotação é a única coisa disponível para anúncio
+    que ainda não vendeu, e é o que decide preço. Mas ela é estimativa, e a
+    diferença entre estimar e faturar é onde a margem some sem ninguém ver.
+
+    A régua não é recalculada aqui: o piso sai do mesmo `piso_de_preco` que o
+    resto do sistema usa, só que alimentado com o frete real. Recalcular por
+    fora faria esta função discordar de `calcular()` sem avisar.
+    """
+    # `carregar` já devolve o resultado de `calcular` — é o atalho de quem só
+    # quer o piso pronto, e é como o resto do sistema pede.
+    por_item = {linha["item_id"]: linha for linha in carregar(con, conta)}
+    if not por_item:
+        return []
+
+    vendas = con.execute(
+        "SELECT * FROM frete_venda WHERE conta_slug = ? "
+        "AND data_pedido >= date('now', ?) ORDER BY data_pedido DESC",
+        (conta.slug, f"-{int(dias)} day"),
+    ).fetchall()
+
+    saida = []
+    for venda in vendas:
+        base = por_item.get(venda["item_id"])
+        if not base:
+            continue                      # sem custo cadastrado, não há margem a apurar
+
+        unidades = int(venda["unidades"] or 1) or 1
+        receita = float(venda["receita"] or 0)
+        if receita <= 0:
+            continue
+        preco_unitario = receita / unidades
+
+        # O frete é do ENVIO, não da unidade: um pedido de 2 peças paga um
+        # frete só. Ratear pelas unidades é o que torna a margem comparável
+        # com o piso, que é por unidade.
+        frete_real = float(venda["custo_vendedor"] or 0) / unidades
+
+        piso_real = piso_de_preco(base["custo_total"], base["comissao"],
+                                  base["imposto"], base["margem_alvo"],
+                                  frete_real, base["rebate"])
+
+        lucro = (preco_unitario
+                 - base["custo_total"]
+                 - frete_real
+                 - preco_unitario * (base["comissao"] + base["imposto"])
+                 + base["rebate"])
+
+        saida.append({
+            "order_id": venda["order_id"], "data": venda["data_pedido"],
+            "item_id": venda["item_id"], "titulo": venda["titulo"],
+            "unidades": unidades, "receita": receita,
+            "preco_unitario": preco_unitario,
+            "frete_real": frete_real,
+            "frete_estimado": base["frete_absorvido"],
+            "custo_total": base["custo_total"],
+            "comissao": base["comissao"], "imposto": base["imposto"],
+            "piso_real": piso_real, "piso_estimado": base["piso"],
+            "lucro_unitario": lucro,
+            "lucro_pedido": lucro * unidades,
+            "margem_pct": (lucro / preco_unitario * 100) if preco_unitario else None,
+            "margem_alvo_pct": base["margem_alvo"] * 100,
+            "abaixo_do_piso": bool(piso_real and preco_unitario < piso_real),
+            # O que a estimativa escondeu. Positivo = o frete real foi MAIOR.
+            "erro_do_frete": frete_real - float(base["frete_absorvido"] or 0),
+        })
+    return saida
