@@ -43,7 +43,39 @@ ATRIBUTOS_PROIBIDOS = {
 # (por regra desta casa) não manda medida nenhuma é declarar uma origem que não
 # existe. O segundo é o identificador que o fluxo de criação do ML gera para si
 # mesmo — carregá-lo de um anúncio para outro é colar a identidade do irmão.
-ATRIBUTOS_DO_SISTEMA = {"ITEM_CONDITION", "PACKAGE_DATA_SOURCE", "SYI_PYMES_ID"}
+#
+# PRODUCT_FEATURES entrou em 11/09/2026, e entrou como seguro, não como
+# correção: num GET completo de 12 anúncios da Facilita ele aparece em 0 —
+# nesta conta não há o que filtrar hoje. Está aqui porque uma implementação
+# independente (gabrielPedron/criacao-anuncio) o encontrou sendo recusado com
+# `ignored because it is not modifiable` noutra categoria, e herdar de um
+# anúncio de origem que o tenha custaria uma recusa silenciosa.
+ATRIBUTOS_DO_SISTEMA = {"ITEM_CONDITION", "PACKAGE_DATA_SOURCE", "SYI_PYMES_ID",
+                        "PRODUCT_FEATURES"}
+
+# Códigos de erro do ML que já foram vistos com controle, e o que cada um quer
+# dizer em português. Existe porque a resposta crua do ML sai como um dicionário
+# aninhado dentro de `cause`, e quem publica pelo terminal lê "status 400" e
+# não lê o motivo — que às vezes é a informação mais cara da rodada.
+DIAGNOSTICO_DE_ERRO = {
+    "shipping.free_shipping.cost_exceeded":
+        "o frete grátis OBRIGATÓRIO desta categoria custa mais que a venda. "
+        "O ML está avisando que o anúncio nasce no prejuízo — confira o preço "
+        "antes de insistir",
+    "item.attributes.not_modifiable":
+        "atributo travado. Em anúncio fechado (`closed`) o ML recusa edição de "
+        "atributo, e não é bug do sistema",
+    "item.user_product.repeated.conflict":
+        "já existe um User Product idêntico nesta família. A família agrupa "
+        "produtos DIFERENTES (cores), não cópias — para o mesmo produto em "
+        "vários anúncios, use --sincronizar",
+    "item.with_family_name.not_allowed_variations":
+        "item com family_name não aceita variações. É classificação da CONTA "
+        "como 'user product seller', não da categoria — não adianta trocar",
+    "lost_me2_by_dimensions":
+        "o ML derrubou o Mercado Envios pela dimensão. Em família NOVA ele "
+        "julga a caixa do zero; família herdada pula esse julgamento",
+}
 
 # Peso do produto também não se herda, e por medida, não por princípio: em
 # 02/09/2026 os anúncios do Sofá Yara declaravam 10 kg e 20 kg para o mesmo
@@ -856,6 +888,46 @@ def descricao_de(cli: MLClient, item_id: str) -> str | None:
         return None
 
 
+def _ler_o_erro(corpo) -> dict:
+    """Extrai os códigos de `cause` e traduz os que já conhecemos.
+
+    O ML devolve o motivo real dentro de `cause`, um nível abaixo de onde quem
+    lê o terminal costuma olhar. Sem isto, `shipping.free_shipping.cost_exceeded`
+    — o ML dizendo que o anúncio nasce no prejuízo — aparece como um 400 seco.
+
+    Não inventa leitura: código desconhecido volta cru, sem tradução.
+    """
+    if not isinstance(corpo, dict):
+        return {}
+
+    codigos: list[str] = []
+    for c in corpo.get("cause") or []:
+        if isinstance(c, dict):
+            for campo in ("code", "cause_id", "type"):
+                if c.get(campo):
+                    codigos.append(str(c[campo]))
+                    break
+            else:
+                if c.get("message"):
+                    codigos.append(str(c["message"])[:120])
+        elif c:
+            codigos.append(str(c)[:120])
+
+    texto = " ".join([str(corpo.get("message") or ""), str(corpo.get("error") or "")])
+    for conhecido in DIAGNOSTICO_DE_ERRO:
+        if conhecido in texto and conhecido not in codigos:
+            codigos.append(conhecido)
+
+    saida: dict = {}
+    if codigos:
+        saida["codigos"] = codigos
+    lidos = [f"{c}: {DIAGNOSTICO_DE_ERRO[c]}"
+             for c in codigos if c in DIAGNOSTICO_DE_ERRO]
+    if lidos:
+        saida["diagnostico"] = lidos
+    return saida
+
+
 def publicar(cli: MLClient, payload: dict, *, simular: bool = True,
              descricao: str | None = None) -> dict:
     """
@@ -888,6 +960,7 @@ def publicar(cli: MLClient, payload: dict, *, simular: bool = True,
     status, corpo = cli.escrever("POST", caminho, payload)
     resultado = {"simulado": False, "status": status, "corpo": corpo}
     if status not in (200, 201):
+        resultado.update(_ler_o_erro(corpo))
         return resultado
 
     novo = corpo.get("id")
@@ -910,6 +983,13 @@ def publicar(cli: MLClient, payload: dict, *, simular: bool = True,
         resultado["logistic_real"] = s.get("logistic_type")
         resultado["tags_envio"] = s.get("tags")
         resultado["status_real"] = real.get("status")
+        # A tag não vem como erro: o POST devolveu 201 e o anúncio existe.
+        # Mas `lost_me2_by_dimensions` é o ML dizendo que derrubou o Envios,
+        # e essa linha some no meio do JSON se ninguém a levantar.
+        lidos = [f"{t}: {DIAGNOSTICO_DE_ERRO[t]}"
+                 for t in (s.get("tags") or []) if t in DIAGNOSTICO_DE_ERRO]
+        if lidos:
+            resultado["diagnostico"] = lidos
     except Exception as erro:
         resultado["envio_real"] = f"nao relido: {erro}"
 

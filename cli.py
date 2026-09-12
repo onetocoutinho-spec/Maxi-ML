@@ -2381,7 +2381,11 @@ def cmd_publicar(args) -> int:
 
         if r.get("status") not in (200, 201):
             print(f"{VERM}Recusado ({r.get('status')}):{FIM}")
-            print(json.dumps(r.get("corpo"), ensure_ascii=False, indent=2)[:1200])
+            # O motivo real mora em `cause`, e some no meio do JSON. Quando é
+            # um código que já medimos, ele vem traduzido e vai PRIMEIRO.
+            for linha in r.get("diagnostico") or []:
+                print(f"  {AMAR}→ {linha}{FIM}")
+            print(json.dumps(r.get("corpo"), ensure_ascii=False, indent=2)[:4000])
             resultados.append({"origem": mlb, "resultado": f"recusado {r.get('status')}",
                                "detalhe": json.dumps(r.get("corpo"), ensure_ascii=False)[:400]})
             falhou = True
@@ -2401,9 +2405,15 @@ def cmd_publicar(args) -> int:
               f"(logistic {r.get('logistic_real')})")
         if r.get("tags_envio"):
             print(f"  tags de envio  : {AMAR}{r['tags_envio']}{FIM}")
+        for linha in r.get("diagnostico") or []:
+            print(f"  {AMAR}→ {linha}{FIM}")
         if not ok:
             print(f"{VERM}  O ML TIROU o Envios depois de aceitar. "
                   f"O anúncio existe, mas sem Mercado Envios.{FIM}")
+            # Medido em 11/09: a releitura imediata deu falso negativo 3 de 3
+            # vezes — o item saiu not_specified e estava me2 minutos depois.
+            print(f"{CINZA}  (releitura imediata já deu falso negativo 3 de 3 "
+                  f"vezes — remeça em ~40 min antes de encerrar){FIM}")
             falhou = True
         resultados.append({"origem": mlb, "resultado": "publicado",
                            "novo_id": r["item_id"], "permalink": r.get("permalink"),
