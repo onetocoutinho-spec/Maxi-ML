@@ -64,6 +64,29 @@ devem ser seguidos quando o assunto aparecer:
   encontra os padrões mais comuns, e use o roteiro para explicar o porquê e
   montar o relatório.
 
+- **`skills/cofre-de-conhecimento/SKILL.md`** — grava e consulta o cofre de
+  conhecimento da Zion. Siga sempre que um experimento ou medição produzir
+  descoberta nova, quando uma decisão do cliente precisar ficar registrada, ou
+  antes de afirmar ao cliente algo que dependa de medição — "o que a gente sabe
+  sobre X", "isso ainda vale?", "de onde veio esse número", "guarda isso".
+
+  O cofre é um vault Obsidian em `C:\Users\Maxi do Brasil\Desktop\zion-cofre`,
+  **fora deste repositório de propósito**: aqui é produto, lá é dado. A régua
+  continua em `core/`; o cofre guarda **por que** a régua é essa, o experimento
+  que produziu o número, quanto aquilo sustenta e quando vence. Ele traz o
+  formato exato (`references/esquema.md`), a régua de aceitação de evidência
+  (`references/portao-de-evidencia.md`) e como validar
+  (`references/validar.md`).
+
+  A regra que mais morde: **duas medições nossas pela API do ML não são duas
+  linhas de evidência.** É a lição do `list_cost`, que errou de forma estável
+  por 200 segundos. Afirmação de alto risco precisa de instrumento diferente —
+  a tela do vendedor, a planilha do cliente ou a documentação.
+
+  Valide toda gravação com o `lint`, que é read-only e **roda nativo no
+  Windows** mesmo com a escrita do produto bloqueada:
+  `python "…\Desktop\claude-obsidian\scripts\claude-obsidian.py" lint --vault "…\Desktop\zion-cofre"`.
+
 ## Agentes de apoio
 
 Ficam em `.claude/agents/`. São subagentes com contexto próprio: recebem uma
