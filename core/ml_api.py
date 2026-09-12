@@ -25,12 +25,172 @@ class ContaDivergente(RuntimeError):
     """O token carregado não pertence à conta que o comando pediu."""
 
 
+# ----------------------------------------------------------------------
+# os DOIS 403 do Mercado Livre — e por que confundi-los custa caro
+# ----------------------------------------------------------------------
+# Até 11/09/2026 este cliente tratava todo 403 como a mesma parede. A
+# documentação oficial mostra que são duas paredes, com destinos opostos, e que
+# só o CORPO da resposta separa uma da outra:
+#
+#   pt_br/permissoes-funcionais (21/11/2025) publica o corpo literal de
+#   PERMISSÃO FUNCIONAL faltando no nosso próprio app:
+#       {"code": "PA_UNAUTHORIZED_RESULT_FROM_POLICIES",
+#        "blocked_by": "PolicyAgent",
+#        "message": "At least one policy returned UNAUTHORIZED.",
+#        "status": 403}
+#
+#   pt_br/erro-403 (02/04/2025) publica o corpo de POSSE — o recurso é de outro
+#   vendedor:
+#       {"status": 403, "error": "access_denied",
+#        "message": "access to the requested resource is forbidden",
+#        "code": "FORBIDDEN"}
+#
+# O primeiro TEM CONSERTO: marca-se a permissão no DevCenter, de graça, e
+# conserta as oito contas de uma vez. O segundo NÃO TEM: nem escopo, nem
+# certificação DPP — cuja lista de benefícios, lida inteira, não inclui acesso
+# ampliado de API — destravam ler anúncio alheio.
+#
+# Isto já aconteceu aqui e ninguém soube ler: o arquivo de 403 largado na raiz
+# do repo (…origem_5214042583.json) contém EXATAMENTE o corpo do PolicyAgent. A
+# sessão que bateu nele anotou "403" e desistiu de uma porta que estava a uma
+# caixa de seleção de abrir.
+MOTIVO_PERMISSAO = "permissao_funcional"     # DevCenter resolve
+MOTIVO_ESCOPO = "escopo_oauth"               # a concessão do vendedor resolve
+MOTIVO_POSSE = "posse"                       # nada resolve
+MOTIVO_PORTA_FECHADA = "politica_do_ml"      # nada resolve
+MOTIVO_INDEFINIDO = "403_nao_classificado"   # corpo fora dos padrões conhecidos
+
+_CONSERTO = {
+    MOTIVO_PERMISSAO: (
+        "PERMISSÃO FUNCIONAL faltando no NOSSO app (blocked_by=PolicyAgent). "
+        "TEM CONSERTO e é de graça: DevCenter > a aplicação > Permissões "
+        "funcionais > habilitar a área deste recurso com leitura (e escrita, se "
+        "for escrita). Não desista deste endpoint sem antes olhar lá."),
+    MOTIVO_ESCOPO: (
+        "ESCOPO OAuth faltando na concessão desta conta (read / write / "
+        "offline_access). TEM CONSERTO: refazer a autorização do vendedor com o "
+        "escopo certo (scripts/autorizar.py)."),
+    MOTIVO_POSSE: (
+        "POSSE: o recurso pertence a outro vendedor. NÃO TEM CONSERTO — nenhuma "
+        "permissão, escopo, plano ou certificação libera. Desista deste caminho "
+        "e leia pela ficha de catálogo (/products/{id}/items) ou pelos endpoints "
+        "de demanda, que respondem em anúncio de terceiro."),
+    MOTIVO_PORTA_FECHADA: (
+        "PORTA FECHADA pelo ML: política ou recurso em descontinuação, não "
+        "permissão. NÃO TEM CONSERTO — é o caso do /sites/MLB/search, que a doc "
+        "pt_br/itens-e-buscas lista como substituído (por seller_id use "
+        "/users/{id}/items/search) e, para busca por palavra-chave, com "
+        "\"Não haverá substituição\". Ver a tabela de bloqueios do CLAUDE.md "
+        "antes de tentar consertar."),
+    MOTIVO_INDEFINIDO: (
+        "403 com corpo fora dos padrões documentados. NÃO CLASSIFICADO: "
+        "leia o corpo antes de concluir que é bloqueio definitivo."),
+}
+
+
+def classificar_403(corpo) -> tuple[str, bool, str]:
+    """Lê o CORPO de um 403 e diz se aquilo tem conserto.
+
+    Devolve (motivo, tem_conserto, o_que_fazer). É pública de propósito: o
+    `cli.py`, o `scripts/diagnosticar.py` e o `core/cupons.py` também topam com
+    403 por caminhos próprios, e precisam dar a MESMA resposta que o cliente dá.
+    """
+    if isinstance(corpo, dict):
+        marcas = " ".join(
+            str(corpo.get(campo) or "")
+            for campo in ("code", "blocked_by", "error", "message", "cause")
+        ).lower()
+    else:
+        marcas = str(corpo or "").lower()
+
+    # A ordem importa. A tabela de erros de /reviews/item/{id} devolve
+    # `error: forbidden` JUNTO com "At least one policy returned UNAUTHORIZED",
+    # e aquilo é permissão funcional, não posse. Quem testasse "forbidden"
+    # primeiro classificaria como sem conserto justamente o caso que mais
+    # interessa acertar.
+    if ("policyagent" in marcas
+            or "pa_unauthorized_result_from_policies" in marcas
+            or "policy returned unauthorized" in marcas):
+        return MOTIVO_PERMISSAO, True, _CONSERTO[MOTIVO_PERMISSAO]
+    if ("invalid scopes" in marcas or "invalid_scope" in marcas
+            or "unauthorized_scopes" in marcas):
+        return MOTIVO_ESCOPO, True, _CONSERTO[MOTIVO_ESCOPO]
+    codigo = str((corpo.get("code") if isinstance(corpo, dict) else "") or "").lower()
+    if "access_denied" in marcas or codigo == "forbidden":
+        # Os dois marcadores do corpo de POSSE documentado em pt_br/erro-403.
+        return MOTIVO_POSSE, False, _CONSERTO[MOTIVO_POSSE]
+    if "forbidden" in marcas:
+        # `{"message":"forbidden","error":"forbidden","status":403,"cause":[]}`
+        # — medido em 11/09/2026 no /sites/MLB/search desta conta. Não traz
+        # `access_denied` nem `code: FORBIDDEN`, e não é posse: ninguém é "dono"
+        # de uma busca. É a porta que o ML fechou para todo mundo. O destino é o
+        # mesmo (não tem conserto), mas dizer "pertence a outro vendedor" ali
+        # mandaria quem lê procurar um dono que não existe.
+        return MOTIVO_PORTA_FECHADA, False, _CONSERTO[MOTIVO_PORTA_FECHADA]
+    return MOTIVO_INDEFINIDO, False, _CONSERTO[MOTIVO_INDEFINIDO]
+
+
+class AcessoNegado(requests.HTTPError):
+    """Um 403 do ML já classificado em "tem conserto" x "não tem".
+
+    HERDA DE requests.HTTPError DE PROPÓSITO — é a decisão de projeto desta
+    mudança. Até aqui o 403 chegava a quem chama como o HTTPError cru do
+    `raise_for_status()`, e o repositório inteiro foi escrito em cima disso:
+    `core/cupons._erro_legivel` lê `erro.response.status_code`, os coletores
+    usam `except Exception`, `link_do_produto` engole tudo. Uma exceção fora
+    dessa árvore obrigaria a revisar todo chamador, e o que escapasse viraria
+    traceback numa coleta noturna.
+
+    Herdando, nada quebra: quem só capturava continua capturando, quem lia
+    `.response` continua lendo — e quem quiser a classificação lê `.motivo`,
+    `.tem_conserto` e `.corpo`. Como a mensagem já sai com o destino escrito
+    ("vá ao DevCenter" x "desista"), até quem apenas imprime o erro aprende a
+    diferença sem mudar uma linha.
+    """
+
+    def __init__(self, mensagem, *, response=None, diagnostico=None):
+        super().__init__(mensagem, response=response)
+        self.diagnostico = diagnostico or {}
+        self.motivo = self.diagnostico.get("motivo", MOTIVO_INDEFINIDO)
+        self.tem_conserto = bool(self.diagnostico.get("tem_conserto"))
+        self.corpo = self.diagnostico.get("corpo")
+
+
+def status_da_entrada_multiget(entrada: dict):
+    """O status de UMA entrada do multiget, nos dois contratos do ML.
+
+    `/items?ids=` chama o campo de `code`; `/items/bulk?ids=` chama de
+    `status_code` (doc pt_br/itens-e-buscas, 31/08/2026). Medido nos dois em
+    11/09/2026 na facilita-brasil-principal.
+
+    Devolve None quando a entrada não traz NENHUM dos dois — e None aqui quer
+    dizer "não sei", nunca "deu certo" nem "falhou". Quem chama é obrigado a
+    tratar, porque é exatamente esse silêncio que a migração produz.
+    """
+    for campo in ("code", "status_code"):
+        valor = entrada.get(campo)
+        if isinstance(valor, bool):
+            continue
+        if isinstance(valor, int):
+            return valor
+        if isinstance(valor, str) and valor.strip().isdigit():
+            return int(valor)
+    return None
+
+
 class MLClient:
     def __init__(self, slug: str, user_id_esperado: str | None = None, verificar: bool = True):
         self.slug = slug
         self.cred = auth.token_valido(slug)
         self.user_id = str(self.cred.user_id)
         self._links_de_produto: dict[str, str | None] = {}
+        # Último 403 classificado, no mesmo estilo de `ultima_busca_truncou`:
+        # quem chama olha depois, sem precisar capturar exceção.
+        self.ultimo_403: dict | None = None
+        # Qual das rotas de multiget respondeu por último nesta instância, e o
+        # que a última chamada devolveu. Ver `detalhes_dos_itens`.
+        self._rota_multiget: str | None = None
+        self.ultimo_multiget: dict = {}
 
         if verificar and user_id_esperado and str(user_id_esperado) not in ("", "SUBSTITUIR"):
             if str(user_id_esperado) != self.user_id:
@@ -50,6 +210,21 @@ class MLClient:
         if time.time() >= self.cred.expira_em - auth.MARGEM_SEGURANCA_SEG:
             self.cred = auth.token_valido(self.slug)
         return {"Authorization": f"Bearer {self.cred.access_token}"}
+
+    def _diagnosticar_403(self, corpo, onde: str) -> dict:
+        """Classifica o 403, guarda em `ultimo_403` e devolve o diagnóstico."""
+        motivo, tem_conserto, o_que_fazer = classificar_403(corpo)
+        diagnostico = {
+            "quando": agora_iso(),
+            "conta": self.slug,
+            "onde": onde,
+            "motivo": motivo,
+            "tem_conserto": tem_conserto,
+            "o_que_fazer": o_que_fazer,
+            "corpo": corpo,
+        }
+        self.ultimo_403 = diagnostico
+        return diagnostico
 
     def get(self, caminho: str, **params) -> Any:
         url = caminho if caminho.startswith("http") else f"{BASE}{caminho}"
@@ -90,6 +265,22 @@ class MLClient:
                 continue
             if r.status_code == 404:
                 return None
+            if r.status_code == 403:
+                # O 403 já subia daqui como HTTPError, pelo raise_for_status
+                # logo abaixo — só que sem o corpo, que é a única parte que diz
+                # se aquilo tem conserto. A exceção continua sendo um
+                # HTTPError (ver AcessoNegado), então quem captura hoje captura
+                # igual; o que muda é que a mensagem agora termina em "vá ao
+                # DevCenter" ou "desista", em vez de um "403 Client Error" seco.
+                try:
+                    corpo = r.json()
+                except ValueError:
+                    corpo = (r.text or "")[:500]
+                d = self._diagnosticar_403(corpo, f"GET {url}")
+                raise AcessoNegado(
+                    f"[{self.slug}] 403 em GET {url} — {d['o_que_fazer']} "
+                    f"Corpo do ML: {corpo}",
+                    response=r, diagnostico=d)
             r.raise_for_status()
             return r.json()
         raise RuntimeError(f"[{self.slug}] GET {url} falhou após 5 tentativas.")
@@ -126,15 +317,138 @@ class MLClient:
     )
 
 
+    # ------------------------------------------------------------------
+    # multiget: o `/items?ids=` morre em 25/10/2026
+    # ------------------------------------------------------------------
+    # A doc pt_br/itens-e-buscas (31/08/2026): "Os endpoints de consultas
+    # múltiplas /items?ids= e /users?ids= entram em processo de descontinuação.
+    # (…) Migre suas integrações até 25/10/2026. Durante esse período, os
+    # endpoints atuais e seus substitutos coexistirão."
+    #
+    # No substituto mudam três coisas: o campo `code` de cada entrada passa a
+    # se chamar `status_code`, a entrada ganha `id` na raiz, e a seleção de
+    # campos exige prefixo `body.`.
+    #
+    # A troca do `code` é a parte perigosa, e o CLAUDE.md já avisava por que:
+    # "o multiget engana quem só olha o status HTTP" — o HTTP vem 200 e o 403
+    # está DENTRO de cada entrada. Com a virada, o filtro antigo
+    # (`entrada.get("code") == 200`) passa a ler None em toda entrada e
+    # descarta TODOS os anúncios, sem um único erro no log. É o mesmo defeito
+    # que já custou um ano de snapshots de promoção vazios aqui. E quem
+    # "consertasse" tirando o filtro cairia no oposto: gravar corpo de 403
+    # como se fosse anúncio bom.
+    #
+    # Por isso a rota não é escolhida por data — data depende de alguém
+    # lembrar. É escolhida por quem RESPONDE, na ordem abaixo, e a escolha fica
+    # guardada na instância (uma sonda por cliente, não por lote). Enquanto o
+    # legado responder ele continua valendo, que é a regra da casa de não
+    # remover o caminho atual antes do prazo; no dia em que parar, o cliente
+    # vira sozinho. Rota que responde num contrato ILEGÍVEL (nenhuma entrada
+    # com `code` nem `status_code`) também é descartada e passa a vez.
+    PRAZO_MULTIGET = "2026-10-25"
+    ROTAS_MULTIGET = ("/items", "/items/bulk")
+
+    @classmethod
+    def campos_do_multiget(cls, rota: str) -> str:
+        """A seleção de campos que cada contrato entende.
+
+        ARMADILHA MEDIDA em 11/09/2026 na facilita-brasil-principal, e é a
+        razão desta função existir: pedir ao `/items/bulk` apenas os campos
+        documentados (`attributes=body.id,body.price,…`) devolve a entrada com
+        a chave `body` e MAIS NADA — sem `status_code`, sem `id`. A seleção de
+        campos corta o próprio campo de status, e aí toda entrada fica
+        ilegível. Só voltam quando são pedidos explicitamente:
+
+            attributes=body.…            -> entrada = {'body': {...}}
+            attributes=status_code,id,body.…  -> {'status_code': 200, 'id': …, 'body': {...}}
+
+        O legado ignora `status_code` na lista e devolve `code` de qualquer
+        jeito, então cada rota leva a sua.
+        """
+        campos = [c.strip() for c in cls.CAMPOS_ITEM.split(",") if c.strip()]
+        if not rota.rstrip("/").endswith("/bulk"):
+            return ",".join(campos)
+        return "status_code,id," + ",".join("body." + c for c in campos)
+
+    def _multiget_itens(self, lote: list[str]) -> list[dict]:
+        """Um lote pelo primeiro contrato que responder de forma LEGÍVEL."""
+        # A rota que já respondeu vem PRIMEIRO (é o que evita uma sonda por
+        # lote), mas as outras continuam na fila atrás dela. Tratar o cache
+        # como lista de uma posição só era um defeito: a rota legada que
+        # morresse no meio de uma varredura derrubaria a varredura inteira, em
+        # vez de virar para o substituto — exatamente o que esta função existe
+        # para impedir, só que com o relógio contra.
+        rotas = [r for r in self.ROTAS_MULTIGET if r != self._rota_multiget]
+        if self._rota_multiget:
+            rotas.insert(0, self._rota_multiget)
+        ultimo_erro: Exception | None = None
+        for rota in rotas:
+            try:
+                resposta = self.get(rota, ids=",".join(lote),
+                                    attributes=self.campos_do_multiget(rota))
+            except requests.HTTPError as erro:
+                # 4xx aqui é o endpoint dizendo que não atende mais neste
+                # formato. Guarda e tenta o próximo contrato.
+                ultimo_erro = erro
+                self._rota_multiget = None
+                continue
+            entradas = [e for e in (resposta or []) if isinstance(e, dict)]
+            if not entradas:
+                self._rota_multiget = None
+                continue
+            if all(status_da_entrada_multiget(e) is None for e in entradas):
+                # Respondeu, mas num contrato que não sabemos ler. Seguir em
+                # frente aqui seria descartar o lote inteiro em silêncio.
+                self._rota_multiget = None
+                continue
+            self._rota_multiget = rota
+            return entradas
+
+        if ultimo_erro is not None:
+            raise ultimo_erro
+        raise RuntimeError(
+            f"[{self.slug}] nenhum contrato de multiget respondeu de forma "
+            f"legível para {len(lote)} ids (tentadas: {', '.join(self.ROTAS_MULTIGET)}). "
+            f"O `/items?ids=` tinha descontinuação marcada para "
+            f"{self.PRAZO_MULTIGET} e o `/items/bulk?ids=` usa `status_code` no "
+            f"lugar de `code` — se o formato mudou de novo, é aqui que se "
+            f"conserta. Nada foi gravado: lote vazio seria pior que erro.")
+
     def detalhes_dos_itens(self, ids: list[str]) -> list[dict]:
-        """multiget de até 20 ids por chamada."""
+        """multiget de até 20 ids por chamada, nos dois contratos do ML.
+
+        Entrada sem `code` NEM `status_code` não é descartada em silêncio: vira
+        anomalia contada em `ultimo_multiget`, e se o lote inteiro for assim o
+        `_multiget_itens` já terá trocado de rota antes de chegar aqui.
+        """
         saida: list[dict] = []
+        contagem = {"pedidos": len(ids), "devolvidos": 0, "negados": 0,
+                    "outros": 0, "sem_status": 0, "rota": None}
         for i in range(0, len(ids), 20):
             lote = ids[i : i + 20]
-            resposta = self.get("/items", ids=",".join(lote), attributes=self.CAMPOS_ITEM) or []
-            for entrada in resposta:
-                if entrada.get("code") == 200 and entrada.get("body"):
-                    saida.append(entrada["body"])
+            for entrada in self._multiget_itens(lote):
+                status = status_da_entrada_multiget(entrada)
+                corpo = entrada.get("body")
+                if status is None:
+                    contagem["sem_status"] += 1
+                    continue
+                if status == 200 and corpo:
+                    saida.append(corpo)
+                    contagem["devolvidos"] += 1
+                elif status == 403:
+                    # O 403 por entrada é o bloqueio que engana quem olha só o
+                    # HTTP. Classificado igual ao 403 de resposta inteira: na
+                    # prática é sempre posse (anúncio de terceiro), mas se um
+                    # dia vier PolicyAgent aqui, fica registrado em `ultimo_403`
+                    # em vez de virar mais um item que "sumiu".
+                    contagem["negados"] += 1
+                    self._diagnosticar_403(
+                        corpo if isinstance(corpo, dict) else entrada,
+                        f"multiget {self._rota_multiget} id={entrada.get('id')}")
+                else:
+                    contagem["outros"] += 1
+        contagem["rota"] = self._rota_multiget
+        self.ultimo_multiget = contagem
         return saida
 
     def visitas(self, item_id: str, dias: int = 7) -> int:
@@ -527,9 +841,25 @@ class MLClient:
                 continue
 
             try:
-                return r.status_code, r.json()
+                corpo = r.json()
             except ValueError:
-                return r.status_code, (r.text or "")[:500]
+                corpo = (r.text or "")[:500]
+
+            if r.status_code == 403:
+                # `escrever` devolve (status, corpo) em vez de levantar, e todo
+                # chamador desempacota essa dupla — mexer no contrato quebraria
+                # as dez chamadas de core/publicacao.py. Então o diagnóstico
+                # entra COMO CHAVE do corpo de erro, e como PRIMEIRA chave: o
+                # `resumo["erro"] = str(corpo)[:300]` de publicacao.py corta em
+                # 300 caracteres, e o que vem depois do corte não existe para
+                # quem lê o terminal. Nenhuma chave do ML é removida.
+                d = self._diagnosticar_403(corpo, f"{metodo} {url}")
+                if isinstance(corpo, dict):
+                    corpo = {"zion_diagnostico": d["o_que_fazer"], **corpo}
+                else:
+                    corpo = {"zion_diagnostico": d["o_que_fazer"],
+                             "resposta": corpo}
+            return r.status_code, corpo
         return 0, {"erro": "esgotou as tentativas"}
 
     def aderir_promocao(self, item_id: str, promocao_id: str, tipo: str,
