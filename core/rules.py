@@ -189,6 +189,62 @@ def avaliar_mudancas_concorrentes(con: sqlite3.Connection, conta: Conta,
                 alerta("concorrente_mexeu", cfg, texto, None, quem,
                        {"quantos": len(lista), "tipo": tipo})
 
+    # ------------- o concorrente está ganhando atenção -------------
+    #
+    # Preço é o sinal que chega DEPOIS. Quando o concorrente baixa o preço, a
+    # disputa já começou. Visita é o que se move antes: ele aparece mais, é
+    # visto mais, e só então o efeito vira venda.
+    #
+    # Por isso a régua é RELATIVA e comparada com a nossa na mesma ficha. Um
+    # concorrente crescendo 60% numa semana em que nós crescemos 55% é
+    # sazonalidade da categoria, não jogada dele — e avisar sobre isso ensina
+    # o operador a ignorar o alerta.
+    if (cfg := _reg(regras, "concorrente_ganhando_atencao")):
+        crescimento_min = float(cfg.get("crescimento_percentual", 50))
+        piso_visitas = int(cfg.get("minimo_visitas", 150))
+
+        for l in con.execute(
+            """
+            WITH j AS (
+              SELECT item_id, referencia, proprio, seller_id,
+                     SUM(CASE WHEN data >= date('now', '-7 day')  THEN visitas END) AS agora,
+                     SUM(CASE WHEN data <  date('now', '-7 day')
+                               AND data >= date('now', '-14 day') THEN visitas END) AS antes
+                FROM snap_visita_dia
+               WHERE conta_slug = ?
+               GROUP BY item_id
+            )
+            SELECT d.referencia, d.item_id, d.seller_id,
+                   d.agora AS dele_agora, d.antes AS dele_antes,
+                   n.agora AS meu_agora,  n.antes AS meu_antes
+              FROM j d
+              JOIN j n ON n.referencia = d.referencia AND n.proprio = 1
+             WHERE d.proprio = 0 AND d.antes > 0 AND d.agora >= ?
+            """, (conta.slug, piso_visitas),
+        ):
+            dele = pct(l["dele_agora"], l["dele_antes"])
+            if dele is None or dele < crescimento_min:
+                continue
+            meu = pct(l["meu_agora"], l["meu_antes"]) if l["meu_antes"] else None
+
+            # Só interessa se ele cresceu e nós não acompanhamos. A margem de
+            # 15 pontos evita alarme por ruído de medição entre dois itens.
+            if meu is not None and meu >= dele - 15:
+                continue
+
+            nosso = (f"o nosso ficou em {meu:+.0f}%" if meu is not None
+                     else "não temos série do nosso para comparar")
+            alerta("concorrente_ganhando_atencao", cfg,
+                   f"Concorrente ganhando atenção em {truncar(l['referencia'], 44)}: "
+                   f"as visitas dele subiram {dele:+.0f}% em 7 dias "
+                   f"({l['dele_antes']} → {l['dele_agora']}) e {nosso}. "
+                   f"Interesse se move antes do preço — vale olhar o que ele mudou "
+                   f"antes de a venda migrar.",
+                   l["item_id"], l["referencia"],
+                   {"item_dele": l["item_id"], "seller_id": l["seller_id"],
+                    "dele_antes": l["dele_antes"], "dele_agora": l["dele_agora"],
+                    "meu_antes": l["meu_antes"], "meu_agora": l["meu_agora"]})
+
     con.commit()
     return gerados
 

@@ -305,6 +305,32 @@ CREATE TABLE IF NOT EXISTS marcador (
     atualizado TEXT NOT NULL
 );
 
+-- Série diária de visitas, MINHA e de concorrente.
+--
+-- Existe separada de snap_concorrente porque o dado é de outra natureza: um
+-- snapshot é a foto de agora, e esta tabela é história retroativa. A primeira
+-- coleta já traz 30 dias, então não é preciso esperar um mês para ter um mês.
+--
+-- Por isso a chave única não é (coleta, item): é (item, data). Coletar de novo
+-- não cria linha nova para um dia que já existe — o ML não reescreve o passado,
+-- e duplicar o mesmo dia estragaria qualquer soma. É a única tabela do banco
+-- onde a regra "coleta nova = linha nova" não vale, e vale dizer por quê:
+-- aqui a linha não representa uma observação nossa, representa um DIA.
+CREATE TABLE IF NOT EXISTS snap_visita_dia (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    visto_em     TEXT NOT NULL,       -- quando NÓS lemos
+    cliente_id   TEXT NOT NULL,
+    conta_slug   TEXT NOT NULL,
+    item_id      TEXT NOT NULL,
+    data         TEXT NOT NULL,       -- o dia a que a contagem se refere
+    visitas      INTEGER NOT NULL,
+    proprio      INTEGER NOT NULL,    -- 1 = anúncio nosso, 0 = concorrente
+    seller_id    TEXT,
+    referencia   TEXT                 -- ficha/rótulo pelo qual chegamos nele
+);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_visita_dia ON snap_visita_dia(item_id, data);
+CREATE INDEX IF NOT EXISTS ix_visita_conta ON snap_visita_dia(conta_slug, data DESC);
+
 -- Log de execuções (auditoria: o que rodou, em qual conta, com que resultado)
 CREATE TABLE IF NOT EXISTS execucao (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -322,8 +348,13 @@ CREATE TABLE IF NOT EXISTS execucao (
 def _migrar(con: sqlite3.Connection) -> None:
     """Colunas acrescentadas depois que já havia banco em produção."""
     colunas_conc = {l["name"] for l in con.execute("PRAGMA table_info(snap_concorrente)")}
+    # visitas_30d entrou em 11/09/2026. É o total da janela de 30 dias no
+    # momento da coleta — a tendência entre rodadas sai da comparação de
+    # snapshots, como no resto da tabela. A série dia a dia mora em
+    # snap_visita_dia, que é outra coisa: história retroativa, não foto.
     for coluna, tipo in (("comparar_com", "TEXT"), ("frete_custo", "REAL"),
-                         ("estoque", "INTEGER"), ("status", "TEXT")):
+                         ("estoque", "INTEGER"), ("status", "TEXT"),
+                         ("visitas_30d", "INTEGER")):
         if coluna not in colunas_conc:
             con.execute(f"ALTER TABLE snap_concorrente ADD COLUMN {coluna} {tipo}")
 
@@ -553,6 +584,34 @@ def inserir_muitos(con: sqlite3.Connection, tabela: str, linhas: Iterable[dict])
         [[l.get(c) for c in colunas] for l in linhas],
     )
     return len(linhas)
+
+
+def gravar_visitas(con: sqlite3.Connection, linhas: Iterable[dict]) -> int:
+    """Grava a série diária de visitas sem duplicar dia já conhecido.
+
+    Diferente de `inserir_muitos` de propósito. Aqui a linha é um DIA, não uma
+    observação nossa: reler a mesma janela amanhã devolve os mesmos dias de
+    ontem, e inseri-los de novo dobraria qualquer soma. O ML não reescreve o
+    passado, então o primeiro valor visto para um dia é o que fica.
+
+    O único caso em que sobrescrever faria sentido é o dia CORRENTE, que ainda
+    está contando — por isso ele é atualizado, e os demais são ignorados.
+    """
+    linhas = list(linhas)
+    if not linhas:
+        return 0
+    hoje = max(l["data"] for l in linhas)
+    novas = con.total_changes
+    con.executemany(
+        "INSERT INTO snap_visita_dia "
+        "(visto_em, cliente_id, conta_slug, item_id, data, visitas, proprio, seller_id, referencia) "
+        "VALUES (:visto_em, :cliente_id, :conta_slug, :item_id, :data, :visitas, :proprio, :seller_id, :referencia) "
+        "ON CONFLICT(item_id, data) DO UPDATE SET "
+        "  visitas = excluded.visitas, visto_em = excluded.visto_em "
+        "WHERE excluded.data = :dia_corrente",
+        [{**l, "dia_corrente": hoje} for l in linhas],
+    )
+    return con.total_changes - novas
 
 
 def ultima_coleta(con: sqlite3.Connection, tabela: str, conta_slug: str, antes_de: str | None = None) -> str | None:

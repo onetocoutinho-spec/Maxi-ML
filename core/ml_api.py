@@ -143,6 +143,32 @@ class MLClient:
         ) or {}
         return int(dados.get("total_visits", 0))
 
+    def visitas_por_dia(self, item_id: str, dias: int = 30) -> dict:
+        """Série diária de visitas. Funciona em anúncio de TERCEIRO.
+
+        Medido com controle em 11/09/2026, 5 anúncios de terceiro em 3
+        categorias: `/items/{id}` devolve 403 nos cinco, e este endpoint
+        devolve 200 com a série completa nos cinco (2.913 a 85.868 visitas
+        em 30 dias). Ficha e demanda são portas separadas na API do ML, e a
+        segunda nunca tinha sido experimentada aqui.
+
+        Não existe versão em lote: `/visits/items?ids=` recusa mais de um id
+        com `maximum amount of items to query is 1`. Custo é uma chamada por
+        anúncio, então quem chama precisa de orçamento.
+
+        Devolve {"total": int, "dias": [{"data": "YYYY-MM-DD", "visitas": n}]}.
+        Dias sem visita não vêm na resposta do ML — a série é esparsa.
+        """
+        dados = self.get(
+            f"/items/{item_id}/visits/time_window", last=dias, unit="day"
+        ) or {}
+        serie = []
+        for ponto in dados.get("results") or []:
+            data = str(ponto.get("date") or "")[:10]
+            if data:
+                serie.append({"data": data, "visitas": int(ponto.get("total") or 0)})
+        return {"total": int(dados.get("total_visits") or 0), "dias": serie}
+
     def vendas_recentes(self, dias: int = 7, desde=None, ate=None) -> list[dict]:
         """
         Pedidos dos últimos N dias, SEM filtro de status — quem decide o que

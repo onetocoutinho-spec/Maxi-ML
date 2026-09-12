@@ -219,3 +219,22 @@ regras:
       duplicata dividindo a própria ficha, que não é perder buy box.
       Estes casos saíam antes como concorrente_cruzou_preco e perdeu_buy_box,
       com o conselho "dá para acompanhar" apontando para a loja ao lado.
+
+  concorrente_ganhando_atencao:
+    ativa: true
+    critico: false
+    crescimento_percentual: 50   # quanto as visitas dele precisam subir em 7d
+    minimo_visitas: 150          # abaixo disso, o percentual é ruído
+    descricao: >
+      As visitas de um concorrente na mesma ficha subiram, e as nossas não
+      acompanharam. Entrou em 11/09/2026, quando se descobriu que a série
+      diária de visitas responde para anúncio de TERCEIRO — `/items/{id}` dá
+      403, mas `/items/{id}/visits/time_window` devolve 30 dias.
+
+      A régua é RELATIVA de propósito: compara o crescimento dele com o nosso
+      na mesma ficha, com folga de 15 pontos. Categoria inteira subindo é
+      sazonalidade, não jogada — e alerta que dispara em sazonalidade ensina o
+      operador a ignorar o canal.
+
+      Não é crítico porque não exige decisão hoje: é sinal antecedente. O preço
+      é o que chega depois, e para esse já existe concorrente_cruzou_preco.

@@ -272,7 +272,13 @@ def main() -> int:
                 con.commit()
                 n_meus = rules.avaliar_mudancas_proprias(con, conta, carimbo)
 
-                r = vigilancia.vigiar(con, conta, cli, carimbo, cep=cep, max_frete=max_frete)
+                # Visita só na passada larga. A série é DIÁRIA: reler de 5 em 5
+                # minutos devolveria os mesmos dias e gastaria 60 chamadas por
+                # ciclo para não descobrir nada. Na larga, o dia corrente ainda
+                # é atualizado — que é a única linha que muda dentro do dia.
+                r = vigilancia.vigiar(con, conta, cli, carimbo, cep=cep,
+                                      max_frete=max_frete,
+                                      max_visitas=60 if largo else 0)
                 n_deles = 0
                 if not r.get("aviso"):
                     n_deles = rules.avaliar_mudancas_concorrentes(con, conta, carimbo)

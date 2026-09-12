@@ -1568,10 +1568,13 @@ def cmd_coletar(args) -> int:
                       lambda: vigilancia.vigiar(
                           con, conta, cli, carimbo,
                           cep=str(cfg_v.get("cep_referencia", "01001000")),
-                          max_frete=int(cfg_v.get("max_fretes_por_rodada", 40))))
+                          max_frete=int(cfg_v.get("max_fretes_por_rodada", 40)),
+                          max_visitas=int(cfg_v.get("max_visitas_por_rodada", 60))))
             if v and v.get("itens"):
                 print(f"   ofertas de concorrentes .... {v['itens']} em "
-                      f"{v.get('produtos', 0)} produtos, {v['fretes']} fretes")
+                      f"{v.get('produtos', 0)} produtos, {v['fretes']} fretes, "
+                      f"{v.get('visitas', 0)} séries de visita "
+                      f"({v.get('dias', 0)} dias novos)")
             elif v and v.get("aviso"):
                 print(f"   {CINZA}vigilância: {v['aviso']}{FIM}")
 
