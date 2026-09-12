@@ -385,6 +385,43 @@ def avaliar_mudancas_proprias(con: sqlite3.Connection, conta: Conta,
     ):
         frete_anterior[l["item_id"]] = l["frete_custo"]
 
+    # E o frete do VENDEDOR, que é outro campo e outra história.
+    #
+    # `frete_custo` é o que o comprador paga. Em frete grátis ele é ZERO antes
+    # e ZERO depois, então o bloco acima é cego justamente nas contas onde o
+    # frete sai do nosso bolso. Quem carrega esse número é `frete_lista`.
+    #
+    # O preço dessa cegueira foi medido em 12/09/2026: em 11/09 o ML passou a
+    # absorver 100% da tarifa em 106 anúncios da maxi-brasil-principal, que
+    # saíram de ~R$ 107 para R$ 0,00 num único ciclo. São R$ 320 a 520 mil por
+    # mês de mudança de custo, e o sistema não emitiu **um** alerta, porque o
+    # comprador continuou pagando zero dos dois lados.
+    # O que mudou de frete nesta passada, para decidir depois se vira uma
+    # mensagem por anúncio ou um resumo só.
+    mudou_frete: list[dict] = []
+    #
+    # Vem com a ORIGEM junto, e isso não é detalhe: `frete_origem` diz por qual
+    # endpoint o número foi lido, e os dois endpoints não devolvem a mesma
+    # coisa. `/items/{id}/shipping_options` dá a tarifa cheia;
+    # `/users/{id}/shipping_options/free` dá o que sobra para o vendedor depois
+    # do subsídio do ML. Comparar um com o outro é comparar régua com régua
+    # diferente — foi assim que 152 anúncios da chinelaria registraram uma alta
+    # de frete que nunca existiu, em 10/09/2026, só porque o endpoint do item
+    # passou a responder.
+    #
+    # A ordem dos endpoints mudou em 12/09/2026, então a primeira coleta depois
+    # disso tem o lado velho por um instrumento e o novo por outro. Sem esta
+    # trava, essa única coleta anunciaria uma queda de frete em massa nas 8
+    # contas — e ela seria inteiramente fabricada.
+    lista_anterior: dict[str, tuple[float, str | None]] = {}
+    for l in con.execute(
+        "SELECT item_id, frete_lista, frete_origem FROM snap_anuncio "
+        "WHERE conta_slug = ? AND coletado_em < ? AND frete_lista IS NOT NULL "
+        "GROUP BY item_id HAVING coletado_em = MAX(coletado_em)",
+        (conta.slug, carimbo_novo)
+    ):
+        lista_anterior[l["item_id"]] = (l["frete_lista"], l["frete_origem"])
+
     def alerta(regra_nome, conf, mensagem, item_id=None, titulo=None, dados=None):
         nonlocal gerados
         entrou = db.registrar_alerta(
@@ -506,6 +543,62 @@ def avaliar_mudancas_proprias(con: sqlite3.Connection, conta: Conta,
                        item_id, n["titulo"], {"permalink": n["permalink"],
                                               "de": frete_antes, "para": frete_agora})
 
+        # ---- o frete que sai do NOSSO bolso mudou ----
+        cfg_lista = _reg(regras, "frete_do_vendedor_mudou")
+        if cfg_lista:
+            try:
+                lista_agora = n["frete_lista"]
+            except (KeyError, IndexError):
+                lista_agora = None
+            lista_antes, origem_antes = lista_anterior.get(item_id, (None, None))
+            try:
+                origem_agora = n["frete_origem"]
+            except (KeyError, IndexError):
+                origem_agora = None
+            # Três travas, e cada uma custou alertas falsos para ser aprendida:
+            # os dois lados medidos (o frete é lido por rodízio), e o MESMO
+            # instrumento dos dois lados (ver a nota em `lista_anterior`).
+            mesmo_instrumento = (origem_antes is not None
+                                 and origem_antes == origem_agora)
+            if lista_antes is not None and lista_agora is not None and mesmo_instrumento:
+                dif_l = pct(lista_agora, lista_antes)
+                mudou = (dif_l is not None and abs(dif_l) >= 5
+                         and abs(lista_agora - lista_antes) >= 2)
+                # Zerar é caso à parte: de R$ 107 para R$ 0 o percentual é
+                # -100%, mas o que importa é que o ML assumiu a conta inteira.
+                if mudou:
+                    subiu = lista_agora > lista_antes
+                    if lista_agora == 0:
+                        texto = (f"O Mercado Livre passou a pagar o frete INTEIRO de "
+                                 f"{rotulo}: {brl(lista_antes)} → R$ 0,00. Enquanto "
+                                 f"durar, o piso deste anúncio cai — e o desconto é "
+                                 f"do ML, que concede e retira sem avisar.")
+                    elif subiu:
+                        texto = (f"O frete que VOCÊ paga em {rotulo} subiu "
+                                 f"{abs(dif_l):.0f}%: {brl(lista_antes)} → "
+                                 f"{brl(lista_agora)}. São {brl(lista_agora - lista_antes)} "
+                                 f"a menos de margem por venda.")
+                    else:
+                        texto = (f"O frete que VOCÊ paga em {rotulo} caiu "
+                                 f"{abs(dif_l):.0f}%: {brl(lista_antes)} → "
+                                 f"{brl(lista_agora)}. Sobra "
+                                 f"{brl(lista_antes - lista_agora)} a mais por venda.")
+                    if not n["frete_gratis"]:
+                        texto += (" Este anúncio não é frete grátis, então quem paga "
+                                  "é o comprador — mexe na conversão, não na margem.")
+                    # Não emite aqui: acumula. O ML mexe no frete em LOTE —
+                    # em 11/09/2026 foram 106 anúncios da Maxi no mesmo ciclo —
+                    # e 106 mensagens para um evento só é a forma mais rápida
+                    # de treinar alguém a ignorar o canal. Quem decide o
+                    # formato é o bloco depois do laço.
+                    mudou_frete.append({
+                        "item_id": item_id, "titulo": n["titulo"],
+                        "permalink": n["permalink"], "de": lista_antes,
+                        "para": lista_agora, "subiu": subiu,
+                        "gratis": bool(n["frete_gratis"]),
+                        "texto": texto, "delta": lista_agora - lista_antes,
+                    })
+
         if _virou(v["envio_modo"], n["envio_modo"]):
             alerta("meu_anuncio_mudou", cfg,
                    f"O envio de {rotulo} mudou de {humano.envio(v['envio_modo'])} "
@@ -561,6 +654,57 @@ def avaliar_mudancas_proprias(con: sqlite3.Connection, conta: Conta,
                        f"{humano.titulo_curto(v['titulo'], 50)} sumiu da conta — "
                        f"foi excluído, ou o Mercado Livre tirou do ar.",
                        item_id, v["titulo"])
+
+    # ---- o frete do vendedor, um a um ou em resumo ----
+    #
+    # Poucos anúncios: cada um com seu número, que é o que permite agir. Muitos:
+    # um resumo, porque aí não são N problemas, é UM evento do ML — e a ação
+    # também é uma só (conferir na tela o que ele fez com a conta).
+    cfg_lista = _reg(regras, "frete_do_vendedor_mudou")
+    if cfg_lista and mudou_frete:
+        teto = int(cfg_lista.get("maximo_individual", 8))
+        if len(mudou_frete) <= teto:
+            for m in mudou_frete:
+                alerta("frete_do_vendedor_mudou",
+                       {**cfg_lista, "critico": bool(m["subiu"] and m["gratis"])},
+                       m["texto"], m["item_id"], m["titulo"],
+                       {"por_item": True, "permalink": m["permalink"],
+                        "de": m["de"], "para": m["para"]})
+        else:
+            subiram = [m for m in mudou_frete if m["subiu"]]
+            cairam = [m for m in mudou_frete if not m["subiu"]]
+            zerados = [m for m in cairam if m["para"] == 0]
+            lado = subiram if len(subiram) >= len(cairam) else cairam
+            soma = sum(abs(m["delta"]) for m in lado)
+            pior = max(lado, key=lambda m: abs(m["delta"]))
+
+            if len(subiram) >= len(cairam):
+                texto = (f"O Mercado Livre AUMENTOU o frete que você paga em "
+                         f"{len(subiram)} anúncios de uma vez, somando "
+                         f"{brl(soma)} a menos de margem por venda. "
+                         f"O maior: {humano.titulo_curto(pior['titulo'], 40)}, "
+                         f"{brl(pior['de'])} → {brl(pior['para'])}.")
+            elif zerados:
+                texto = (f"O Mercado Livre passou a pagar o frete INTEIRO de "
+                         f"{len(zerados)} anúncios seus de uma vez "
+                         f"({len(cairam)} tiveram queda no total). Enquanto "
+                         f"durar, o piso desses anúncios cai — e o desconto é "
+                         f"do ML, que concede e retira sem avisar. "
+                         f"Confira na tela antes de repreçar em cima disso.")
+            else:
+                texto = (f"O Mercado Livre REDUZIU o frete que você paga em "
+                         f"{len(cairam)} anúncios de uma vez, somando "
+                         f"{brl(soma)} a mais de margem por venda.")
+
+            if subiram and cairam:
+                texto += f" (Foram {len(subiram)} para cima e {len(cairam)} para baixo.)"
+
+            alerta("frete_do_vendedor_mudou",
+                   {**cfg_lista, "critico": bool(subiram and len(subiram) > len(cairam))},
+                   texto, dados={"quantos": len(mudou_frete),
+                                 "subiram": len(subiram), "cairam": len(cairam),
+                                 "zerados": len(zerados),
+                                 "itens": [m["item_id"] for m in mudou_frete[:50]]})
 
     con.commit()
     return gerados
@@ -891,9 +1035,111 @@ def avaliar(con: sqlite3.Connection, conta: Conta, carimbo_novo: str,
             except ValueError:
                 pass
 
+    gerados += avaliar_prejuizo(con, conta, carimbo_novo)
+
     con.commit()
     return gerados
 
+
+def avaliar_prejuizo(con: sqlite3.Connection, conta: Conta,
+                     carimbo_novo: str, alerta_externo=None) -> int:
+    """
+    Avisa o anúncio que vende abaixo do custo — sem depender da margem-alvo.
+
+    Toda a régua de piso desta casa parte de uma margem pedida, e essa margem é
+    uma DECISÃO: 10% nas contas Facilita, 12% no Ênio, 20% na chinelaria. A da
+    chinelaria nunca foi confirmada com a cliente, e o próprio `conta.yaml` diz
+    isso — então "abaixo do piso" ali é uma conversa em aberto, não um fato.
+
+    Este alerta existe para o que NÃO está em aberto: preço de vitrine menor
+    que custo + frete + comissão + imposto. Aí não há margem-alvo que salve, e
+    a conta fecha negativa mesmo pedindo 0% de lucro. Medido em 12/09/2026: 29
+    anúncios da chinelaria estão assim, e nenhum gerava alerta — porque o único
+    aviso existente dependia dos 20% em disputa.
+
+    Roda junto com `avaliar`, isto é, na coleta completa (de hora em hora), e
+    não a cada ciclo de 5 minutos do vigia: prejuízo é ESTADO, não
+    acontecimento, e relê planilha de custo do disco.
+    """
+    from . import precificacao as _prec
+
+    regras = carregar_regras()
+    cfg = _reg(regras, "vende_no_prejuizo")
+    if not cfg:
+        return 0
+
+    gerados = 0
+    if alerta_externo is not None:
+        alerta = alerta_externo
+    else:
+        def alerta(regra_nome, cfg_, mensagem, item_id=None, titulo=None, dados=None):
+            nonlocal gerados
+            entrou = db.registrar_alerta(
+                con, cliente_id=conta.cliente_id, conta_slug=conta.slug,
+                regra=regra_nome, critico=bool(cfg_.get("critico", False)),
+                mensagem=mensagem, item_id=item_id, titulo=titulo, dados=dados)
+            if entrou:
+                gerados += 1
+
+    try:
+        itens = _prec.carregar(con, conta)
+    except Exception:
+        return gerados
+    if not itens:
+        return gerados
+
+    anuncios = {l["item_id"]: l for l in con.execute(
+        "SELECT item_id, titulo, permalink FROM snap_anuncio "
+        "WHERE conta_slug = ? AND coletado_em = ?", (conta.slug, carimbo_novo))}
+
+    for r in itens:
+        preco = r.get("preco")
+        if not preco:
+            continue
+        # O mesmo piso, pedindo margem ZERO: é o preço em que a venda empata.
+        # Reusa a função da casa em vez de repetir a aritmética — se a fórmula
+        # mudar (uma tarifa nova, um imposto), este alerta muda junto.
+        empate = _prec.piso_de_preco(
+            r.get("custo_total") or 0.0, r.get("comissao") or 0.0,
+            r.get("imposto") or 0.0, 0.0,
+            r.get("frete_absorvido") or 0.0, r.get("rebate") or 0.0)
+        if empate is None or preco >= empate:
+            continue
+
+        perda = empate - preco
+        # Centavo de arredondamento não é prejuízo.
+        if perda < 0.50:
+            continue
+
+        # Estado, não acontecimento: sem trava isto repetiria de hora em hora
+        # para sempre. Volta a avisar quando o número muda — preço novo, custo
+        # novo ou frete novo.
+        chave = f"prejuizo:{conta.slug}:{r['item_id']}"
+        assinatura = f"{preco:.2f}|{empate:.2f}"
+        if db.ler_marcador(con, chave) == assinatura:
+            continue
+        db.gravar_marcador(con, chave, assinatura)
+
+        a = anuncios.get(r["item_id"])
+        frete = r.get("frete_absorvido") or 0.0
+        msg = (f"Este anúncio vende NO PREJUÍZO: sai a {brl(preco)} e só empata a "
+               f"{brl(empate)} — são {brl(perda)} de perda em cada venda. "
+               f"Isso não depende da margem que a conta pede: mesmo a 0% de "
+               f"lucro a conta fecha negativa.")
+        if frete:
+            msg += (f" O frete que a loja absorve é {brl(frete)}, "
+                    f"{frete / preco * 100:.0f}% do preço — costuma ser a maior "
+                    f"peça dessa conta.")
+
+        alerta("vende_no_prejuizo", cfg, msg,
+               item_id=r["item_id"],
+               titulo=(a["titulo"] if a else r.get("titulo") or r["item_id"]),
+               dados={"por_item": True,
+                      "permalink": (a["permalink"] if a else None),
+                      "preco": preco, "empate": empate, "perda": perda,
+                      "frete_absorvido": frete, "piso": r.get("piso")})
+
+    return gerados
 
 
 def avaliar_busca(con: sqlite3.Connection, conta: Conta, carimbo_novo: str,

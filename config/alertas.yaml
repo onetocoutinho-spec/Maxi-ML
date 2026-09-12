@@ -195,6 +195,37 @@ regras:
       comando. Depende de custo cadastrado.
       Um aviso por estado de preco: so repete quando o numero muda.
 
+  frete_do_vendedor_mudou:
+    ativa: true
+    # O `critico` aqui e decidido no codigo, nao neste arquivo: frete que SOBE
+    # em anuncio de frete gratis e dinheiro saindo agora; frete que CAI e boa
+    # noticia e nao precisa acordar ninguem. Este valor e so o padrao.
+    critico: false
+    descricao: >
+      Mudou o frete que a LOJA paga (`frete_lista`), nao o que o comprador
+      paga. Sao campos diferentes: em frete gratis o do comprador e zero antes
+      e depois, entao o alerta antigo era cego justamente onde o frete sai do
+      nosso bolso. Em 11/09/2026 o ML passou a absorver 100% da tarifa em 106
+      anuncios da Maxi — de ~R$ 107 para R$ 0,00 — e nenhum aviso saiu.
+      Dispara a partir de 5% e R$ 2 de diferenca, com os dois lados medidos
+      (o frete e lido por rodizio, e comparar com leitura nula ja produziu 76
+      alertas falsos). Um aviso por anuncio; volta quando o numero muda.
+      Acima de `maximo_individual` anuncios na mesma passada vira UM resumo:
+      lote nao e' N problemas, e' um evento do ML, e a acao tambem e' uma so.
+    maximo_individual: 8
+
+  vende_no_prejuizo:
+    ativa: true
+    critico: true
+    descricao: >
+      O preco de vitrine e menor que custo + frete + comissao + imposto: a
+      venda fecha negativa mesmo pedindo 0% de lucro. Diferente de "abaixo do
+      piso", que depende da margem-alvo da conta — e a da chinelaria e de 20%
+      nunca confirmado com a cliente. Aqui nao ha alvo em disputa: e prejuizo
+      em qualquer regua. Medido em 12/09/2026: 29 anuncios da chinelaria, todos
+      sem alerta ate agora. Roda na coleta completa, nao a cada ciclo do vigia:
+      prejuizo e estado, nao acontecimento.
+
   cupom_novo:
     ativa: true
     critico: true
