@@ -32,6 +32,52 @@ def _link_da_ficha(cli: MLClient, product_id: str) -> str | None:
         return None
 
 
+def caixa_declarada(it: dict) -> str | None:
+    """A medida de embalagem que ESTE anúncio declara, como "CxLxAxPESO".
+
+    Guardada crua, em texto, de propósito: o que interessa não é o número
+    bonito, é poder comparar depois com o `billable_weight` que o ML cobrou.
+    Quando os dois discordam, o ML ignorou a declaração — e isso não aparece em
+    lugar nenhum do anúncio, porque o atributo continua mostrando o que a gente
+    mandou.
+
+    Usa SELLER_PACKAGE_*, que é o conjunto que vale nesta operação: medido em
+    02/09/2026, mandando PACKAGE_* o ML aceita o POST e descarta em seguida.
+    """
+    at = {a.get("id"): a.get("value_name") for a in (it.get("attributes") or [])}
+
+    def n(chave):
+        v = at.get(chave)
+        if not v:
+            return None
+        try:
+            return float(str(v).split()[0].replace(",", "."))
+        except ValueError:
+            return None
+
+    c, l, a = n("SELLER_PACKAGE_LENGTH"), n("SELLER_PACKAGE_WIDTH"), n("SELLER_PACKAGE_HEIGHT")
+    p = n("SELLER_PACKAGE_WEIGHT")
+    if not (c and l and a and p):
+        return None
+    return f"{c:.0f}x{l:.0f}x{a:.0f}x{p:.0f}"
+
+
+def peso_faturavel_esperado(caixa: str | None) -> float | None:
+    """O que o peso faturável DEVERIA ser, pela regra do ML.
+
+    `max(peso declarado, cubagem)`, cubagem = CxLxA/6. Medido em 26 anúncios em
+    12/09/2026: 25 seguem isso. O 26º é justamente o caso que esta função
+    existe para achar.
+    """
+    if not caixa:
+        return None
+    try:
+        c, l, a, p = (float(x) for x in caixa.split("x"))
+    except ValueError:
+        return None
+    return max(c * l * a / 6.0, p)
+
+
 def _fila_de_fretes(con: sqlite3.Connection, conta: Conta, itens: list[dict],
                     quantos: int) -> set[str]:
     """
@@ -102,6 +148,7 @@ def coletar_meus_anuncios(con: sqlite3.Connection, conta: Conta, cli: MLClient, 
         frete_custo = None
         frete_lista = None
         frete_origem = None
+        frete_billable = None
         preco_vitrine = None
 
         if str(it.get("id")) in na_fila and it.get("status") == "active":
@@ -113,7 +160,8 @@ def coletar_meus_anuncios(con: sqlite3.Connection, conta: Conta, cli: MLClient, 
             # do ML — dois números diferentes com o mesmo nome.
             if envio.get("free_shipping"):
                 try:
-                    cotado = cli.custo_do_frete_gratis(it["id"])
+                    cotado, frete_billable = cli.custo_do_frete_gratis(
+                        it["id"], com_peso=True)
                     if isinstance(cotado, (int, float)):
                         frete_lista = cotado
                         frete_origem = "cotacao_frete_gratis"
@@ -217,6 +265,8 @@ def coletar_meus_anuncios(con: sqlite3.Connection, conta: Conta, cli: MLClient, 
                 "frete_custo": frete_custo,
                 "frete_lista": frete_lista,
                 "frete_origem": frete_origem,
+                "frete_billable": frete_billable,
+                "caixa_declarada": caixa_declarada(it),
                 "preco_vitrine": preco_vitrine,
             }
         )

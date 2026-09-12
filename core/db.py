@@ -437,10 +437,16 @@ def _migrar(con: sqlite3.Connection) -> None:
     # que entregam por fora e para os quais o primeiro caminho não responde.
     # Sem separar, uma cotação hipotética viraria custo medido na mesma coluna,
     # que é exatamente o tipo de mistura que esta casa não faz.
+    # frete_billable e caixa_declarada existem para um problema que nenhuma
+    # outra coluna enxerga: o ML às vezes IGNORA a medida declarada e cobra
+    # sobre um peso próprio, SEM alterar o atributo do anúncio. Medido em
+    # 12/09/2026 — três anúncios declarando 1.673 g cobrados sobre 18.560.
+    # Guardar os dois lado a lado é o único jeito de ver isso depois.
     for coluna, tipo in (("thumbnail", "TEXT"), ("descontos", "TEXT"),
                          ("envio_modo", "TEXT"), ("frete_custo", "REAL"),
                          ("preco_vitrine", "REAL"), ("sku", "TEXT"),
-                         ("frete_lista", "REAL"), ("frete_origem", "TEXT")):
+                         ("frete_lista", "REAL"), ("frete_origem", "TEXT"),
+                         ("frete_billable", "REAL"), ("caixa_declarada", "TEXT")):
         if coluna not in colunas_anuncio:
             con.execute(f"ALTER TABLE snap_anuncio ADD COLUMN {coluna} {tipo}")
     con.commit()

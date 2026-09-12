@@ -226,6 +226,26 @@ regras:
       sem alerta ate agora. Roda na coleta completa, nao a cada ciclo do vigia:
       prejuizo e estado, nao acontecimento.
 
+  frete_arbitrado_pelo_ml:
+    ativa: true
+    # Critico: e dinheiro saindo por venda, e e invisivel em qualquer outra
+    # tela. Quem nao olhar aqui nao olha em lugar nenhum.
+    critico: true
+    descricao: >
+      O Mercado Livre esta cobrando o frete sobre um peso que NAO e o da caixa
+      declarada no anuncio — e sem alterar o atributo. O anuncio segue
+      mostrando a medida que mandamos, a tela tambem, e a fatura usa outro
+      numero. Medido em 12/09/2026: tres anuncios declarando 1.673 g cobrados
+      sobre 18.560; o irmao de mesmo SKU que declarou os 23.600 g reais teve a
+      declaracao honrada.
+      O que dispara a arbitragem e DESCONHECIDO. A hipotese obvia (o ML ignora
+      quem declara medida falsa) foi medida em 78 anuncios e morreu: 76 tiveram
+      a declaracao aceita, e 33 desses declaram menos que o produto pesa. Isto
+      e um detector, nao uma explicacao.
+      Contestar exige a medida real conferida. Um aviso por estado; volta a
+      avisar quando o numero mudar, inclusive quando voltar ao normal.
+    tolerancia_percentual: 1
+
   cupom_novo:
     ativa: true
     critico: true

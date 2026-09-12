@@ -757,7 +757,8 @@ class MLClient:
                         listing_type_id=tipo_anuncio)
 
     def custo_do_frete_gratis(self, item_id: str,
-                              detalhar: bool = False):
+                              detalhar: bool = False,
+                              com_peso: bool = False):
         """
         Quanto o frete grátis deste anúncio custa AO VENDEDOR.
 
@@ -774,8 +775,16 @@ class MLClient:
         NUNCA devolve 0 por falta de resposta: frete zero infla a margem e é
         exatamente o erro que faz cadastrar promoção no prejuízo. Sem resposta
         é None, e quem chama decide pular o anúncio.
+
+        `com_peso=True` devolve `(custo, billable_weight)` — o peso sobre o qual
+        o ML de fato cobrou. Vale a pena pedir porque ele denuncia uma coisa que
+        não aparece em lugar nenhum do anúncio: quando o ML IGNORA a medida
+        declarada e arbitra a sua. Medido em 12/09/2026, três anúncios que
+        declaram 1.673 g são cobrados sobre 18.560 — e o atributo do anúncio
+        continua mostrando 1.673. Ver `rules.avaliar_frete_arbitrado`.
         """
         tentativas: list[tuple[str, Any]] = []
+        peso: float | None = None
 
         # A ordem é a medida na FACILITA em 02/09/2026: /users/... respondeu
         # R$ 70,95 no #4701515641, o mesmo número da tela, e /items/... deu
@@ -784,7 +793,10 @@ class MLClient:
         r1 = self.get(f"/users/{self.user_id}/shipping_options/free",
                       item_id=item_id, verbose="true")
         tentativas.append(("/users/{user}/shipping_options/free", r1))
-        custo = (((r1 or {}).get("coverage") or {}).get("all_country") or {}).get("list_cost")
+        cobertura = ((r1 or {}).get("coverage") or {}).get("all_country") or {}
+        custo = cobertura.get("list_cost")
+        if isinstance(cobertura.get("billable_weight"), (int, float)):
+            peso = float(cobertura["billable_weight"])
 
         if not isinstance(custo, (int, float)):
             r2 = self.get(f"/items/{item_id}/shipping_options/free")
@@ -800,7 +812,9 @@ class MLClient:
             custo = (r3 or {}).get("custo_lista")
 
         valor = float(custo) if isinstance(custo, (int, float)) else None
-        return (valor, tentativas) if detalhar else valor
+        if detalhar:
+            return (valor, tentativas)
+        return (valor, peso) if com_peso else valor
 
     # ------------------------------------------------------------------
     # promoções — leitura e adesão

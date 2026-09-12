@@ -1036,8 +1036,108 @@ def avaliar(con: sqlite3.Connection, conta: Conta, carimbo_novo: str,
                 pass
 
     gerados += avaliar_prejuizo(con, conta, carimbo_novo)
+    gerados += avaliar_frete_arbitrado(con, conta, carimbo_novo)
 
     con.commit()
+    return gerados
+
+
+def avaliar_frete_arbitrado(con: sqlite3.Connection, conta: Conta,
+                            carimbo_novo: str, alerta_externo=None) -> int:
+    """
+    Avisa quando o ML cobra frete sobre um peso que NÃO é o declarado.
+
+    É o único jeito de ver isto. O Mercado Livre às vezes ignora a medida de
+    embalagem do anúncio e cobra sobre um peso próprio — e **não altera o
+    atributo**. O anúncio segue mostrando a caixa que mandamos, a tela segue
+    mostrando a caixa que mandamos, e a fatura usa outro número. Quem só lê o
+    anúncio calcula um frete que não existe.
+
+    Medido em 12/09/2026 na facilita-brasil-principal: três anúncios da
+    Escrivaninha Mesa Gamer declaram 23x18x11 e 1.673 g — cubagem 759, logo
+    peso faturável esperado 1.673 — e o ML cobra sobre **18.560**. O irmão de
+    mesmo SKU que declara os 23.600 g reais tem peso faturável exatamente
+    23.600: ali a declaração foi honrada.
+
+    O QUE ESTA REGRA NÃO SABE: o que dispara a arbitragem. A hipótese óbvia —
+    que o ML ignora quem declara medida falsa — foi medida e MORREU: em 78
+    anúncios com frete grátis, 76 tiveram a declaração aceita, e 33 desses
+    declaram MENOS que o produto pesa, um deles 10%. Os dois arbitrados tinham
+    declaração idêntica entre si e pesos faturáveis diferentes. Então isto é um
+    detector, não uma explicação — e é assim que deve ser apresentado.
+
+    Margem de tolerância de 1%: `billable_weight` vem arredondado (11.704 vira
+    11.705) e um alerta por arredondamento é ruído puro.
+    """
+    from .collectors import peso_faturavel_esperado
+
+    regras = carregar_regras()
+    cfg = _reg(regras, "frete_arbitrado_pelo_ml")
+    if not cfg:
+        return 0
+
+    gerados = 0
+    if alerta_externo is not None:
+        alerta = alerta_externo
+    else:
+        def alerta(regra_nome, cfg_, mensagem, item_id=None, titulo=None, dados=None):
+            nonlocal gerados
+            entrou = db.registrar_alerta(
+                con, cliente_id=conta.cliente_id, conta_slug=conta.slug,
+                regra=regra_nome, critico=bool(cfg_.get("critico", False)),
+                mensagem=mensagem, item_id=item_id, titulo=titulo, dados=dados)
+            if entrou:
+                gerados += 1
+
+    folga = float(cfg.get("tolerancia_percentual", 1)) / 100.0
+    linhas = con.execute(
+        "SELECT item_id, titulo, permalink, preco, frete_lista, frete_billable, "
+        "       caixa_declarada FROM snap_anuncio "
+        "WHERE conta_slug = ? AND coletado_em = ? AND status = 'active' "
+        "  AND frete_billable IS NOT NULL AND caixa_declarada IS NOT NULL",
+        (conta.slug, carimbo_novo)).fetchall()
+
+    for l in linhas:
+        esperado = peso_faturavel_esperado(l["caixa_declarada"])
+        if not esperado:
+            continue
+        cobrado = float(l["frete_billable"])
+        if abs(cobrado - esperado) <= max(2.0, esperado * folga):
+            continue
+
+        # Estado, não acontecimento: enquanto o ML mantiver a arbitragem a
+        # condição segue verdadeira. Volta a avisar quando o número mudar —
+        # inclusive quando ele VOLTAR ao declarado, que é a notícia boa.
+        chave = f"frete_arbitrado:{conta.slug}:{l['item_id']}"
+        assinatura = f"{cobrado:.0f}|{esperado:.0f}"
+        if db.ler_marcador(con, chave) == assinatura:
+            continue
+        db.gravar_marcador(con, chave, assinatura)
+
+        c, larg, alt, peso = l["caixa_declarada"].split("x")
+        vezes = cobrado / esperado if esperado else 0
+        if cobrado > esperado:
+            direcao = (f"{vezes:.1f}x MAIS pesado do que a caixa declarada"
+                       if vezes >= 1.5 else "mais pesado do que a caixa declarada")
+        else:
+            direcao = "MENOS pesado do que a caixa declarada — a seu favor"
+
+        msg = (f"O Mercado Livre está cobrando o frete deste anúncio sobre "
+               f"{cobrado / 1000:.1f} kg, {direcao}: você declarou "
+               f"{c}x{larg}x{alt} cm e {float(peso) / 1000:.1f} kg, o que daria "
+               f"{esperado / 1000:.1f} kg faturáveis. O atributo do anúncio NÃO "
+               f"mudou — essa diferença só aparece aqui, e o frete de hoje é "
+               f"{brl(l['frete_lista'])}.")
+        if cobrado > esperado:
+            msg += (" Para contestar é preciso a medida real conferida; sem ela "
+                    "não há caso a apresentar.")
+
+        alerta("frete_arbitrado_pelo_ml", cfg, msg,
+               item_id=l["item_id"], titulo=l["titulo"] or l["item_id"],
+               dados={"por_item": True, "permalink": l["permalink"],
+                      "caixa": l["caixa_declarada"], "esperado": esperado,
+                      "cobrado": cobrado, "frete": l["frete_lista"]})
+
     return gerados
 
 
