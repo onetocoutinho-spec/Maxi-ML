@@ -33,6 +33,53 @@ NOMES = {
     "PRICE_MATCHING": "igualar preço",
 }
 
+# Campanhas que NÃO mexem no preço da vitrine. Cupom é desconto de CARRINHO:
+# o anúncio segue no mesmo preço e a API devolve `price: 0` nessas linhas.
+# Quem cuida de cupom é `core/cupons.py`, com tabela própria.
+NAO_MEXEM_NO_PRECO = ("SELLER_COUPON_CAMPAIGN",)
+
+# Como se ALTERA o preço de uma campanha em que o anúncio JÁ está.
+#
+# Não é igual para todos os tipos, e tratar como se fosse custa vaga em
+# campanha. Literal da doc (central-de-promociones, 09/06/2026):
+#
+#   "Para editar los descuentos individuales (PRICE_DISCOUNT), las ofertas
+#    del día (DOD) y las ofertas relámpago (LIGHTNING) debes eliminar la
+#    promoción y aplicarla nuevamente."
+#
+# São só esses três. DEAL, MARKETPLACE_CAMPAIGN e VOLUME têm
+# `PUT /seller-promotions/items/{id}` e mudam no lugar.
+#
+# A diferença é dinheiro: sair de um DEAL para reentrar devolve a vaga ao ML
+# sem garantia de recuperá-la, e depois de sair o ML ancora no preço
+# praticado para recusar aumento (medido nesta casa em 02/09/2026).
+SAIR_E_READERIR = ("PRICE_DISCOUNT", "DOD", "LIGHTNING")
+ALTERA_NO_LUGAR = ("DEAL", "MARKETPLACE_CAMPAIGN", "VOLUME")
+
+
+def como_alterar(tipo: str | None) -> str:
+    """
+    'put', 'sair_e_readerir' ou 'confira_a_doc' — como mexer no preço desta
+    campanha sem perder a vaga.
+
+    Mora aqui, e não em quem escreve, pela regra da casa: régua em `core/`,
+    versão única. Hoje o caminho de escrita generaliza:
+    `core/publicacao.py::sair_de_promocao` faz DELETE em qualquer tipo e
+    `core/ml_api.py` não tem sequer um método de PUT para promoção. Quem for
+    consertar aquele caminho pergunta a esta função em vez de repetir a
+    tabela num terceiro lugar.
+
+    'confira_a_doc' não é sinônimo de 'pode PUT'. A lista dos que aceitam
+    edição no lugar é fechada; tipo fora das duas listas é motivo para parar
+    e ler, não para arriscar um DELETE.
+    """
+    t = (tipo or "").upper()
+    if t in SAIR_E_READERIR:
+        return "sair_e_readerir"
+    if t in ALTERA_NO_LUGAR:
+        return "put"
+    return "confira_a_doc"
+
 
 def nome_legivel(promocao) -> str:
     """O nome da campanha, ou o tipo traduzido quando ela não tem nome."""
@@ -44,6 +91,48 @@ def nome_legivel(promocao) -> str:
 
 def _num(valor: Any) -> float | None:
     return float(valor) if isinstance(valor, (int, float)) else None
+
+
+def _preco_de_vitrine(p: dict) -> float | None:
+    """
+    O preço que o COMPRADOR vê — que nem sempre é o preço da campanha.
+
+    O ML pode turbinar uma oferta: põe desconto por cima do preço da campanha
+    e a vitrine passa a mostrar um valor MENOR que o `price` da promoção. A
+    doc (central-de-promociones, 09/06/2026) descreve os campos
+    `boosted_offer`, `discount_meli_boosted_percentage`,
+    `discount_meli_boost_amount` e `total_price_for_boosted_offer` — este
+    último com todas as letras: o preço que o comprador de fato vê. Eles só
+    existem quando `boosted_offer` é verdadeiro, e só em DEAL,
+    PRICE_DISCOUNT, PRE_NEGOTIATED, SMART, PRICE_MATCHING e LIGHTNING.
+
+    A coluna `preco` desta tabela sempre significou preço de vitrine: é com
+    ela que `consolidar` diz "esta é a que manda no preço hoje" e que o
+    alerta escreve "o preço iria para X". Numa oferta turbinada, gravar o
+    `price` cru não muda o sentido da coluna — só a preenche com o número
+    errado, e o veredito passa a decidir por um preço que ninguém pratica.
+
+    Na dúvida fica o MENOR dos dois, e a dúvida é real. Os campos do boost se
+    chamam `discount_meli_*`, o que sugere que o ML banca a diferença e o
+    vendedor segue recebendo pelo `price` — mas isso é leitura de nome de
+    campo, não medição. Sonda de 11/09/2026 (somente leitura) em 46 anúncios
+    de 5 contas (Facilita ×2, Ênio, Maxi, JB), 164 promoções lidas, não achou
+    UMA linha com `boosted_offer` — o campo nem aparece na resposta. Ou seja:
+    o problema é real e ainda está dormindo, e não há venda turbinada para
+    conferir quem banca. Enquanto não
+    houver, errar para baixo faz recusar campanha boa; errar para cima faz
+    aceitar campanha que fura o piso — que é o erro que este módulo existe
+    para impedir. Quem responde de vez é `/orders/{id}/discounts` →
+    `amounts.seller` de uma venda turbinada, que separa o que o ML pagou do
+    que a loja pagou.
+    """
+    base = _num(p.get("price"))
+    if not p.get("boosted_offer"):
+        return base
+    turbinado = _num(p.get("total_price_for_boosted_offer"))
+    if turbinado is None:
+        return base                   # boost anunciado sem o total: fica o base
+    return turbinado if base is None else min(base, turbinado)
 
 
 def normalizar(item_id: str, bruto: Any) -> list[dict]:
@@ -66,7 +155,7 @@ def normalizar(item_id: str, bruto: Any) -> list[dict]:
             "tipo": p.get("type"),
             "nome": p.get("name") or "",
             "status": status,
-            "preco": _num(p.get("price")),
+            "preco": _preco_de_vitrine(p),
             "preco_original": _num(p.get("original_price")),
             "preco_sugerido": _num(p.get("suggested_discounted_price")),
             "preco_minimo": _num(p.get("min_discounted_price")),
@@ -207,8 +296,28 @@ def consolidar(campanhas: list, piso: float | None) -> dict | None:
     Devolve None quando não há campanha ativa, e marca `ramo` como
     'nenhuma cabe no piso' quando nem a mais cara salva — nesse caso o
     problema é o preço de cadastro, e campanha nenhuma resolve.
+
+    Aviso para quem EXECUTA o ramo 'sobe para o piso': o conserto é SAIR das
+    campanhas que furam, não subir o preço do anúncio. Subir o preço apaga
+    desconto sozinho — literal da doc, sobre PRICE_DISCOUNT: "Si se realiza
+    una suba del precio del ítem, los descuentos serán quitados
+    automáticamente". Não vem erro, não vem HTTP diferente: o desconto
+    simplesmente some, e quem só olhou o status acha que não fez nada. Somem
+    inclusive os descontos que não estavam no plano.
     """
-    ativas = [p for p in campanhas if p["status"] == "started" and p["preco"] is not None]
+    # Só entra quem realmente manda no preço da vitrine. Cupom não manda: a
+    # API devolve `price: 0` nessas linhas, então ele seria SEMPRE a "mais
+    # barata" e o plano sairia com "hoje R$ 0,00 → sobe para o piso" em todo
+    # anúncio da campanha. Não é hipótese: entre 02 e 05/09/2026 a
+    # maxi-brasil-principal teve 167 linhas assim, todas
+    # SELLER_COUPON_CAMPAIGN. Reprocessado com o filtro, os 22 anúncios
+    # atingidos trocam "hoje R$ 0,00" pelo preço que de fato valia — a SMART
+    # ou o DEAL do item. O `> 0` acompanha o filtro por tipo de propósito:
+    # preço zero nunca é preço de vitrine, venha de que tipo vier.
+    ativas = [p for p in campanhas
+              if p["status"] == "started"
+              and p["tipo"] not in NAO_MEXEM_NO_PRECO
+              and p["preco"] is not None and float(p["preco"]) > 0]
     if not ativas:
         return None
     ativas.sort(key=lambda p: (float(p["preco"]), -float(p["parte_do_ml"] or 0)))
