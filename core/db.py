@@ -367,6 +367,37 @@ CREATE TABLE IF NOT EXISTS frete_venda (
 CREATE UNIQUE INDEX IF NOT EXISTS ux_frete_venda ON frete_venda(shipment_id);
 CREATE INDEX IF NOT EXISTS ix_frete_venda_conta ON frete_venda(conta_slug, data_pedido DESC);
 
+-- O que o Mercado Livre AVISOU, e o que a gente foi buscar por causa disso.
+--
+-- A caixa de correio mora no Zion-OS (`/ml-callback-zionml`), porque o ML só
+-- avisa quem responde 200 em 500 ms e esta máquina desliga. Lá fica o PONTEIRO:
+-- tópico e caminho, sem dado e sem credencial. Aqui fica o que o ponteiro
+-- rendeu — o recurso lido com o token da conta, que só existe deste lado.
+--
+-- `notificacao_id` é único porque é o `_id` do ML: as retentativas dele e os
+-- drenos repetidos daqui apontam para o mesmo evento, e duplicar viraria
+-- trabalho refeito e contagem errada.
+--
+-- `erro` guarda a recusa em vez de apagar a linha. Notificação que não pôde ser
+-- lida é informação: um 403 de posse diz que o anúncio mudou de dono, um 404
+-- diz que sumiu. Apagar deixaria o sintoma invisível.
+CREATE TABLE IF NOT EXISTS notificacao_ml (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    notificacao_id  TEXT NOT NULL,
+    topico          TEXT NOT NULL,
+    recurso         TEXT NOT NULL,
+    user_id_ml      TEXT NOT NULL,
+    conta_slug      TEXT,          -- NULL = user_id que não está no registro
+    cliente_id      TEXT,
+    enviado_em      TEXT,          -- quando o ML mandou
+    drenado_em      TEXT NOT NULL, -- quando ESTA máquina buscou
+    http            INTEGER,       -- o que o GET do recurso respondeu
+    erro            TEXT,
+    corpo           TEXT           -- o recurso lido, JSON cru
+);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_notificacao_ml ON notificacao_ml(notificacao_id);
+CREATE INDEX IF NOT EXISTS ix_notificacao_ml_conta ON notificacao_ml(conta_slug, topico, drenado_em DESC);
+
 -- Log de execuções (auditoria: o que rodou, em qual conta, com que resultado)
 CREATE TABLE IF NOT EXISTS execucao (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1344,6 +1344,53 @@ def cmd_margem_real(args) -> int:
     return 0
 
 
+def cmd_notificacoes(args) -> int:
+    """Drena a caixa de correio do Mercado Livre e lê o que ela apontou.
+
+    A caixa mora no Zion-OS porque o ML só avisa quem responde 200 em 500 ms,
+    sempre. Aqui é onde os tokens das contas vivem — por isso a leitura do
+    recurso acontece deste lado, e não lá.
+    """
+    from core import notificacoes
+    con = db.conectar()
+    try:
+        r = notificacoes.drenar(con, max_buscas=int(args.max_buscas))
+    except RuntimeError as erro:
+        print(f"\n  {AMAR}{erro}{FIM}\n")
+        return 1
+    except Exception as erro:
+        print(f"\n  {VERM}caixa de correio indisponível:{FIM} {erro}\n")
+        return 1
+
+    if not r["pendentes"]:
+        print(f"\n  {CINZA}Nada pendente na caixa de correio.{FIM}\n")
+        return 0
+
+    print(f"\n  pendentes na caixa ..... {r['pendentes']}")
+    print(f"  recursos lidos ......... {r['lidos']}")
+    print(f"  confirmados ............ {r['confirmados']}")
+    if r.get("fretes"):
+        print(f"  {VERDE}fretes cobrados novos .. {r['fretes']}{FIM}")
+    if r.get("sem_conta"):
+        print(f"  {AMAR}user_id fora do registro {r['sem_conta']}{FIM}")
+    if r.get("restaram"):
+        # Fila que sobra não é erro: é o orçamento de busca fazendo o trabalho.
+        # Vira problema quando sobra sempre — aí ela cresce mais rápido do que
+        # se drena, e o teto precisa subir ou a rodada precisa ser mais frequente.
+        print(f"  {CINZA}ficaram para a próxima . {r['restaram']}{FIM}")
+
+    print(f"\n  {CINZA}o que chegou, por tópico:{FIM}")
+    for l in con.execute(
+        "SELECT topico, conta_slug, COUNT(*) n, SUM(CASE WHEN erro IS NOT NULL THEN 1 ELSE 0 END) erros "
+        "FROM notificacao_ml WHERE drenado_em >= datetime('now','-1 hour') "
+        "GROUP BY topico, conta_slug ORDER BY n DESC LIMIT 12"
+    ):
+        alerta = f"  {VERM}{l['erros']} com erro{FIM}" if l["erros"] else ""
+        print(f"    {l['topico']:<20} {(l['conta_slug'] or '—'):<28} {l['n']:>4}{alerta}")
+    print()
+    return 0
+
+
 def cmd_vendas(args) -> int:
     """
     Mostra os pedidos crus que o sistema enxerga, para comparar com o painel
@@ -2968,6 +3015,12 @@ def main() -> int:
     s.add_argument("--dias", default=30, help="janela de apuracao (padrao 30)")
     s.add_argument("--quantos", default=12, help="quantas vendas listar (padrao 12)")
     s.set_defaults(fn=cmd_margem_real)
+
+    s = sub.add_parser("notificacoes",
+                       help="drena a caixa de correio do ML (o que ele AVISOU)")
+    s.add_argument("--max-buscas", dest="max_buscas", default=150,
+                   help="teto de recursos lidos por rodada (padrao 150)")
+    s.set_defaults(fn=cmd_notificacoes)
 
     s = sub.add_parser("precos",
                        help="confere a planilha de custo e mostra o piso de preço")
