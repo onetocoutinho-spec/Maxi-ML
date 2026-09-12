@@ -17,3 +17,11 @@ __pycache__/
 # fila
 pedidos/*.pedido
 pedidos/feitos/
+
+# rascunho de sessao na raiz (ancorado na raiz: nao pega nada em contas/)
+/_*
+/scratchpad_*
+/Users*Temp*
+
+# imagens geradas (53 MB e crescendo)
+/imagens_geradas/
