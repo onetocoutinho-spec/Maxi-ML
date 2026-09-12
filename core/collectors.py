@@ -105,38 +105,76 @@ def coletar_meus_anuncios(con: sqlite3.Connection, conta: Conta, cli: MLClient, 
         preco_vitrine = None
 
         if str(it.get("id")) in na_fila and it.get("status") == "active":
-            try:
-                # 'custo' é o que o comprador paga: em frete grátis vem 0 e não
-                # diz nada sobre margem. 'custo_lista' é o valor cheio da mesma
-                # opção — a medida do que sai do bolso de quem vende.
-                medida = cli.frete_do_item(it["id"], cep) or {}
-                frete_custo = medida.get("custo")
-                frete_lista = medida.get("custo_lista")
-                if isinstance(frete_lista, (int, float)):
-                    frete_origem = "opcao_do_item"
-            except Exception:
-                frete_custo = None
-                frete_lista = None
-
-            # Segundo caminho, para quem o primeiro não alcança. Anúncio em
-            # `not_specified` não tem opção de envio no ML, então
-            # /items/.../shipping_options devolve nada e o frete ficava NULO —
-            # e frete nulo entra no piso como ZERO, que é o erro mais caro que
-            # existe aqui. Medido em 03/09/2026 na Decoralli: 80 anúncios
-            # nessa situação, mediana de R$ 224,90, faixa R$ 53,90 a R$ 498,90.
+            # ORDEM INVERTIDA EM 12/09/2026. Ver a nota longa abaixo.
             #
-            # O número é uma COTAÇÃO — o que o ML cobraria por aquele
-            # despacho — e não o que a loja paga entregando por fora, que só o
-            # cliente sabe. Por isso vai carimbado em frete_origem: é melhor
-            # estimativa que zero, e não pode ser confundido com medição.
-            if not isinstance(frete_lista, (int, float)) and (envio.get("free_shipping")):
+            # Em frete grátis o número que importa é o LÍQUIDO do vendedor, e
+            # quem devolve isso é /users/{id}/shipping_options/free. O
+            # /items/{id}/shipping_options devolve a tarifa ANTES do subsídio
+            # do ML — dois números diferentes com o mesmo nome.
+            if envio.get("free_shipping"):
                 try:
                     cotado = cli.custo_do_frete_gratis(it["id"])
                     if isinstance(cotado, (int, float)):
                         frete_lista = cotado
                         frete_origem = "cotacao_frete_gratis"
+                        # Frete grátis: o comprador paga zero, por definição.
+                        # Não é leitura, é o significado do campo.
+                        frete_custo = 0.0
                 except Exception:
                     pass
+
+            # Segundo caminho: anúncio sem frete grátis (onde o endpoint do
+            # 'free' não se aplica) e o que o primeiro não alcançou.
+            #
+            # 'custo' é o que o comprador paga: em frete grátis vem 0 e não
+            # diz nada sobre margem. 'custo_lista' é o valor cheio da mesma
+            # opção.
+            if not isinstance(frete_lista, (int, float)):
+                try:
+                    medida = cli.frete_do_item(it["id"], cep) or {}
+                    if frete_custo is None:
+                        frete_custo = medida.get("custo")
+                    frete_lista = medida.get("custo_lista")
+                    if isinstance(frete_lista, (int, float)):
+                        frete_origem = "opcao_do_item"
+                except Exception:
+                    pass
+
+            # POR QUE A ORDEM É ESTA, e por que ela já foi o contrário
+            #
+            # O caminho do item era o primeiro, e o do 'free' só entrava como
+            # plano B. O efeito foi medido em 12/09/2026: 83% de todas as
+            # leituras de `frete_lista` no banco vinham do endpoint do item, e
+            # o valor era sistematicamente ALTO — +12,8% na chinelaria, +8,1%
+            # na Maxi, e correto no Ênio.
+            #
+            # A causa é `free_shipping_by_meli`: quando o ML subsidia parte da
+            # tarifa (rate 0.3 significa que ele paga 70%), o endpoint do item
+            # devolve o valor CHEIO, e o do 'free' devolve o que sobra para o
+            # vendedor. Onde não há subsídio os dois concordam — foi por isso
+            # que a diferença passou despercebida por tanto tempo, e por isso
+            # uma medição em 66 itens sem subsídio não a reproduziu.
+            #
+            # O preço do engano: em 10/09/2026 a chinelaria trocou de
+            # `drop_off` para `xd_drop_off`, o endpoint do item começou a
+            # responder, e 152 anúncios registraram uma ALTA DE FRETE que
+            # nunca aconteceu — era só a troca de instrumento.
+            #
+            # Nota histórica, para quem for reler o cofre: esta inversão foi
+            # anotada como "feita" em 11/09/2026 e NÃO estava no código, em
+            # nenhum branch. Anotação não é commit.
+            #
+            # Anúncio em `not_specified` não tem opção de envio no ML: ali o
+            # endpoint do item devolve nada e o frete ficava NULO — e frete
+            # nulo entra no piso como ZERO, que é o erro mais caro que existe
+            # aqui. Medido em 03/09/2026 na Decoralli: 80 anúncios nessa
+            # situação, mediana de R$ 224,90, faixa R$ 53,90 a R$ 498,90.
+            #
+            # Os dois números são COTAÇÃO — o que o ML cobraria por aquele
+            # despacho — e não o que a loja paga entregando por fora, que só o
+            # cliente sabe. Por isso vão carimbados em `frete_origem`: é melhor
+            # estimativa que zero, e não pode ser confundida com medição. Para
+            # o que foi REALMENTE cobrado existe `frete_venda`.
 
         if com_visitas and it.get("status") == "active":
             try:
