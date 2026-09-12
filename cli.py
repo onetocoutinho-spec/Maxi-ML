@@ -1378,6 +1378,11 @@ def cmd_notificacoes(args) -> int:
     print(f"  confirmados ............ {r['confirmados']}")
     if r.get("fretes"):
         print(f"  {VERDE}fretes cobrados novos .. {r['fretes']}{FIM}")
+    if r.get("convites"):
+        # Convite de campanha tem PRAZO. O veredito sai pela régua de sempre
+        # (promocoes + rules), não por uma segunda decisão escrita aqui.
+        print(f"  {AMAR}convites de campanha ... {r['convites']}{FIM}"
+              + (f"  → {VERM}{r['alertas']} alerta(s){FIM}" if r.get('alertas') else ""))
     if r.get("sem_conta"):
         print(f"  {AMAR}user_id fora do registro {r['sem_conta']}{FIM}")
     if r.get("restaram"):

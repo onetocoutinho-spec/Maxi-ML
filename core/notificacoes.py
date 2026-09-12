@@ -174,6 +174,22 @@ def _ja_sabemos(con: sqlite3.Connection, topico: str, recurso: str) -> bool:
         (envio,)).fetchone())
 
 
+def _item_do_convite(recurso: str, corpo) -> str | None:
+    """O anúncio que o ML acabou de convidar para uma campanha.
+
+    O `resource` já traz o item embutido — `CANDIDATE-MLB123-456` —, mas quem
+    manda é o corpo: o id é formato, o corpo é dado. Só interessa quem está em
+    `candidate`, que é o momento em que existe decisão a tomar. `started` e
+    `finished` são história, e a coleta normal já os vê.
+    """
+    if not isinstance(corpo, dict):
+        return None
+    if str((corpo.get("status") or {}).get("id")) != "candidate":
+        return None
+    item = corpo.get("item_id")
+    return str(item) if item else None
+
+
 def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict:
     """Busca o que chegou, le cada RECURSO uma vez e confirma o que fechou.
 
@@ -209,6 +225,11 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
 
     linhas: list[dict] = []
     confirmar: list[int] = []
+    # Convite de campanha, por conta. Não vira alerta aqui: a régua de quando
+    # uma campanha compensa mora em core/promocoes.py e core/rules.py, e
+    # decidir de novo neste módulo criaria um segundo veredito que um dia
+    # discorda do primeiro. Aqui só se junta QUEM precisa ser avaliado.
+    convites: dict[str, list[str]] = {}
     lidos = pulados = fretes = sem_conta = 0
 
     for (topico, recurso), avisos in por_recurso.items():
@@ -269,6 +290,11 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
             except Exception:
                 pass
 
+        if base["http"] == 200 and topico == "public_candidates":
+            item = _item_do_convite(recurso, corpo)
+            if item:
+                convites.setdefault(conta.slug, []).append(item)
+
         linhas.append(base)
 
     if linhas:
@@ -281,6 +307,27 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
             linhas,
         )
         con.commit()
+
+    # Os convites viram alerta pelo caminho de sempre: coletar as campanhas
+    # do anúncio e deixar `rules.avaliar_promocoes` cruzar com o piso. É a
+    # mesma régua que a coleta usa — o que muda é a HORA de rodá-la. Convite
+    # tem prazo, e saber dele no dia seguinte é saber tarde.
+    alertas = 0
+    if convites:
+        from . import promocoes, rules
+        for slug, itens in convites.items():
+            conta = next((c for c in contas.values() if c.slug == slug), None)
+            if not conta or slug not in clientes:
+                continue
+            try:
+                n, carimbo_promo = promocoes.coletar(con, conta, clientes[slug],
+                                                     sorted(set(itens)))
+                if n:
+                    alertas += rules.avaliar_promocoes(con, conta, carimbo_promo)
+            except Exception:
+                # Campanha indisponível não pode derrubar a drenagem: o resto
+                # já foi lido e precisa ser confirmado.
+                continue
 
     confirmados = 0
     if confirmar:
@@ -296,5 +343,6 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
         "pendentes": len(pendentes), "recursos": len(por_recurso),
         "lidos": lidos, "pulados": pulados, "confirmados": confirmados,
         "fretes": fretes, "sem_conta": sem_conta,
+        "convites": sum(len(v) for v in convites.values()), "alertas": alertas,
         "restaram": len(pendentes) - len(confirmar),
     }

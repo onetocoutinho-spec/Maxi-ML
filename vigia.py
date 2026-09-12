@@ -269,9 +269,12 @@ def main() -> int:
             if d["pendentes"]:
                 extra = f", {VERDE}{d['fretes']} fretes{FIM}" if d.get("fretes") else ""
                 pulo = f", {d['pulados']} ja sabidos" if d.get("pulados") else ""
+                conv = (f", {AMAR}{d['convites']} convites{FIM}"
+                        if d.get("convites") else "")
+                total_alertas += d.get("alertas", 0)
                 sobra = f", {d['restaram']} na fila" if d.get("restaram") else ""
                 print(f"{CINZA}{relogio()}{FIM}  caixa do ML: {d['lidos']} buscados"
-                      f"{pulo}{extra}{sobra}")
+                      f"{pulo}{extra}{conv}{sobra}")
         except RuntimeError as erro_cfg:
             # Falta ZION_OS_URL/CRON_SECRET. Avisa UMA vez por execução e segue:
             # o vigia existe para vigiar preço e estoque, e isso não depende da
