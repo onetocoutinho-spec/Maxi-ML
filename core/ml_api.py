@@ -904,6 +904,60 @@ class MLClient:
         return self.escrever("POST", f"/seller-promotions/items/{item_id}",
                              corpo, app_version=VERSAO_PROMO)
 
+    def alterar_promocao(self, item_id: str, promocao_id: str, tipo: str,
+                         preco: float, preco_meli_mais: float | None = None,
+                         offer_id: str | None = None) -> tuple[int, Any]:
+        """
+        Muda o preço de uma campanha em que o anúncio JÁ está — sem sair dela.
+
+        Existe porque DELETE + POST não é equivalente a editar. Sair de um DEAL
+        devolve a vaga ao ML sem garantia de recuperá-la, e depois de sair o ML
+        ancora no preço praticado para recusar aumento (medido nesta casa em
+        02/09/2026). Enquanto este método não existia, o único caminho de
+        escrita era o DELETE — e ele era usado em qualquer tipo.
+
+        QUEM DECIDE se o tipo aceita isto NÃO é este método: é
+        `core.promocoes.como_alterar`, régua de versão única, a mesma que o
+        resto do sistema lê. Este método é só o braço; mandar um
+        PRICE_DISCOUNT por aqui é contornar a régua, não vencê-la.
+
+        Contrato lido na doc em 12/09/2026 (developers, "Deals" → *Modificar
+        ítems*): mesmo recurso e MESMOS campos do POST, trocando o verbo —
+
+            curl -X PUT -d '{"deal_price":3900, "top_deal_price":3000,
+                             "promotion_id":"P-MLB1806019",
+                             "promotion_type":"DEAL"}'
+              .../seller-promotions/items/MLB3295112047?app_version=v2
+            → 200 {"price":3900,"top_price":3000,"original_price":5000}
+
+        O exemplo publicado é de DEAL. MARKETPLACE_CAMPAIGN e VOLUME entram
+        pelo mesmo recurso e estão na lista de `ALTERA_NO_LUGAR`, mas a doc não
+        traz exemplo próprio de PUT para eles — se algum recusar, o erro vem do
+        ML e não daqui.
+
+        Escrito em 12/09/2026 e NUNCA chamado contra conta de cliente: mexer no
+        preço de campanha alheia é decisão com dono na frente, não efeito
+        colateral de uma implementação. `ERROR_CREDIBILITY_DISCOUNTED_PRICE` —
+        o ML recusando um preço que julga não-crível — é a recusa esperada aqui,
+        a mesma que já aparece no POST.
+        """
+        corpo: dict = {"promotion_type": tipo,
+                       "deal_price": round(float(preco), 2)}
+        # Sem o ramo `!= PRICE_DISCOUNT` que o POST tem: PRICE_DISCOUNT é o
+        # tipo que NÃO altera no lugar (está em `promocoes.SAIR_E_READERIR`),
+        # então ele não chega aqui — e escrever o ramo sugeriria que chega.
+        if promocao_id:
+            corpo["promotion_id"] = promocao_id
+        # Mesma exigência de `aderir_promocao`/`sair_da_promocao`: os tipos que
+        # trabalham por oferta precisam do `ref_id` da listagem, senão o ML
+        # responde "Offer id is required" e nada muda.
+        if offer_id:
+            corpo["offer_id"] = offer_id
+        if preco_meli_mais is not None:
+            corpo["top_deal_price"] = round(float(preco_meli_mais), 2)
+        return self.escrever("PUT", f"/seller-promotions/items/{item_id}",
+                             corpo, app_version=VERSAO_PROMO)
+
     def sair_da_promocao(self, item_id: str, promocao_id: str, tipo: str,
                          offer_id: str | None = None) -> tuple[int, Any]:
         """

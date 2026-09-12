@@ -23,6 +23,7 @@ import os
 import time
 from typing import Any
 
+from . import promocoes
 from .ml_api import MLClient
 
 # Nunca copiados de um anúncio para outro. Medido em 02/09/2026: na
@@ -50,7 +51,44 @@ ATRIBUTOS_PROIBIDOS = {
 # independente (gabrielPedron/criacao-anuncio) o encontrou sendo recusado com
 # `ignored because it is not modifiable` noutra categoria, e herdar de um
 # anúncio de origem que o tenha custaria uma recusa silenciosa.
-ATRIBUTOS_DO_SISTEMA = {"ITEM_CONDITION", "PACKAGE_DATA_SOURCE", "SYI_PYMES_ID",
+#
+# ITEM_CONDITION SAIU desta lista em 12/09/2026, e saiu medido, não deduzido.
+# Estava aqui pelo mesmo argumento do PRODUCT_FEATURES — a tal recusa com
+# `ignored because it is not modifiable` — mas aquele argumento confundia duas
+# rotas: o ML pode recusar um atributo na EDIÇÃO (PUT /items/{id}) e consumi-lo
+# normalmente na CRIAÇÃO (POST /items). São endpoints diferentes, e o filtro
+# não distinguia. A doc trata ITEM_CONDITION como atributo de primeira classe:
+# aparece no exemplo oficial de POST, DEFINE a família no modelo User Products
+# e é atualizável por PUT /user-products-families/{id}.
+#
+# Medido em 12/09/2026 pelo validador oficial (`POST /items/validate`, que
+# devolve 204 e NÃO cria anúncio — doc "Validador de publicaciones",
+# 30/12/2025), sobre o payload real de `montar` em 4 anúncios da
+# facilita-brasil-principal, 3 categorias (MLB31039, MLB416807, MLB186067):
+#
+#   sem ITEM_CONDITION ............. lista de causas X
+#   + ITEM_CONDITION "Novo" ........ lista de causas X, IDÊNTICA
+#   + ITEM_CONDITION value_id Novo . lista de causas X, IDÊNTICA
+#   + ITEM_CONDITION "Usado" ....... 400 item.condition.invalid — "Item
+#                                    condition field and ITEM_CONDITION
+#                                    attribute were both modified and have
+#                                    different values"
+#   + ITEM_CONDITION "Molhado" ..... 400 item.attributes.condition.invalid
+#
+# A prova são as duas ÚLTIMAS linhas, não as duas primeiras: silêncio pode ser
+# aceitação ou descarte, mas um campo que muda a resposta é um campo que o ML
+# LÊ, mapeia e confere contra o `condition` do topo. E atributo de fato
+# recusado aparece NOMEADO numa causa `item.attributes.ignored` — foi o que o
+# mesmo validador disse de FILTRABLE_COLOR, INSTALLATION_SERVICE e MANUFACTURER
+# nesses mesmos payloads. ITEM_CONDITION nunca apareceu ali. Bate com a conta:
+# ele está presente em 12 de 12 anúncios da Facilita, `value_name: "Novo"`.
+#
+# Deixá-lo passar é seguro por construção: `montar` copia o ITEM_CONDITION e o
+# `condition` do topo da MESMA origem, então os dois concordam. Se um dia
+# divergirem — alguém mandando um por `atributos_extras` —, o ML recusa com
+# `item.condition.invalid`, que está em DIAGNOSTICO_DE_ERRO para que a recusa
+# seja legível no terminal em vez de virar um 400 seco.
+ATRIBUTOS_DO_SISTEMA = {"PACKAGE_DATA_SOURCE", "SYI_PYMES_ID",
                         "PRODUCT_FEATURES"}
 
 # Códigos de erro do ML que já foram vistos com controle, e o que cada um quer
@@ -75,6 +113,15 @@ DIAGNOSTICO_DE_ERRO = {
     "lost_me2_by_dimensions":
         "o ML derrubou o Mercado Envios pela dimensão. Em família NOVA ele "
         "julga a caixa do zero; família herdada pula esse julgamento",
+    "item.condition.invalid":
+        "o `condition` do topo e o atributo ITEM_CONDITION estão dizendo "
+        "coisas diferentes. O ML lê os DOIS e confere um contra o outro "
+        "(medido em 12/09/2026 no validador). O recadastro herda ambos da "
+        "mesma origem, então isto só aparece quando alguém manda um por fora",
+    "item.attributes.condition.invalid":
+        "o valor mandado em ITEM_CONDITION não existe na categoria e o ML não "
+        "conseguiu mapeá-lo. Mande `value_id` — em MLB31039 são 2230284 Novo, "
+        "2230581 Usado, 2230582 Recondicionado",
 }
 
 # Peso do produto também não se herda, e por medida, não por princípio: em
@@ -773,6 +820,69 @@ def alterar_preco(cli: MLClient, item_id: str, preco: float, *,
     return resumo
 
 
+def _promocao_que_manda(cli: MLClient, item_id: str,
+                        tipo: str | None = None) -> tuple[dict | None, dict]:
+    """
+    A campanha que manda no preço — a mais barata das ativas — e o retrato dela.
+
+    Devolve `(escolhida, resumo)`; com `escolhida=None` o `resumo` já traz o
+    motivo de não haver o que fazer, e quem chamou só precisa devolvê-lo.
+
+    Extraído de `sair_de_promocao` em 12/09/2026, quando ALTERAR virou um
+    caminho separado de SAIR. Não é arrumação: se cada caminho escolhesse a
+    campanha por conta própria, os dois passariam a discordar sobre qual manda
+    no preço — e discordar aí significa mexer na campanha errada.
+
+    `resumo["caminho"]` é a resposta de `core.promocoes.como_alterar` para o
+    tipo escolhido: 'put', 'sair_e_readerir' ou 'confira_a_doc'. A régua mora
+    lá, versão única; aqui ela é só consultada.
+    """
+    ativas = []
+    try:
+        for x in (cli.promocoes_do_item(item_id) or []):
+            if isinstance(x, dict) and x.get("status") == "started" and x.get("price"):
+                ativas.append(x)
+    except Exception as e:
+        return None, {"item_id": item_id,
+                      "resultado": f"não consegui ler as promoções: {e}"}
+
+    resumo: dict = {"item_id": item_id, "ativas": len(ativas)}
+    if not ativas:
+        resumo["resultado"] = "nada a fazer: sem promoção ativa"
+        return None, resumo
+
+    ativas.sort(key=lambda x: float(x["price"]))
+
+    # `tipo` existe porque duas campanhas podem estar no MESMO preço, e aí
+    # "a mais barata" não escolhe nada — mas elas têm datas de fim diferentes,
+    # e é a data que decide qual sair. Em 03/09/2026 o MLB7575758162 tinha
+    # DEAL e SELLER_CAMPAIGN a R$ 771,63: a segunda morria naquela noite, a
+    # primeira só em 10/09. Sair da DEAL não muda o preço hoje e devolve o
+    # anúncio à tabela quando a outra expirar.
+    if tipo:
+        escolhidas = [x for x in ativas if x.get("type") == tipo]
+        if not escolhidas:
+            resumo["resultado"] = (f"nada a fazer: não há promoção ativa do tipo "
+                                   f"{tipo} (ativas: {[x.get('type') for x in ativas]})")
+            return None, resumo
+        manda = escolhidas[0]
+        restantes = [x for x in ativas if x is not manda]
+        prox = restantes[0] if restantes else None
+    else:
+        manda, prox = ativas[0], (ativas[1] if len(ativas) > 1 else None)
+    resumo.update({
+        "tipo": manda.get("type"), "promocao_id": manda.get("id"),
+        "offer_id": manda.get("ref_id"), "preco_hoje": float(manda["price"]),
+        "termina": manda.get("finish_date"),
+        "passa_a_valer": float(prox["price"]) if prox else None,
+        "passa_a_valer_tipo": (prox.get("type") if prox else "tabela"),
+        "caminho": promocoes.como_alterar(manda.get("type")),
+    })
+    if resumo["passa_a_valer"]:
+        resumo["salto_pct"] = (resumo["passa_a_valer"] / resumo["preco_hoje"] - 1) * 100
+    return manda, resumo
+
+
 def sair_de_promocao(cli: MLClient, item_id: str, *, simular: bool = True,
                      tipo: str | None = None) -> dict:
     """
@@ -790,48 +900,24 @@ def sair_de_promocao(cli: MLClient, item_id: str, *, simular: bool = True,
     - **HTTP 200 não é prova.** Duas leituras rápidas já mostraram `started`
       num anúncio que tinha saído. Aqui a releitura espera antes de concluir,
       e o resultado diz o que a API respondeu na segunda olhada.
-    """
-    ativas = []
-    try:
-        for x in (cli.promocoes_do_item(item_id) or []):
-            if isinstance(x, dict) and x.get("status") == "started" and x.get("price"):
-                ativas.append(x)
-    except Exception as e:
-        return {"item_id": item_id, "resultado": f"não consegui ler as promoções: {e}"}
 
-    resumo = {"item_id": item_id, "ativas": len(ativas)}
-    if not ativas:
-        resumo["resultado"] = "nada a fazer: sem promoção ativa"
+    SAIR continua sendo DELETE em qualquer tipo, e isso está certo: sair é
+    sair. O que mudou em 12/09/2026 é que este passo agora PERGUNTA a
+    `core.promocoes.como_alterar` e, quando a campanha aceitaria edição no
+    lugar, avisa em `resumo["aviso_vaga"]` — porque quem só queria mudar o
+    preço estaria pagando a vaga sem precisar. Aviso, não bloqueio: sair de um
+    DEAL que fura o piso é exatamente o conserto que `promocoes.consolidar`
+    recomenda no ramo 'sobe para o piso'.
+    """
+    manda, resumo = _promocao_que_manda(cli, item_id, tipo)
+    if manda is None:
         return resumo
 
-    ativas.sort(key=lambda x: float(x["price"]))
-
-    # `tipo` existe porque duas campanhas podem estar no MESMO preço, e aí
-    # "a mais barata" não escolhe nada — mas elas têm datas de fim diferentes,
-    # e é a data que decide qual sair. Em 03/09/2026 o MLB7575758162 tinha
-    # DEAL e SELLER_CAMPAIGN a R$ 771,63: a segunda morria naquela noite, a
-    # primeira só em 10/09. Sair da DEAL não muda o preço hoje e devolve o
-    # anúncio à tabela quando a outra expirar.
-    if tipo:
-        escolhidas = [x for x in ativas if x.get("type") == tipo]
-        if not escolhidas:
-            resumo["resultado"] = (f"nada a fazer: não há promoção ativa do tipo "
-                                   f"{tipo} (ativas: {[x.get('type') for x in ativas]})")
-            return resumo
-        manda = escolhidas[0]
-        restantes = [x for x in ativas if x is not manda]
-        prox = restantes[0] if restantes else None
-    else:
-        manda, prox = ativas[0], (ativas[1] if len(ativas) > 1 else None)
-    resumo.update({
-        "tipo": manda.get("type"), "promocao_id": manda.get("id"),
-        "offer_id": manda.get("ref_id"), "preco_hoje": float(manda["price"]),
-        "termina": manda.get("finish_date"),
-        "passa_a_valer": float(prox["price"]) if prox else None,
-        "passa_a_valer_tipo": (prox.get("type") if prox else "tabela"),
-    })
-    if resumo["passa_a_valer"]:
-        resumo["salto_pct"] = (resumo["passa_a_valer"] / resumo["preco_hoje"] - 1) * 100
+    if resumo.get("caminho") == "put":
+        resumo["aviso_vaga"] = (
+            f"{resumo['tipo']} aceita PUT: se a intenção era MUDAR O PREÇO e "
+            f"não sair da campanha, use alterar_preco_de_promocao — sair "
+            f"devolve a vaga ao ML sem reentrada garantida")
 
     # A recusa que evita a falha silenciosa.
     if manda.get("type") in ("SMART", "PRICE_MATCHING") and not manda.get("ref_id"):
@@ -876,6 +962,100 @@ def sair_de_promocao(cli: MLClient, item_id: str, *, simular: bool = True,
     else:
         resumo["resultado"] = "falhou"
         resumo["erro"] = str(corpo)[:300]
+    return resumo
+
+
+def alterar_preco_de_promocao(cli: MLClient, item_id: str, preco: float, *,
+                              simular: bool = True, tipo: str | None = None,
+                              preco_meli_mais: float | None = None) -> dict:
+    """
+    Muda o preço da campanha que manda, SEM tirar o anúncio dela.
+
+    É o caminho que faltava. Até 12/09/2026 o único jeito de mexer no preço de
+    uma campanha por aqui era `sair_de_promocao` — DELETE em qualquer tipo — e
+    isso custa duas coisas já medidas: a VAGA (sair de um DEAL devolve a vaga
+    ao ML sem garantia de recuperá-la) e o TETO (depois de sair o ML ancora no
+    preço praticado para recusar aumento, 02/09/2026).
+
+    Não vale para todo tipo, e quem decide não é esta função: a régua é
+    `core.promocoes.como_alterar`, versão única, a mesma que o resto do sistema
+    lê. Ela responde três coisas:
+
+    - **'put'** (DEAL, MARKETPLACE_CAMPAIGN, VOLUME): altera no lugar. É o que
+      esta função faz.
+    - **'sair_e_readerir'** (PRICE_DISCOUNT, DOD, LIGHTNING): a doc é literal —
+      nesses três o preço só muda eliminando a promoção e aplicando de novo.
+      Esta função NÃO encadeia isso sozinha. Não é limitação técnica: sair é
+      irreversível na prática, então são dois passos, `sair_de_promocao` e
+      depois `cli.aderir_promocao`, cada um com o seu sim.
+    - **'confira_a_doc'**: tipo fora das duas listas. Para e diz o motivo —
+      'não está na lista do PUT' não é sinônimo de 'então manda DELETE'.
+
+    Como todo passo de escrita deste módulo, simula por padrão. E, como em
+    `alterar_preco`, HTTP 200 não é prova: relê a campanha depois e reporta o
+    preço que REALMENTE ficou. A central de promoções demora dezenas de
+    segundos para refletir — a espera aqui é a mesma de `sair_de_promocao`, e
+    pelo mesmo motivo: ler cedo demais dá falso negativo e faz repetir a
+    escrita.
+    """
+    manda, resumo = _promocao_que_manda(cli, item_id, tipo)
+    if manda is None:
+        return resumo
+    resumo["preco_novo"] = float(preco)
+
+    caminho = resumo.get("caminho")
+    if caminho == "sair_e_readerir":
+        resumo["resultado"] = (
+            f"recusado: {resumo['tipo']} não altera no lugar — nesse tipo o "
+            f"preço só muda saindo (DELETE) e readerindo (POST), e sair não "
+            f"tem reentrada garantida. São dois passos, cada um com seu sim: "
+            f"sair_de_promocao e depois cli.aderir_promocao")
+        return resumo
+    if caminho != "put":
+        resumo["resultado"] = (
+            f"recusado: não há régua conferida para o tipo {resumo['tipo']} — "
+            f"core.promocoes.como_alterar respondeu '{caminho}'. Leia a doc "
+            f"antes de escrever; arriscar um DELETE aqui custa a vaga")
+        return resumo
+
+    if simular:
+        resumo["simulado"] = True
+        return resumo
+
+    status, corpo = cli.alterar_promocao(item_id, manda.get("id"),
+                                         manda.get("type"), float(preco),
+                                         preco_meli_mais=preco_meli_mais,
+                                         offer_id=manda.get("ref_id"))
+    resumo["status_http"] = status
+    if status not in (200, 201):
+        resumo["resultado"] = "falhou"
+        resumo["erro"] = str(corpo)[:300]
+        return resumo
+
+    agora = None
+    for espera in (6, 10, 20):
+        time.sleep(espera)
+        atual = None
+        try:
+            for x in (cli.promocoes_do_item(item_id) or []):
+                if (isinstance(x, dict) and x.get("status") == "started"
+                        and x.get("id") == manda.get("id")):
+                    atual = x
+                    break
+        except Exception:
+            continue                    # leitura falhou: não conclui que mudou
+        if atual and atual.get("price") is not None:
+            agora = float(atual["price"])
+            if abs(agora - float(preco)) < 0.02:
+                break
+    resumo["preco_agora"] = agora
+    if agora is not None and abs(agora - float(preco)) < 0.02:
+        resumo["resultado"] = "alterado"
+        item = cli.get(f"/items/{item_id}") or {}
+        resumo["preco_de_tabela"] = item.get("price")
+    else:
+        resumo["resultado"] = ("API aceitou mas o preço da campanha NÃO mudou "
+                               "— confira na tela")
     return resumo
 
 
