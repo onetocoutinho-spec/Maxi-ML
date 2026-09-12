@@ -169,6 +169,31 @@ class MLClient:
                 serie.append({"data": data, "visitas": int(ponto.get("total") or 0)})
         return {"total": int(dados.get("total_visits") or 0), "dias": serie}
 
+    def custo_do_envio(self, shipment_id: str) -> dict | None:
+        """O frete COBRADO num envio que aconteceu. Não é cotação.
+
+        `GET /shipments/{id}/costs`. A documentação do ML indica este recurso
+        para reconciliação e é explícita sobre qual campo vale:
+
+            To find out what was charged to the seller, query senders[].cost
+
+        `receiver.cost` é o que o comprador pagou. Medido em 11/09/2026: existe
+        venda em que os DOIS pagam — comprador R$ 39,99 e vendedor R$ 106,85 no
+        mesmo envio. Nenhuma cotação mostra isso.
+
+        `promoted_amount` e `save` são informativos e a própria documentação
+        avisa para não usá-los como base de cobrança.
+        """
+        dados = self.get(f"/shipments/{shipment_id}/costs")
+        if not dados:
+            return None
+        remetentes = dados.get("senders") or []
+        return {
+            "custo_vendedor": (remetentes[0] or {}).get("cost") if remetentes else None,
+            "custo_comprador": (dados.get("receiver") or {}).get("cost"),
+            "promovido": (dados.get("receiver") or {}).get("promoted_amount"),
+        }
+
     def vendas_recentes(self, dias: int = 7, desde=None, ate=None) -> list[dict]:
         """
         Pedidos dos últimos N dias, SEM filtro de status — quem decide o que

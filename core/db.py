@@ -331,6 +331,42 @@ CREATE TABLE IF NOT EXISTS snap_visita_dia (
 CREATE UNIQUE INDEX IF NOT EXISTS ux_visita_dia ON snap_visita_dia(item_id, data);
 CREATE INDEX IF NOT EXISTS ix_visita_conta ON snap_visita_dia(conta_slug, data DESC);
 
+-- Frete COBRADO, por envio. Não é cotação.
+--
+-- Todo o resto do sistema estima o frete: `snap_anuncio.frete_lista` é uma
+-- cotação de anúncio que ainda não vendeu, e serve para decidir preço. Aqui
+-- fica o que o ML efetivamente cobrou numa venda que aconteceu, que é o número
+-- que fecha a margem realizada.
+--
+-- A fonte é `GET /shipments/{id}/costs`, indicada pela documentação do ML para
+-- reconciliação: `senders[].cost` é o que sai do vendedor e `receiver.cost` o
+-- que o comprador pagou. Medido em 11/09/2026: existe venda em que os DOIS
+-- pagam, coisa que nenhuma cotação mostra.
+--
+-- Como em snap_visita_dia, a chave única não é a coleta: é o ENVIO. A linha
+-- representa um fato consumado, não uma observação nossa — reler amanhã traz
+-- o mesmo valor, e duplicar estragaria qualquer soma.
+CREATE TABLE IF NOT EXISTS frete_venda (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    lido_em          TEXT NOT NULL,
+    cliente_id       TEXT NOT NULL,
+    conta_slug       TEXT NOT NULL,
+    shipment_id      TEXT NOT NULL,
+    order_id         TEXT,
+    data_pedido      TEXT,
+    item_id          TEXT,
+    titulo           TEXT,
+    unidades         INTEGER,
+    receita          REAL,       -- o que o pedido somou
+    custo_comprador  REAL,       -- receiver.cost
+    custo_vendedor   REAL,       -- senders[].cost  <- o que sai da margem
+    promovido        REAL,       -- promoted_amount, informativo
+    logistic_type    TEXT,
+    status_envio     TEXT
+);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_frete_venda ON frete_venda(shipment_id);
+CREATE INDEX IF NOT EXISTS ix_frete_venda_conta ON frete_venda(conta_slug, data_pedido DESC);
+
 -- Log de execuções (auditoria: o que rodou, em qual conta, com que resultado)
 CREATE TABLE IF NOT EXISTS execucao (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -612,6 +648,46 @@ def gravar_visitas(con: sqlite3.Connection, linhas: Iterable[dict]) -> int:
         [{**l, "dia_corrente": hoje} for l in linhas],
     )
     return con.total_changes - novas
+
+
+def gravar_fretes_de_venda(con: sqlite3.Connection, linhas: Iterable[dict]) -> int:
+    """Grava o frete cobrado sem duplicar envio já conhecido.
+
+    O envio é um fato consumado: o primeiro valor lido é o que vale. A exceção
+    é o envio ainda em curso, cujo custo pode ser fechado depois — por isso o
+    UPDATE só entra quando o valor do vendedor ainda estava nulo.
+    """
+    linhas = list(linhas)
+    if not linhas:
+        return 0
+    antes = con.total_changes
+    con.executemany(
+        "INSERT INTO frete_venda "
+        "(lido_em, cliente_id, conta_slug, shipment_id, order_id, data_pedido, item_id, "
+        " titulo, unidades, receita, custo_comprador, custo_vendedor, promovido, "
+        " logistic_type, status_envio) "
+        "VALUES (:lido_em, :cliente_id, :conta_slug, :shipment_id, :order_id, :data_pedido, "
+        " :item_id, :titulo, :unidades, :receita, :custo_comprador, :custo_vendedor, "
+        " :promovido, :logistic_type, :status_envio) "
+        "ON CONFLICT(shipment_id) DO UPDATE SET "
+        "  custo_vendedor = excluded.custo_vendedor, "
+        "  custo_comprador = excluded.custo_comprador, "
+        "  status_envio = excluded.status_envio, "
+        "  lido_em = excluded.lido_em "
+        "WHERE frete_venda.custo_vendedor IS NULL",
+        linhas,
+    )
+    return con.total_changes - antes
+
+
+def envios_ja_lidos(con: sqlite3.Connection, conta_slug: str) -> set[str]:
+    """Envios que já têm custo do vendedor gravado — não precisam ser relidos."""
+    return {
+        str(l[0]) for l in con.execute(
+            "SELECT shipment_id FROM frete_venda "
+            "WHERE conta_slug = ? AND custo_vendedor IS NOT NULL", (conta_slug,)
+        )
+    }
 
 
 def ultima_coleta(con: sqlite3.Connection, tabela: str, conta_slug: str, antes_de: str | None = None) -> str | None:

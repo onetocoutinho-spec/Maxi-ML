@@ -565,3 +565,71 @@ def coletar_buy_box(con: sqlite3.Connection, conta: Conta, cli: MLClient, carimb
             }
         )
     return situacao
+
+
+# ----------------------------------------------------------------------
+# 6. Frete COBRADO das vendas que aconteceram
+# ----------------------------------------------------------------------
+def coletar_frete_das_vendas(con: sqlite3.Connection, conta: Conta, cli: MLClient,
+                             carimbo: str, dias: int = 30,
+                             max_envios: int = 120) -> dict:
+    """Traz `senders[].cost` de cada venda com envio para o banco.
+
+    Existe porque todo o resto do sistema ESTIMA o frete. `frete_lista` é
+    cotação de anúncio que ainda não vendeu — serve para decidir preço, não
+    para fechar margem. Aqui entra o que o ML cobrou de verdade.
+
+    Envio já lido não é relido: o custo de um envio fechado não muda, e a
+    chamada é uma por envio. Isso mantém o custo da rotina baixo mesmo com
+    janela larga — na primeira passada ela é cheia, depois só o que é novo.
+    """
+    ja_lidos = db.envios_ja_lidos(con, conta.slug)
+    linhas: list[dict] = []
+    lidos = sem_envio = 0
+
+    for pedido in cli.vendas_recentes(dias=dias):
+        if lidos >= max_envios:
+            break
+        if str(pedido.get("status")) in ("cancelled", "invalid"):
+            continue
+
+        envio = (pedido.get("shipping") or {}).get("id")
+        if not envio:
+            sem_envio += 1
+            continue
+        envio = str(envio)
+        if envio in ja_lidos:
+            continue
+
+        try:
+            custos = cli.custo_do_envio(envio)
+        except Exception:
+            continue
+        lidos += 1
+        if not custos:
+            continue
+
+        itens = pedido.get("order_items") or []
+        primeiro = (itens[0] or {}).get("item") or {} if itens else {}
+        linhas.append({
+            "lido_em": carimbo,
+            "cliente_id": conta.cliente_id,
+            "conta_slug": conta.slug,
+            "shipment_id": envio,
+            "order_id": str(pedido.get("id") or ""),
+            "data_pedido": str(pedido.get("date_created") or "")[:19],
+            "item_id": primeiro.get("id"),
+            "titulo": primeiro.get("title"),
+            "unidades": sum(int(i.get("quantity") or 0) for i in itens),
+            "receita": pedido.get("total_amount"),
+            "custo_comprador": custos.get("custo_comprador"),
+            "custo_vendedor": custos.get("custo_vendedor"),
+            "promovido": custos.get("promovido"),
+            "logistic_type": ((pedido.get("shipping") or {}).get("logistic_type")),
+            "status_envio": ((pedido.get("shipping") or {}).get("status")),
+        })
+
+    gravados = db.gravar_fretes_de_venda(con, linhas)
+    con.commit()
+    return {"envios_lidos": lidos, "gravados": gravados,
+            "ja_conhecidos": len(ja_lidos), "sem_envio": sem_envio}

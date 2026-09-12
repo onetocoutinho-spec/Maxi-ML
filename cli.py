@@ -1575,6 +1575,19 @@ def cmd_coletar(args) -> int:
                       f"{v.get('produtos', 0)} produtos, {v['fretes']} fretes, "
                       f"{v.get('visitas', 0)} séries de visita "
                       f"({v.get('dias', 0)} dias novos)")
+
+            # O frete COBRADO das vendas. Todo o resto do sistema estima; este
+            # é o número que fecha a margem realizada. Envio já lido não é
+            # relido, então a primeira rodada é cheia e as seguintes são curtas.
+            f = etapa("frete das vendas indisponível",
+                      lambda: collectors.coletar_frete_das_vendas(
+                          con, conta, cli, carimbo,
+                          dias=int(cfg_v.get("dias_de_frete_de_venda", 30)),
+                          max_envios=int(cfg_v.get("max_envios_por_rodada", 120))))
+            if f and f.get("envios_lidos"):
+                print(f"   frete cobrado nas vendas ... {f['gravados']} gravados "
+                      f"de {f['envios_lidos']} lidos "
+                      f"({f.get('ja_conhecidos', 0)} já conhecidos)")
             elif v and v.get("aviso"):
                 print(f"   {CINZA}vigilância: {v['aviso']}{FIM}")
 
