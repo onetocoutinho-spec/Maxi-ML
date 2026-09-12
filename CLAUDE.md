@@ -290,6 +290,24 @@ delas. Antes de "consertar" qualquer coisa aqui, confira se não é isto:
 | `/items/{id}` de terceiro | 403 `access_denied` | não se lê anúncio de outro vendedor por ID |
 | `/items?ids=` de terceiro | HTTP 200, **code interno 403** | mesmo bloqueio; o multiget engana quem só olha o status HTTP |
 
+**Os dois 403 não são a mesma parede** (separados em 11/09/2026). Leia o CORPO,
+não só o status — `core.ml_api.classificar_403()` faz isso:
+
+- `blocked_by: PolicyAgent` → **permissão funcional faltando no NOSSO app**.
+  TEM conserto, de graça, no DevCenter, e conserta as 8 contas de uma vez.
+- `error: access_denied` → **posse**: o recurso é de outro vendedor. Não tem
+  conserto; nem escopo nem certificação destravam.
+
+Um 403 do primeiro tipo já ficou largado na raiz deste repo sem ninguém saber
+ler. Antes de registrar um endpoint como bloqueado aqui, classifique.
+
+**`/items?ids=` morre em 25/10/2026.** Vira `/items/bulk`, e o campo `code` de
+cada entrada passa a `status_code` — quem ler só `code` vai achar que todo item
+falhou, em silêncio. `MLClient` já tenta as duas rotas e fica com a que
+responder de forma legível; a tabela acima descreve o contrato antigo enquanto
+ele viver. Armadilha medida: pedir `attributes=body.…` no `/items/bulk` faz a
+resposta voltar só com `body`, sem `status_code` nem `id`.
+
 O que continua liberado: `/products/{id}/items` — as ofertas de uma ficha de
 catálogo, com preço, vendedor e frete grátis. É por isso que a vigilância
 observa FICHAS e não anúncios (`core/vigilancia.py`).
