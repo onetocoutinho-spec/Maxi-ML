@@ -332,6 +332,11 @@ def main() -> int:
                         _, carimbo_promo = promocoes.coletar(con, conta, cli, fatia)
                         con.commit()
                         n_promo = rules.avaliar_promocoes(con, conta, carimbo_promo)
+                        # E a que já está no ar: campanha de conta reaplica
+                        # sozinha, e o rodízio é quem alcança o anúncio que
+                        # nenhuma notificação citou.
+                        n_promo += rules.avaliar_promocoes_ativas(
+                            con, conta, carimbo_promo)
                 except Exception as erro_promo:
                     # Campanha indisponível não pode derrubar o ciclo: preço e
                     # estoque são o essencial e já foram lidos.

@@ -1381,8 +1381,13 @@ def cmd_notificacoes(args) -> int:
     if r.get("convites"):
         # Convite de campanha tem PRAZO. O veredito sai pela régua de sempre
         # (promocoes + rules), não por uma segunda decisão escrita aqui.
-        print(f"  {AMAR}convites de campanha ... {r['convites']}{FIM}"
-              + (f"  → {VERM}{r['alertas']} alerta(s){FIM}" if r.get('alertas') else ""))
+        print(f"  {AMAR}convites de campanha ... {r['convites']}{FIM}")
+    if r.get("ofertas"):
+        # Campanha que já está no ar. Não há o que aceitar: a pergunta é
+        # quanto custa deixar assim, e a régua responde.
+        print(f"  {AMAR}campanhas mexendo ...... {r['ofertas']}{FIM}")
+    if r.get("alertas"):
+        print(f"  {VERM}alertas gerados ........ {r['alertas']}{FIM}")
     if r.get("sem_conta"):
         print(f"  {AMAR}user_id fora do registro {r['sem_conta']}{FIM}")
     if r.get("restaram"):
@@ -1749,6 +1754,12 @@ def cmd_coletar(args) -> int:
             if promo and promo.get("carimbo"):
                 gerados += etapa("avaliação de campanhas falhou",
                                  lambda: rules.avaliar_promocoes(
+                                     con, conta, promo["carimbo"])) or 0
+                # A campanha que JÁ está rodando é outra pergunta, e a
+                # varredura é o único caminho que alcança o anúncio que o
+                # tópico `public_offers` nunca mencionou.
+                gerados += etapa("avaliação de campanhas ativas falhou",
+                                 lambda: rules.avaliar_promocoes_ativas(
                                      con, conta, promo["carimbo"])) or 0
             if cup and cup[0]:
                 gerados += etapa("avaliação de cupons falhou",

@@ -176,6 +176,25 @@ regras:
       aviso chega, mas sem veredito.
       Só campanha nova entra; as que já estavam abertas não repetem.
 
+  promocao_ativa_fura_o_piso:
+    ativa: true
+    # Critico junto com os de cupom, e pelo mesmo motivo: nao e' uma decisao
+    # que espera a leitura da manha, e' dinheiro saindo agora. A campanha ja
+    # esta no ar e cada venda que entrar sai abaixo do combinado.
+    critico: true
+    descricao: >
+      Uma campanha que JA ESTA RODANDO deixa o anuncio abaixo do piso, E SAIR
+      DELA RESOLVE. Nao ha o que aceitar aqui: o preco da vitrine ja e' o com
+      desconto. Existe porque campanha de conta reaplica sozinha — o anuncio
+      sai pela API e o Mercado Livre o devolve sem avisar.
+      Fica de fora, de proposito, o caso em que nem a campanha mais cara cabe
+      no piso: ali o problema e' o preco de CADASTRO, campanha nenhuma
+      resolve, e sao 60 anuncios (medido em 12/09/2026) que mandariam o
+      operador mexer no lugar errado. Esse caso e' assunto do relatorio de
+      margem. No caso que fica, sao 4 anuncios e cada um tem conserto de um
+      comando. Depende de custo cadastrado.
+      Um aviso por estado de preco: so repete quando o numero muda.
+
   cupom_novo:
     ativa: true
     critico: true

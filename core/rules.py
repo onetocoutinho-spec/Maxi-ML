@@ -1089,6 +1089,136 @@ def avaliar_promocoes(con: sqlite3.Connection, conta: Conta, carimbo_novo: str,
     return gerados
 
 
+def avaliar_promocoes_ativas(con: sqlite3.Connection, conta: Conta,
+                             carimbo_novo: str, alerta_externo=None) -> int:
+    """
+    Avisa quando uma campanha que JÁ ESTÁ RODANDO deixa o anúncio abaixo do
+    piso — e sair dela resolve.
+
+    É a outra metade de `avaliar_promocoes`. Lá a pergunta é 'dá para aceitar?',
+    e só entra campanha em `candidate`. Aqui não há o que aceitar: a campanha
+    está no ar, o preço da vitrine já é o com desconto, e o dinheiro já está
+    saindo. A pergunta vira 'quanto custa deixar assim, e o que devolve o
+    preço?'.
+
+    Existe porque campanha de conta **reaplica sozinha**: o anúncio sai pela
+    API e o Mercado Livre o devolve à campanha sem avisar ninguém. Enquanto
+    isso dependia só da varredura por rodízio, a notícia chegava no dia
+    seguinte; com o tópico `public_offers` no dreno, chega em minutos.
+
+    Quem decide o que fica é `promocoes.consolidar` — a MESMA função que a
+    página da loja usa. Recalcular aqui criaria um segundo veredito que um dia
+    discorda do primeiro.
+
+    SÓ O RAMO 'sobe para o piso'. `consolidar` tem um segundo ramo, 'nenhuma
+    cabe no piso', em que nem a campanha mais cara salva o anúncio. Esse não
+    entra aqui de propósito: medido em 12/09/2026, são **60 anúncios** nas
+    contas com custo cadastrado, e neles o problema é o PREÇO DE CADASTRO —
+    campanha nenhuma resolve, então um aviso crítico de campanha mandaria o
+    operador mexer no lugar errado, 60 vezes. Isso é assunto do relatório de
+    margem, não de um aviso disparado por notificação. No ramo que fica, sair
+    das campanhas que furam devolve o preço para dentro do piso: são 4
+    anúncios hoje, e cada um tem conserto de um comando.
+
+    Avalia só os anúncios lidos NESTE carimbo — mesma disciplina de
+    `avaliar_promocoes`: anúncio cuja leitura falhou fica com o retrato antigo,
+    e julgar retrato velho é avisar sobre campanha que talvez já tenha acabado.
+    """
+    from . import promocoes as _promo
+    from . import precificacao as _prec
+
+    regras = carregar_regras()
+    cfg = _reg(regras, "promocao_ativa_fura_o_piso")
+    if not cfg:
+        return 0
+
+    itens = [r["item_id"] for r in con.execute(
+        "SELECT DISTINCT item_id FROM snap_promocao "
+        "WHERE conta_slug = ? AND coletado_em = ?", (conta.slug, carimbo_novo))]
+    if not itens:
+        return 0
+
+    gerados = 0
+    if alerta_externo is not None:
+        alerta = alerta_externo
+    else:
+        def alerta(regra_nome, cfg_, mensagem, item_id=None, titulo=None, dados=None):
+            nonlocal gerados
+            entrou = db.registrar_alerta(
+                con, cliente_id=conta.cliente_id, conta_slug=conta.slug,
+                regra=regra_nome, critico=bool(cfg_.get("critico", False)),
+                mensagem=mensagem, item_id=item_id, titulo=titulo, dados=dados)
+            if entrou:
+                gerados += 1
+
+    pisos = {r["item_id"]: r for r in _prec.carregar(con, conta)}
+    if not pisos:
+        # Sem planilha de custo não há piso, e sem piso não há veredito. Dizer
+        # "tem campanha rodando" sem dizer se dói não é aviso, é ruído.
+        return gerados
+
+    campanhas = _promo.ultimas_por_item(con, conta.slug)
+    anuncios = {l["item_id"]: l for l in con.execute(
+        "SELECT item_id, titulo, permalink FROM snap_anuncio "
+        "WHERE conta_slug = ? AND coletado_em = ("
+        "  SELECT MAX(coletado_em) FROM snap_anuncio WHERE conta_slug = ?)",
+        (conta.slug, conta.slug))}
+
+    for item_id in sorted(set(itens)):
+        r = pisos.get(item_id)
+        if not r or not r.get("piso"):
+            continue
+        plano = _promo.consolidar(campanhas.get(item_id) or [], r["piso"])
+        if not plano or plano["ramo"] != "sobe para o piso":
+            continue
+
+        # Enquanto a campanha durar a condição continua verdadeira, e o dreno
+        # roda de 5 em 5 minutos. Repetir a mesma frase 288 vezes por dia é a
+        # forma mais rápida de treinar alguém a ignorar o canal. Um aviso por
+        # estado de preço; volta a avisar quando o número mudar. É o mesmo
+        # desenho de `cupom_fura_o_piso`, pelo mesmo motivo.
+        chave = f"promo_ativa_piso:{conta.slug}:{item_id}"
+        assinatura = f"{plano['hoje']:.2f}|{r['piso']:.2f}|{plano['depois']:.2f}"
+        if db.ler_marcador(con, chave) == assinatura:
+            continue
+        db.gravar_marcador(con, chave, assinatura)
+
+        a = anuncios.get(item_id)
+        fica = plano["fica"]
+        saem = plano["saem"]
+        nomes = ", ".join(sorted({_promo.nome_legivel(p) for p in saem})) or "as que furam"
+
+        msg = (f"Campanha RODANDO neste anúncio o deixa a {brl(plano['hoje'])} — "
+               f"{brl(r['piso'] - plano['hoje'])} ABAIXO do piso de "
+               f"{brl(r['piso'])}. Não há o que aceitar: já está no ar. Saindo "
+               f"de *{nomes}*, o preço volta para {brl(plano['depois'])} e cabe "
+               f"no piso. O conserto é SAIR da campanha, não subir o preço do "
+               f"anúncio: subir o preço apaga desconto sozinho e em silêncio, "
+               f"inclusive os que você queria manter.")
+        # Uma linha a mais só quando ela muda a AÇÃO. Campanha do grupo
+        # "altera no lugar" (DEAL, MARKETPLACE_CAMPAIGN, VOLUME) aceita PUT de
+        # preço: dá para corrigir sem devolver a vaga ao ML, que não garante
+        # recuperá-la. Nos outros tipos o único caminho é sair, e repetir isso
+        # seria repetir a frase acima.
+        no_lugar = [p for p in saem if _promo.como_alterar(p["tipo"]) == "put"]
+        if no_lugar:
+            quais = ", ".join(sorted({_promo.nome_legivel(p) for p in no_lugar}))
+            msg += (f" Antes de sair: *{quais}* aceita mudança de preço NO "
+                    f"LUGAR — corrige sem devolver a vaga ao Mercado Livre, "
+                    f"que não garante recuperá-la.")
+
+        alerta("promocao_ativa_fura_o_piso", cfg, msg,
+               item_id=item_id, titulo=(a["titulo"] if a else item_id),
+               dados={"por_item": True, "promocao": fica["promocao_id"],
+                      "tipo": fica["tipo"], "ramo": plano["ramo"],
+                      "permalink": (a["permalink"] if a else None),
+                      "hoje": plano["hoje"], "depois": plano["depois"],
+                      "piso": r["piso"], "quantas": plano["quantas"],
+                      "saem": [p["promocao_id"] for p in saem]})
+
+    return gerados
+
+
 def _dias_desde(inicio: str | None, agora: str) -> float | None:
     """Dias corridos entre o início da campanha e a leitura."""
     if not inicio:

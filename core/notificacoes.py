@@ -23,6 +23,15 @@ E chega tarde: em 12/09/2026, na primeira vez que a rota respondeu, entraram
 246 notificações represadas de 7 contas — inclusive `public_candidates`, que é
 convite de campanha COM PRAZO. Esses avisos vinham batendo num 404.
 
+Campanha tem dois tópicos, e eles fazem perguntas diferentes:
+
+  `public_candidates` -> o ML OFERECE.      "dá para aceitar?"
+  `public_offers`     -> já está ACONTECENDO. "e agora, quanto custa?"
+
+O segundo existe para um problema velho desta casa: campanha de conta reaplica
+sozinha. O anúncio sai pela API e o Mercado Livre o devolve sem avisar ninguém,
+e o preço da vitrine cai de novo. Pela varredura isso aparecia no dia seguinte.
+
 O QUE NÃO SUBSTITUI
 -------------------
 Visitas, conversão, reputação e `/performance` não têm tópico. Continuam
@@ -190,6 +199,30 @@ def _item_do_convite(recurso: str, corpo) -> str | None:
     return str(item) if item else None
 
 
+def _item_da_oferta(corpo) -> str | None:
+    """O anúncio de uma campanha que já está (ou esteve) no ar.
+
+    `public_offers` é o gêmeo de `public_candidates`: mesmo formato de corpo,
+    mesma rota, outro momento. Convite é o que o ML OFERECE; oferta é o que
+    está ACONTECENDO com o preço.
+
+    Aqui NÃO se filtra por status, e isso é decisão, não descuido. Em
+    12/09/2026 os 77 avisos deste tópico vieram todos com `finished` — uma
+    expiração em massa encerrada às 02:59:59 do dia 11. Nunca vimos um
+    `started` chegar. Filtrar por `started`, que seria o palpite óbvio, pode
+    ser um filtro que nunca deixa nada passar; e `finished` também move o
+    preço, para cima. Em qualquer estado, a resposta certa é a mesma: reler as
+    campanhas daquele anúncio e deixar a régua olhar o retrato novo.
+
+    Campanha de conta reaplica sozinha — o anúncio sai pela API e volta sem
+    aviso. É justamente o vaivém que este tópico narra.
+    """
+    if not isinstance(corpo, dict):
+        return None
+    item = corpo.get("item_id")
+    return str(item) if item else None
+
+
 def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict:
     """Busca o que chegou, le cada RECURSO uma vez e confirma o que fechou.
 
@@ -213,7 +246,8 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
     pendentes = resposta.get("pendentes") or []
     if not pendentes:
         return {"pendentes": 0, "recursos": 0, "lidos": 0, "pulados": 0,
-                "confirmados": 0, "fretes": 0, "restaram": 0}
+                "confirmados": 0, "fretes": 0, "convites": 0, "ofertas": 0,
+                "alertas": 0, "restaram": 0}
 
     contas = _contas_por_user_id()
     clientes: dict[str, MLClient] = {}
@@ -230,6 +264,9 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
     # decidir de novo neste módulo criaria um segundo veredito que um dia
     # discorda do primeiro. Aqui só se junta QUEM precisa ser avaliado.
     convites: dict[str, list[str]] = {}
+    # O mesmo, para campanha que já está no ar. Vem separado do convite só
+    # para o relatório: a pergunta que cada um faz à régua é diferente.
+    ofertas: dict[str, list[str]] = {}
     lidos = pulados = fretes = sem_conta = 0
 
     for (topico, recurso), avisos in por_recurso.items():
@@ -295,6 +332,11 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
             if item:
                 convites.setdefault(conta.slug, []).append(item)
 
+        if base["http"] == 200 and topico == "public_offers":
+            item = _item_da_oferta(corpo)
+            if item:
+                ofertas.setdefault(conta.slug, []).append(item)
+
         linhas.append(base)
 
     if linhas:
@@ -308,22 +350,38 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
         )
         con.commit()
 
-    # Os convites viram alerta pelo caminho de sempre: coletar as campanhas
-    # do anúncio e deixar `rules.avaliar_promocoes` cruzar com o piso. É a
-    # mesma régua que a coleta usa — o que muda é a HORA de rodá-la. Convite
-    # tem prazo, e saber dele no dia seguinte é saber tarde.
+    # Convite e oferta desembocam no MESMO lugar: reler as campanhas daquele
+    # anúncio e deixar a régua de sempre cruzar com o piso. A régua mora em
+    # `core/promocoes.py` e `core/rules.py` — decidir de novo aqui criaria um
+    # segundo veredito que um dia discorda do primeiro. Aqui só se junta QUEM
+    # precisa ser avaliado. O que muda é a HORA: campanha tem prazo, e saber
+    # dela no dia seguinte é saber tarde.
+    #
+    # Uma leitura por anúncio serve às duas perguntas, que são diferentes:
+    #
+    #   public_candidates -> "dá para aceitar?"          avaliar_promocoes
+    #   public_offers     -> "e agora, quanto custa?"    avaliar_promocoes_ativas
+    #
+    # O anúncio que aparecer nos dois tópicos é lido uma vez só.
+    a_avaliar: dict[str, set[str]] = {}
+    for fonte in (convites, ofertas):
+        for slug, itens in fonte.items():
+            a_avaliar.setdefault(slug, set()).update(itens)
+
     alertas = 0
-    if convites:
+    if a_avaliar:
         from . import promocoes, rules
-        for slug, itens in convites.items():
+        for slug, itens in a_avaliar.items():
             conta = next((c for c in contas.values() if c.slug == slug), None)
             if not conta or slug not in clientes:
                 continue
             try:
                 n, carimbo_promo = promocoes.coletar(con, conta, clientes[slug],
-                                                     sorted(set(itens)))
+                                                     sorted(itens))
                 if n:
                     alertas += rules.avaliar_promocoes(con, conta, carimbo_promo)
+                    alertas += rules.avaliar_promocoes_ativas(con, conta,
+                                                              carimbo_promo)
             except Exception:
                 # Campanha indisponível não pode derrubar a drenagem: o resto
                 # já foi lido e precisa ser confirmado.
@@ -343,6 +401,7 @@ def drenar(con: sqlite3.Connection, *, max_recursos: int = MAX_RECURSOS) -> dict
         "pendentes": len(pendentes), "recursos": len(por_recurso),
         "lidos": lidos, "pulados": pulados, "confirmados": confirmados,
         "fretes": fretes, "sem_conta": sem_conta,
-        "convites": sum(len(v) for v in convites.values()), "alertas": alertas,
+        "convites": sum(len(v) for v in convites.values()),
+        "ofertas": sum(len(v) for v in ofertas.values()), "alertas": alertas,
         "restaram": len(pendentes) - len(confirmar),
     }
